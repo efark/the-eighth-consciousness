@@ -24,15 +24,15 @@ public abstract class AbstractBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (targetType == "Enemy" && other.gameObject.tag == "Enemy")
+        if (targetType.ToLower() == "enemy" && other.gameObject.tag.ToLower() == "enemy")
         {
             //other.transform.GetComponent<EnemyController>().AddHP(damage);
             Destroy(gameObject);
             return;
         }
-        if (targetType == "Player" && other.gameObject.tag == "Player")
+        if (targetType.ToLower() == "player" && other.gameObject.tag.ToLower() == "player")
         {
-            //other.transform.GetComponent<EnemyController>().AddHP(damage);
+            other.transform.GetComponent<PlayerController>().playerHP -= damage;
             Destroy(gameObject);
             return;
         }

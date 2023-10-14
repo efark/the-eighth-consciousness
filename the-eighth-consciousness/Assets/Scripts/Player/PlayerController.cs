@@ -47,6 +47,23 @@ public class PlayerController : MonoBehaviour
     private GameObject[] players;
     private Collider[] playerColliders;
 
+
+    public int playerHP
+    {
+        get
+        {
+            return HP;
+        }
+        set
+        {
+            if (value != HP)
+            {
+                HP = Helpers.Clamp(value, MinHP, MaxHP);
+                //Raise();
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
