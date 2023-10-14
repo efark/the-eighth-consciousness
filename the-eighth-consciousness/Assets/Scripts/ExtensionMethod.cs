@@ -25,6 +25,14 @@ public static class ExtensionMethod
     public float homingSpeed;
     public float homingDuration;
 
+    Homing Propelled:
+    public Vector3 direction;
+    public GameObject target;
+    public float homingDelay;
+    public float homingSpeed;
+    public float homingDuration;
+    public float force;
+    public float InitialForce;
      */
 
     public static GameObject Instantiate(
@@ -68,6 +76,31 @@ public static class ExtensionMethod
             hbc.homingDuration = homingDuration;
         return bullet;
         }
+
+    public static GameObject Instantiate(
+            // Default parameters:
+            this GameObject thisObj, GameObject original, Vector3 position, Quaternion rotation,
+            // Inherited parameters:
+            string targetType, int player, float speed, int damage, float ttl,
+            // Homing bullet parameters:
+            Vector3 direction, GameObject target, float homingDelay, float homingSpeed, float homingDuration, float force, float InitialForce)
+    {
+        GameObject bullet = GameObject.Instantiate(original, position, rotation) as GameObject;
+        HomingPropelledBulletController hpbc = bullet.GetComponent<HomingPropelledBulletController>();
+        hpbc.targetType = targetType;
+        hpbc.player = player;
+        hpbc.speed = speed;
+        hpbc.damage = damage;
+        hpbc.ttl = ttl;
+        hpbc.direction = direction;
+        hpbc.target = target;
+        hpbc.homingDelay = homingDelay;
+        hpbc.homingSpeed = homingSpeed;
+        hpbc.homingDuration = homingDuration;
+        hpbc.force = force;
+        hpbc.InitialForce = InitialForce;
+        return bullet;
+    }
 }
 /*---------------------------------------------------------------------------------------
  End of quoted code.

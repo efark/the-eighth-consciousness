@@ -40,6 +40,7 @@ public class HomingPropelledBulletController : AbstractBullet
 
         if (!homingStarted)
         {
+            //rb.velocity = direction.normalized * 0.5f;
             homingDelayAccumTime += Time.fixedDeltaTime;
             if (homingDelayAccumTime >= homingDelay)
             {
