@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomingBulletController : AbstractBullet
+public class HomingPropelledBulletController : AbstractBullet
 {
     /* Inherited from Abstract class:
     public string targetType;
@@ -18,11 +18,21 @@ public class HomingBulletController : AbstractBullet
     public float homingDelay;
     public float homingSpeed;
     public float homingDuration;
+    public float force;
+    public float InitialForce;
 
     private float homingAccumTime = 0f;
     private float homingDelayAccumTime = 0f;
     private bool homingStarted = false;
     private bool isHoming = false;
+
+    void Start()
+    {
+        rb = transform.GetComponent<Rigidbody>();
+        Destroy(gameObject, ttl);
+
+        rb.AddForce(direction.normalized * InitialForce);
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -33,12 +43,9 @@ public class HomingBulletController : AbstractBullet
             homingDelayAccumTime += Time.fixedDeltaTime;
             if (homingDelayAccumTime >= homingDelay)
             {
+                //Debug.Log("Start homing!");
                 homingStarted = true;
                 isHoming = true;
-            }
-            else
-            {
-                rb.velocity = direction * speed;
             }
         }
 
@@ -48,15 +55,17 @@ public class HomingBulletController : AbstractBullet
             if (homingAccumTime >= homingDuration)
             {
                 isHoming = false;
+                //Debug.Log("Stop homing!");
             }
             Vector3 targetDirection = target.transform.position - this.transform.position;
             float singleStep = homingSpeed * Time.fixedDeltaTime;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
             Debug.DrawRay(transform.position, newDirection, Color.red);
             transform.rotation = Quaternion.LookRotation(newDirection);
-            rb.velocity = newDirection * speed;
+            //rb.velocity = newDirection * speed;
+            rb.AddForce(newDirection.normalized * force);
         }
 
-        
+
     }
 }

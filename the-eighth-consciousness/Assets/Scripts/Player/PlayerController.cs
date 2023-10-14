@@ -6,13 +6,25 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Game Management")]
     public GameObject gameController;
+    public GameObject playerPrefab;
+    public Vector3 startingPoint;
 
     [Header("Prefabs")]
     public GameObject bullet;
     public GameObject bomb;
 
+    [Header("Stats")]
+    public int HP = 100;
+    public int MaxHP = 100;
+    public int MinHP = 0;
+    public int lives = 3;
+    public int continues = 3;
+    public int bombs = 3;
+
     [Header("Movement")]
     public float speed;
+    public float maxSpeed;
+    public float minSpeed;
     public float tiltAngle;
 
     [Header("Fire")]
@@ -24,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float ECDDuration = 4;
     public List<Transform> firepoints = new List<Transform>();
 
+    private bool isAlive;
     private float nextFire;
     private float activeECDCooldown;
     private float activeSpeed;
@@ -43,6 +56,16 @@ public class PlayerController : MonoBehaviour
         activeSpeed = speed;
         ECDready = true;
         ECDenabled = false;
+        isAlive = true;
+    }
+
+    void InitNewLife()
+    {
+        isAlive = true;
+        HP = 100;
+        bombs = Mathf.Max(bombs - 1, 1);
+        speed = Mathf.Max(speed - 1, minSpeed);
+        firePower = Mathf.Max(firePower - 1, minFirePower);
     }
 
     void FixedUpdate()
@@ -61,6 +84,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //
+        if (HP < MinHP)
+        {
+            // Death.
+            playerDeath();
+        }
+
+        if (!isAlive)
+        {
+            return;
+        }
+
         nextFire = Mathf.Max(nextFire - Time.deltaTime, 0);
         bool fireButton = Input.GetButton("Fire1");
         bool slowMoButton = Input.GetButton("Fire3");
@@ -108,8 +143,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
-
     }
 
     private void triggerSlowMo()
@@ -131,6 +164,17 @@ public class PlayerController : MonoBehaviour
         activeSpeed = speed;
         activeECDCooldown = ECDCooldown;
         gameController.transform.GetComponent<TimeController>().SlowMotionEffect(false);
+    }
+
+    IEnumerator playerDeath()
+    {
+        // Trigger Death Animation.
+        isAlive = false;
+        yield return new WaitForSecondsRealtime(2);
+
+        // Reset values.
+        InitNewLife();
+        Instantiate(playerPrefab, transform.TransformPoint(startingPoint), Quaternion.identity);
     }
 
 }

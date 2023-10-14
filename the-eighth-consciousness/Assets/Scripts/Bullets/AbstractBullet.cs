@@ -4,9 +4,13 @@ using UnityEngine;
 
 public abstract class AbstractBullet : MonoBehaviour
 {
-    public float damage;
+    [Header("Basic Parameters")]
     public string targetType;
+    public int player;
+    public float speed;
+    public int damage;
     public float ttl;
+    // public float wavePeriod;
 
     public Rigidbody rb;
 
