@@ -111,8 +111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d439dbe91c5fc6428a2e50c58859b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
   damage: 10
+  targetType: Enemy
+  ttl: 7
+  rb: {fileID: 0}
+  speed: 10
 --- !u!54 &9106291315262664029
 Rigidbody:
   m_ObjectHideFlags: 0
