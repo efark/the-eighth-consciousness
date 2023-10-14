@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAction : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [Header("Game Management")]
     public GameObject gameController;
@@ -11,35 +11,54 @@ public class PlayerAction : MonoBehaviour
     public GameObject bullet;
     public GameObject bomb;
 
+    [Header("Movement")]
+    public float speed;
+    public float tiltAngle;
+
     [Header("Fire")]
     public int firePower = 1;
     public int maxFirePower = 5;
     public int minFirePower = 1;
-    public float fireRate = 4;
-    public float maxFireRate = 10;
-    public float minFireRate = 4;
+    public float fireRate = 10;
     public float ECDCooldown = 10;
     public float ECDDuration = 4;
     public List<Transform> firepoints = new List<Transform>();
 
     private float nextFire;
     private float activeECDCooldown;
+    private float activeSpeed;
     private bool ECDenabled;
     private bool ECDready;
 
+    private Rigidbody rigidBody;
     private GameObject[] players;
     private Collider[] playerColliders;
 
     // Start is called before the first frame update
     void Start()
     {
-        nextFire = 5 / fireRate;
+        rigidBody = transform.GetComponent<Rigidbody>();
+        nextFire = 1 / fireRate;
         activeECDCooldown = ECDCooldown;
+        activeSpeed = speed;
         ECDready = true;
         ECDenabled = false;
     }
 
-    // Update is called once per frame
+    void FixedUpdate()
+    {
+        // Character movement.
+        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxis("Horizontal");
+
+        Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
+        rigidBody.velocity = movement * activeSpeed;
+
+        rigidBody.rotation = Quaternion.Euler(Vector3.forward * moveHorizontal * tiltAngle);
+        //rigidBody.rotation = Quaternion.Euler(Vector3.right * 90);
+
+    }
+
     void Update()
     {
         nextFire = Mathf.Max(nextFire - Time.deltaTime, 0);
@@ -57,8 +76,8 @@ public class PlayerAction : MonoBehaviour
         {
             if (nextFire <= 0)
             {
-                Debug.Log("Fire!");
-                nextFire = 5 / fireRate;
+                //Debug.Log("Fire!");
+                nextFire = 1 / fireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
                     GameObject bulletInst = Instantiate(bullet, firepoints[i].position, Quaternion.identity);
@@ -76,7 +95,7 @@ public class PlayerAction : MonoBehaviour
             if (ECDready && !ECDenabled)
             {
                 triggerSlowMo();
-            }    
+            }
         }
 
         if (!ECDenabled && !ECDready)
@@ -98,6 +117,7 @@ public class PlayerAction : MonoBehaviour
         Debug.Log("ECD start!");
         ECDenabled = true;
         ECDready = false;
+        activeSpeed *= 1.25f;
         gameController.transform.GetComponent<TimeController>().SlowMotionEffect(true);
         StartCoroutine(endSlowMo(ECDDuration));
     }
@@ -108,10 +128,9 @@ public class PlayerAction : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeout);
         Debug.Log("ECD stop!");
         ECDenabled = false;
+        activeSpeed = speed;
         activeECDCooldown = ECDCooldown;
         gameController.transform.GetComponent<TimeController>().SlowMotionEffect(false);
     }
-
-
 
 }

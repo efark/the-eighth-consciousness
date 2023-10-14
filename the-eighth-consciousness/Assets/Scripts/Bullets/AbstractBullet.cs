@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class AbstractBullet : MonoBehaviour
+{
+    public float damage;
+    public string targetType;
+    public float ttl;
+
+    public Rigidbody rb;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = transform.GetComponent<Rigidbody>();
+        Destroy(gameObject, ttl);
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (targetType == "Enemy" && other.gameObject.tag == "Enemy")
+        {
+            //other.transform.GetComponent<EnemyController>().AddHP(damage);
+            Destroy(gameObject);
+            return;
+        }
+        if (targetType == "Player" && other.gameObject.tag == "Player")
+        {
+            //other.transform.GetComponent<EnemyController>().AddHP(damage);
+            Destroy(gameObject);
+            return;
+        }
+    }
+}
