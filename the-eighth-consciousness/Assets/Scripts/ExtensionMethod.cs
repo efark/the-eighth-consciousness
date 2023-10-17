@@ -33,6 +33,21 @@ public static class ExtensionMethod
     public float homingDuration;
     public float force;
     public float InitialForce;
+
+    public float waveDistance = 4;
+    [SerializeField] private float thetaStep = Mathf.PI / 32f;
+    [SerializeField] private float theta = 0f;
+    [SerializeField] private float amplitude = 4f;
+
+    // how stretched or expanded the sine wave is
+    // if number > 1, wave will shrink (meaning it will take a shorter time to reach a full sin wave cycle) 
+    // if number < 1 but > 0,  wave will stretch out (meaning it will take longer to reach a full sine wave cycle)
+    [SerializeField] private float waveFrequency = 2f;
+
+    // Determines which direction the sine wave should go initially (e.g. left or right)
+    [SerializeField] private int waveDirection = 1;
+    private float xOffset;
+     
      */
 
     public static GameObject Instantiate(
@@ -101,7 +116,29 @@ public static class ExtensionMethod
         hpbc.InitialForce = InitialForce;
         return bullet;
     }
+
+    public static GameObject Instantiate(
+        // Default parameters:
+        this GameObject thisObj, GameObject original, Vector3 position, Quaternion rotation,
+        // Inherited parameters:
+        string targetType, int player, float speed, int damage, float ttl,
+        // Directional bullet parameters:
+        Vector3 direction, float waveDistance, float thetaStep, float theta, float amplitude, float waveFrequency, int waveDirection)
+    {
+        GameObject bullet = GameObject.Instantiate(original, position, rotation) as GameObject;
+        WavyBulletController wbc = bullet.GetComponent<WavyBulletController>();
+        wbc.targetType = targetType;
+        wbc.player = player;
+        wbc.speed = speed;
+        wbc.damage = damage;
+        wbc.ttl = ttl;
+        wbc.direction = direction;
+        wbc.waveDistance = waveDistance;
+        wbc.thetaStep = thetaStep;
+        wbc.theta = theta;
+        wbc.amplitude = amplitude;
+        wbc.waveFrequency = waveFrequency;
+        wbc.waveDirection = waveDirection;
+        return bullet;
+    }
 }
-/*---------------------------------------------------------------------------------------
- End of quoted code.
----------------------------------------------------------------------------------------*/
