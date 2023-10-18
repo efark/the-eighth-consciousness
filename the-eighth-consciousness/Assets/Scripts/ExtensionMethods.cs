@@ -6,18 +6,22 @@ Spanish version: https://learn.unity.com/tutorial/metodos-de-extension#
 ---------------------------------------------------------------------------------------*/
 public static class ExtensionMethods
 {
-    /* from the Abstract class.
+    /*
+    /////////////////////////////////////
+    Abstract bullet:
     public string targetType;
     public int player;
     public float speed;
     public int damage;
     public float ttl;
 
+    /////////////////////////////////////
     Directional bullet:
     public Vector3 direction;
     public float acceleration;
     public float accelerationDelay;
 
+    /////////////////////////////////////
     Homing:
     public Vector3 direction;
     public GameObject target;
@@ -25,6 +29,7 @@ public static class ExtensionMethods
     public float homingSpeed;
     public float homingDuration;
 
+    /////////////////////////////////////
     Homing Propelled:
     public Vector3 direction;
     public GameObject target;
@@ -34,20 +39,13 @@ public static class ExtensionMethods
     public float force;
     public float InitialForce;
 
-    public float waveDistance = 4;
-    [SerializeField] private float thetaStep = Mathf.PI / 32f;
-    [SerializeField] private float theta = 0f;
-    [SerializeField] private float amplitude = 4f;
-
-    // how stretched or expanded the sine wave is
-    // if number > 1, wave will shrink (meaning it will take a shorter time to reach a full sin wave cycle) 
-    // if number < 1 but > 0,  wave will stretch out (meaning it will take longer to reach a full sine wave cycle)
-    [SerializeField] private float waveFrequency = 2f;
-
-    // Determines which direction the sine wave should go initially (e.g. left or right)
-    [SerializeField] private int waveDirection = 1;
-    private float xOffset;
-     
+    /////////////////////////////////////
+    Wavy Bullet:
+    public Vector3 direction;
+    public float amplitude = 1f;
+    public float waveFrequency = 2f;
+    public int waveStartingSide;
+    public float waveSpeed;     
      */
 
     public static GameObject Instantiate(
