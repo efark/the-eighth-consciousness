@@ -132,7 +132,11 @@ public class PlayerController : MonoBehaviour
                 nextFire = 1 / fireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    GameObject bulletInst = Instantiate(bullet, firepoints[i].position, Quaternion.identity);
+                    //GameObject bulletInst = Instantiate(bullet, firepoints[i].position, Quaternion.identity);
+                    GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    "Enemy", 1, 5f, 10, 30f,
+                    // Vector3 direction, float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
+                    Vector3.forward, 5f, 1f, 1f, false);
 
                     for (int j = 0; j < playerColliders.Length; j++)
                     {

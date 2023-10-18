@@ -638,6 +638,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8103483714818685985, guid: bd265326688ee844f962e2fdff45dee7, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 4495484506752154102, guid: e274cdd62804f8c409ed9e2545d1e3d7, type: 3}
+    - target: {fileID: 8103483714818685985, guid: bd265326688ee844f962e2fdff45dee7, type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 2117424282}
