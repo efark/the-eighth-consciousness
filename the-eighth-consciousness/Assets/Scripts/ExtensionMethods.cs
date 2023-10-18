@@ -68,7 +68,7 @@ public static class ExtensionMethods
         dbc.direction = direction;
         return bullet;
     }
-    
+
     public static GameObject Instantiate(
         // Default parameters:
         this GameObject thisObj, GameObject original, Vector3 position, Quaternion rotation,
@@ -76,21 +76,21 @@ public static class ExtensionMethods
         string targetType, int player, float speed, int damage, float ttl,
         // Homing bullet parameters:
         Vector3 direction, GameObject target, float homingDelay, float homingSpeed, float homingDuration)
-        {
-            GameObject bullet = GameObject.Instantiate(original, position, rotation) as GameObject;
-            HomingBulletController hbc = bullet.GetComponent<HomingBulletController>();
-            hbc.targetType = targetType;
-            hbc.player = player;
-            hbc.speed = speed;
-            hbc.damage = damage;
-            hbc.ttl = ttl;
-            hbc.direction = direction;
-            hbc.target = target;
-            hbc.homingDelay = homingDelay;
-            hbc.homingSpeed = homingSpeed;
-            hbc.homingDuration = homingDuration;
+    {
+        GameObject bullet = GameObject.Instantiate(original, position, rotation) as GameObject;
+        HomingBulletController hbc = bullet.GetComponent<HomingBulletController>();
+        hbc.targetType = targetType;
+        hbc.player = player;
+        hbc.speed = speed;
+        hbc.damage = damage;
+        hbc.ttl = ttl;
+        hbc.direction = direction;
+        hbc.target = target;
+        hbc.homingDelay = homingDelay;
+        hbc.homingSpeed = homingSpeed;
+        hbc.homingDuration = homingDuration;
         return bullet;
-        }
+    }
 
     public static GameObject Instantiate(
             // Default parameters:
@@ -123,7 +123,7 @@ public static class ExtensionMethods
         // Inherited parameters:
         string targetType, int player, float speed, int damage, float ttl,
         // Directional bullet parameters:
-        Vector3 direction, float waveDistance, float thetaStep, float theta, float amplitude, float waveFrequency, int waveDirection)
+        Vector3 direction, float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight)
     {
         GameObject bullet = GameObject.Instantiate(original, position, rotation) as GameObject;
         WavyBulletController wbc = bullet.GetComponent<WavyBulletController>();
@@ -133,12 +133,10 @@ public static class ExtensionMethods
         wbc.damage = damage;
         wbc.ttl = ttl;
         wbc.direction = direction;
-        wbc.waveDistance = waveDistance;
-        wbc.thetaStep = thetaStep;
-        wbc.theta = theta;
+        wbc.waveSpeed = waveSpeed;
         wbc.amplitude = amplitude;
         wbc.waveFrequency = waveFrequency;
-        wbc.waveDirection = waveDirection;
+        wbc.waveStartingSide = waveStartsRight ? 1 : -1;
         return bullet;
     }
 }

@@ -133,9 +133,8 @@ MonoBehaviour:
   damage: 10
   ttl: 60
   rb: {fileID: 0}
-  waveDistance: 4
-  thetaStep: 0.09817477
-  theta: 0
-  amplitude: 4
+  direction: {x: 0, y: 0, z: 0}
+  amplitude: 1
   waveFrequency: 2
-  waveDirection: 1
+  waveStartingSide: 1
+  waveSpeed: 5
