@@ -4,7 +4,7 @@ using UnityEngine;
 This code was adapted from the example for Extension methods in Unity Learn resources.
 Spanish version: https://learn.unity.com/tutorial/metodos-de-extension# 
 ---------------------------------------------------------------------------------------*/
-public static class ExtensionMethod
+public static class ExtensionMethods
 {
     /* from the Abstract class.
     public string targetType;
@@ -119,7 +119,7 @@ public static class ExtensionMethod
 
     public static GameObject Instantiate(
         // Default parameters:
-        this GameObject thisObj, GameObject original, Vector3 position, Quaternion rotation,
+        GameObject original, Vector3 position, Quaternion rotation,
         // Inherited parameters:
         string targetType, int player, float speed, int damage, float ttl,
         // Directional bullet parameters:
