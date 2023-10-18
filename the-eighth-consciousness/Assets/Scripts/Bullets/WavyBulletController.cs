@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*---------------------------------------------------------------------------------------
-This code was adapted from the example for Extension methods in Unity Learn resources.
-Spanish version: https://github.com/hlimbo/Space-Shooter-Tutorial/blob/main/Assets/Scripts/ShootPatterns/SinLaser.cs 
+This code was adapted from an answer in Unity's public forum. (Originally published: 2022-10-22, accessed: 2023-10-17)
+https://forum.unity.com/threads/sinusoidal-movement-of-the-projectile.1351121/#post-8529059
 ---------------------------------------------------------------------------------------*/
-
 
 public class WavyBulletController : AbstractBullet
 {
@@ -31,7 +30,6 @@ public class WavyBulletController : AbstractBullet
     // Determines which direction the sine wave should go initially (e.g. left or right)
     public int waveStartingSide;
     public float waveSpeed;
-
 
     private Vector3 startPosition;
     private Vector3 forwardDirection, sineDirection;
