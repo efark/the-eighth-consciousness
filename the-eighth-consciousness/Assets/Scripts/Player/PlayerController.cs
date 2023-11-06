@@ -87,6 +87,28 @@ public class PlayerController : MonoBehaviour
         firePower = Mathf.Max(firePower - 1, minFirePower);
     }
 
+    // Code taken from Unity Reference: https://docs.unity3d.com/ScriptReference/GameObject.FindGameObjectsWithTag.html
+    public GameObject FindClosestEnemy()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
+    }
+    // End of quoted code.
+
     void FixedUpdate()
     {
         // Character movement.
@@ -145,12 +167,21 @@ public class PlayerController : MonoBehaviour
                     // End
 
                     // Parameters for a Wavy Bullet.
-                    GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    "Enemy", 1, 5f, 10, 30f, Vector2.up,
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 5f, 10, 30f, Vector2.up,
                     // float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
-                    5f, 1f, 1f, alternate);
+                    // 5f, 1f, 1f, alternate);
+                    // alternate = !alternate;
+                    // End
+
+                    // Parameters for a Homing Bullet.
+                    GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
+                    FindClosestEnemy(), 1f, 1f, 5f);
                     alternate = !alternate;
                     // End
+
+
 
                     for (int j = 0; j < playerColliders.Length; j++)
                     {
