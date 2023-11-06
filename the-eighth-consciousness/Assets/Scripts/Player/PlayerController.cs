@@ -43,9 +43,9 @@ public class PlayerController : MonoBehaviour
     private bool ECDenabled;
     private bool ECDready;
 
-    private Rigidbody rigidBody;
+    private Rigidbody2D rigidBody;
     private GameObject[] players;
-    private Collider[] playerColliders;
+    private Collider2D[] playerColliders;
 
 
     public int playerHP
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = transform.GetComponent<Rigidbody>();
+        rigidBody = transform.GetComponent<Rigidbody2D>();
         nextFire = 1 / fireRate;
         activeECDCooldown = ECDCooldown;
         activeSpeed = speed;
@@ -91,10 +91,10 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
         float moveHorizontal = Input.GetAxis("Horizontal");
 
-        Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
+        Vector3 movement = new Vector2(moveHorizontal, moveVertical);
         rigidBody.velocity = movement * activeSpeed;
 
-        rigidBody.rotation = Quaternion.Euler(Vector3.forward * moveHorizontal * tiltAngle);
+        //rigidBody.rotation = Quaternion.Euler(Vector3.forward * moveHorizontal * tiltAngle);
         //rigidBody.rotation = Quaternion.Euler(Vector3.right * 90);
 
     }
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in players)
         {
-            playerColliders = p.transform.GetComponentsInChildren<Collider>();
+            playerColliders = p.transform.GetComponentsInChildren<Collider2D>();
         }
 
         if (fireButton)
@@ -132,15 +132,18 @@ public class PlayerController : MonoBehaviour
                 nextFire = 1 / fireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    GameObject bulletInst = Instantiate(bullet, firepoints[i].position, Quaternion.identity);
+                    // Parameters for a Simple Bullet.
+                    GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    "Enemy", 1, 5f, 10, 30f, Vector2.up);
+                    // End
                     /*GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
                     "Enemy", 1, 5f, 10, 30f,
-                    // Vector3 direction, float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
-                    Vector3.forward, 5f, 1f, 1f, false);
+                    // Vector2 direction, float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
+                    Vector2.up, 5f, 1f, 1f, false);
                     */
                     for (int j = 0; j < playerColliders.Length; j++)
                     {
-                        Physics.IgnoreCollision(bulletInst.transform.GetComponent<Collider>(), playerColliders[j]);
+                        Physics2D.IgnoreCollision(bulletInst.transform.GetComponent<Collider2D>(), playerColliders[j]);
                     }
                 }
             }

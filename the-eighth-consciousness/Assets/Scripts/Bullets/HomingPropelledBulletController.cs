@@ -28,7 +28,7 @@ public class HomingPropelledBulletController : AbstractBullet
 
     void Start()
     {
-        rb = transform.GetComponent<Rigidbody>();
+        rb = transform.GetComponent<Rigidbody2D>();
         Destroy(gameObject, ttl);
 
         rb.AddForce(direction.normalized * InitialForce);

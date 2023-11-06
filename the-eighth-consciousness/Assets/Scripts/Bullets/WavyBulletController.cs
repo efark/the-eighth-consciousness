@@ -31,22 +31,24 @@ public class WavyBulletController : AbstractBullet
     public float waveSpeed;
 
     private Vector3 startPosition;
+    private Vector3 v3Direction;
     private Vector3 forwardDirection, sineDirection;
     private float forwardSpeed, forwardProgress, sineProgress;
 
     void Start()
     {
-        rb = transform.GetComponent<Rigidbody>();
+        rb = transform.GetComponent<Rigidbody2D>();
         Destroy(gameObject, ttl);
 
         startPosition = this.transform.position;
-        sineDirection = Vector3.Cross(Vector3.up, direction);
+        v3Direction = new Vector3(direction.x, 0, direction.y);
+        sineDirection = Vector3.Cross(Vector3.up, v3Direction);
     }
 
     void FixedUpdate()
     {
         forwardProgress += speed * Time.fixedDeltaTime;
-        Vector3 position = startPosition + forwardProgress * direction;
+        Vector3 position = startPosition + forwardProgress * v3Direction;
 
         sineProgress += waveSpeed * Time.fixedDeltaTime;
         position += sineDirection * Mathf.Sin(sineProgress * waveFrequency) * amplitude * waveStartingSide;

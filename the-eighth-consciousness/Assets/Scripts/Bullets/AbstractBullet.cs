@@ -10,14 +10,14 @@ public abstract class AbstractBullet : MonoBehaviour
     public float speed;
     public int damage;
     public float ttl;
-    public Vector3 direction;
+    public Vector2 direction;
 
-    public Rigidbody rb;
+    public Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = transform.GetComponent<Rigidbody>();
+        rb = transform.GetComponent<Rigidbody2D>();
         Destroy(gameObject, ttl);
     }
 
