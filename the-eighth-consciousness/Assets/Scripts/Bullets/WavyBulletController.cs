@@ -48,7 +48,7 @@ public class WavyBulletController : AbstractBullet
     void FixedUpdate()
     {
         forwardProgress += speed * Time.fixedDeltaTime;
-        Vector3 position = startPosition + forwardProgress * v3Direction;
+        Vector3 position = startPosition + forwardProgress * new Vector3(v3Direction.x, v3Direction.z, 0);
 
         sineProgress += waveSpeed * Time.fixedDeltaTime;
         position += sineDirection * Mathf.Sin(sineProgress * waveFrequency) * amplitude * waveStartingSide;

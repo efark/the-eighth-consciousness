@@ -21,9 +21,10 @@ public static class ExtensionMethods
     // No additional parameters.
 
     /////////////////////////////////////
-    Directional bullet:
+    Accelerating bullet:
     public float acceleration;
-    public float accelerationDelay;
+    public float minSpeed;
+    public float maxSpeed;
 
     /////////////////////////////////////
     Homing:
@@ -49,6 +50,7 @@ public static class ExtensionMethods
     public float waveSpeed;     
      */
 
+    // Simple Bullet.
     public static GameObject Instantiate(
         // Default parameters:
         GameObject original, Vector3 position, Quaternion rotation,
@@ -66,7 +68,30 @@ public static class ExtensionMethods
         bc.direction = direction;
         return bullet;
     }
-    /*
+
+    // Accelerating Bullet.
+    public static GameObject Instantiate(
+    // Default parameters:
+    GameObject original, Vector3 position, Quaternion rotation,
+    // Inherited parameters:
+    string targetType, int player, float speed, int damage, float ttl, Vector2 direction,
+    float acceleration, float minSpeed, float maxSpeed
+    )
+    {
+        GameObject bullet = GameObject.Instantiate(original, position, rotation) as GameObject;
+        AcceleratingBulletController abc = bullet.GetComponent<AcceleratingBulletController>();
+        abc.targetType = targetType;
+        abc.player = player;
+        abc.speed = speed;
+        abc.damage = damage;
+        abc.ttl = ttl;
+        abc.direction = direction;
+        abc.acceleration = acceleration;
+        abc.minSpeed = minSpeed;
+        abc.maxSpeed = maxSpeed;
+        return bullet;
+    }
+    
     public static GameObject Instantiate(
         // Default parameters:
         GameObject original, Vector3 position, Quaternion rotation,
@@ -137,5 +162,5 @@ public static class ExtensionMethods
         wbc.waveStartingSide = waveStartsRight ? 1 : -1;
         return bullet;
     }
-    */
+    
 }

@@ -11,9 +11,9 @@ public class AcceleratingBulletController : AbstractBullet
     public int damage;
     public float ttl;
     private Rigidbody rb;
-    public Vector3 direction;
+    public Vector2 direction;
      */
-    [Header("")]
+    [Header("Acceleration parameters")]
     public float acceleration;
     public float minSpeed;
     public float maxSpeed;
@@ -21,6 +21,21 @@ public class AcceleratingBulletController : AbstractBullet
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (acceleration > 0)
+        {
+            if (maxSpeed != speed)
+            {
+                speed = Mathf.Max(maxSpeed, speed * acceleration * Time.fixedDeltaTime);
+            }
+        }
+        if (acceleration < 0)
+        {
+            if (minSpeed != speed)
+            {
+                speed = Mathf.Min(minSpeed, speed * acceleration * Time.fixedDeltaTime);
+            }
+
+        }
         rb.velocity = direction * speed;
     }
 

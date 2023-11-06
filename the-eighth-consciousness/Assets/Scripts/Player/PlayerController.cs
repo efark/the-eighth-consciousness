@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     private GameObject[] players;
     private Collider2D[] playerColliders;
 
+    private bool alternate = false;
+
 
     public int playerHP
     {
@@ -133,14 +135,23 @@ public class PlayerController : MonoBehaviour
                 for (int i = 0; i < firepoints.Count; i++)
                 {
                     // Parameters for a Simple Bullet.
-                    GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    "Enemy", 1, 5f, 10, 30f, Vector2.up);
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 5f, 10, 30f, Vector2.up);
                     // End
-                    /*GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    "Enemy", 1, 5f, 10, 30f,
-                    // Vector2 direction, float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
-                    Vector2.up, 5f, 1f, 1f, false);
-                    */
+
+                    // Parameters for an Accelerating Bullet.
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 3f, 10, 30f, Vector2.up, 2, 0, 20);
+                    // End
+
+                    // Parameters for a Wavy Bullet.
+                    GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    "Enemy", 1, 5f, 10, 30f, Vector2.up,
+                    // float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
+                    5f, 1f, 1f, alternate);
+                    alternate = !alternate;
+                    // End
+
                     for (int j = 0; j < playerColliders.Length; j++)
                     {
                         Physics2D.IgnoreCollision(bulletInst.transform.GetComponent<Collider2D>(), playerColliders[j]);
