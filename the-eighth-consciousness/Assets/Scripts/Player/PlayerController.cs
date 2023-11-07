@@ -43,9 +43,11 @@ public class PlayerController : MonoBehaviour
     private bool ECDenabled;
     private bool ECDready;
 
-    private Rigidbody rigidBody;
+    private Rigidbody2D rigidBody;
     private GameObject[] players;
-    private Collider[] playerColliders;
+    private Collider2D[] playerColliders;
+
+    private bool alternate = false;
 
 
     public int playerHP
@@ -67,7 +69,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = transform.GetComponent<Rigidbody>();
+        rigidBody = transform.GetComponent<Rigidbody2D>();
         nextFire = 1 / fireRate;
         activeECDCooldown = ECDCooldown;
         activeSpeed = speed;
@@ -85,16 +87,38 @@ public class PlayerController : MonoBehaviour
         firePower = Mathf.Max(firePower - 1, minFirePower);
     }
 
+    // Code taken from Unity Reference: https://docs.unity3d.com/ScriptReference/GameObject.FindGameObjectsWithTag.html
+    public GameObject FindClosestEnemy()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
+    }
+    // End of quoted code.
+
     void FixedUpdate()
     {
         // Character movement.
         float moveVertical = Input.GetAxis("Vertical");
         float moveHorizontal = Input.GetAxis("Horizontal");
 
-        Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
+        Vector3 movement = new Vector2(moveHorizontal, moveVertical);
         rigidBody.velocity = movement * activeSpeed;
 
-        rigidBody.rotation = Quaternion.Euler(Vector3.forward * moveHorizontal * tiltAngle);
+        //rigidBody.rotation = Quaternion.Euler(Vector3.forward * moveHorizontal * tiltAngle);
         //rigidBody.rotation = Quaternion.Euler(Vector3.right * 90);
 
     }
@@ -121,7 +145,7 @@ public class PlayerController : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in players)
         {
-            playerColliders = p.transform.GetComponentsInChildren<Collider>();
+            playerColliders = p.transform.GetComponentsInChildren<Collider2D>();
         }
 
         if (fireButton)
@@ -132,15 +156,41 @@ public class PlayerController : MonoBehaviour
                 nextFire = 1 / fireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    //GameObject bulletInst = Instantiate(bullet, firepoints[i].position, Quaternion.identity);
+                    // Parameters for a Simple Bullet.
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 5f, 10, 30f, Vector2.up);
+                    // End
+
+                    // Parameters for an Accelerating Bullet.
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 3f, 10, 30f, Vector2.up, 2, 0, 20);
+                    // End
+
+                    // Parameters for a Wavy Bullet.
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 5f, 10, 30f, Vector2.up,
+                    // float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
+                    // 5f, 1f, 1f, alternate);
+                    // alternate = !alternate;
+                    // End
+
+                    // Parameters for a Homing Bullet.
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
+                    // FindClosestEnemy(), 1f, 1f, 5f);
+                    // alternate = !alternate;
+                    // End
+
+                    // Parameters for a Homing Propelled Bullet.
                     GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    "Enemy", 1, 5f, 10, 30f,
-                    // Vector3 direction, float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
-                    Vector3.forward, 5f, 1f, 1f, false);
+                    "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
+                    FindClosestEnemy(), 1f, 1f, 5f, 200f, 500f);
+                    alternate = !alternate;
+                    // End
 
                     for (int j = 0; j < playerColliders.Length; j++)
                     {
-                        Physics.IgnoreCollision(bulletInst.transform.GetComponent<Collider>(), playerColliders[j]);
+                        Physics2D.IgnoreCollision(bulletInst.transform.GetComponent<Collider2D>(), playerColliders[j]);
                     }
                 }
             }

@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: 331f7e4fb986fb84394b805a4da94a01
+guid: 10e5047f6edc51947aee67981c59adf8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - gameController: {instanceID: 0}
-  - bullet: {fileID: 2565028675128515868, guid: a6be645665ff0904180e8f35521c88bb, type: 3}
-  - bomb: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

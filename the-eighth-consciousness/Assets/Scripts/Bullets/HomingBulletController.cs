@@ -11,9 +11,9 @@ public class HomingBulletController : AbstractBullet
     public int damage;
     public float ttl;
     private Rigidbody rb;
-    */
-    [Header("Homing parameters")]
     public Vector3 direction;
+     */
+    [Header("Homing parameters")]
     public GameObject target;
     public float homingDelay;
     public float homingSpeed;
@@ -57,6 +57,6 @@ public class HomingBulletController : AbstractBullet
             rb.velocity = newDirection * speed;
         }
 
-        
+
     }
 }

@@ -11,9 +11,9 @@ public class HomingPropelledBulletController : AbstractBullet
     public int damage;
     public float ttl;
     private Rigidbody rb;
+    public Vector3 direction;
     */
     [Header("Homing parameters")]
-    public Vector3 direction;
     public GameObject target;
     public float homingDelay;
     public float homingSpeed;
@@ -28,23 +28,19 @@ public class HomingPropelledBulletController : AbstractBullet
 
     void Start()
     {
-        rb = transform.GetComponent<Rigidbody>();
+        rb = transform.GetComponent<Rigidbody2D>();
         Destroy(gameObject, ttl);
 
         rb.AddForce(direction.normalized * InitialForce);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-
         if (!homingStarted)
         {
-            //rb.velocity = direction.normalized * 0.5f;
             homingDelayAccumTime += Time.fixedDeltaTime;
             if (homingDelayAccumTime >= homingDelay)
             {
-                //Debug.Log("Start homing!");
                 homingStarted = true;
                 isHoming = true;
             }
@@ -56,14 +52,13 @@ public class HomingPropelledBulletController : AbstractBullet
             if (homingAccumTime >= homingDuration)
             {
                 isHoming = false;
-                //Debug.Log("Stop homing!");
             }
             Vector3 targetDirection = target.transform.position - this.transform.position;
             float singleStep = homingSpeed * Time.fixedDeltaTime;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
             Debug.DrawRay(transform.position, newDirection, Color.red);
             transform.rotation = Quaternion.LookRotation(newDirection);
-            //rb.velocity = newDirection * speed;
+    
             rb.AddForce(newDirection.normalized * force);
         }
 
