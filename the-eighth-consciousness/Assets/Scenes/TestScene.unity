@@ -274,7 +274,7 @@ MonoBehaviour:
   gameController: {fileID: 2092622406}
   playerPrefab: {fileID: 0}
   startingPoint: {x: 0, y: 0, z: 0}
-  bullet: {fileID: 2656347697357522817, guid: 528372a210b539c41938ee8de455b27f, type: 3}
+  bullet: {fileID: 8515990756729836895, guid: 570c19c9e748c55459b72b4f88c1e659, type: 3}
   bomb: {fileID: 0}
   HP: 100
   MaxHP: 100

@@ -175,12 +175,27 @@ public class PlayerController : MonoBehaviour
                     // End
 
                     // Parameters for a Homing Bullet.
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
+                    // FindClosestEnemy(), 1f, 1f, 5f);
+                    // alternate = !alternate;
+                    // End
+
+                    // Parameters for a Homing Propelled Bullet.
                     GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
                     "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
-                    FindClosestEnemy(), 1f, 1f, 5f);
+                    FindClosestEnemy(), 1f, 1f, 5f, 200f, 500f);
                     alternate = !alternate;
                     // End
 
+                    /*
+    public GameObject target;
+    public float homingDelay;
+    public float homingSpeed;
+    public float homingDuration;
+    public float force;
+    public float InitialForce;
+                     */
 
 
                     for (int j = 0; j < playerColliders.Length; j++)
