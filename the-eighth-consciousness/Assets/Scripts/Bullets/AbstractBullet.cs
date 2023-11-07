@@ -22,7 +22,7 @@ public abstract class AbstractBullet : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (targetType.ToLower() == "enemy" && other.gameObject.tag.ToLower() == "enemy")
         {
