@@ -188,16 +188,6 @@ public class PlayerController : MonoBehaviour
                     alternate = !alternate;
                     // End
 
-                    /*
-    public GameObject target;
-    public float homingDelay;
-    public float homingSpeed;
-    public float homingDuration;
-    public float force;
-    public float InitialForce;
-                     */
-
-
                     for (int j = 0; j < playerColliders.Length; j++)
                     {
                         Physics2D.IgnoreCollision(bulletInst.transform.GetComponent<Collider2D>(), playerColliders[j]);
