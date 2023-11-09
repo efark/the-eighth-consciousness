@@ -25,14 +25,14 @@ public class AcceleratingBulletController : AbstractBullet
         {
             if (maxSpeed != speed)
             {
-                speed = Mathf.Max(maxSpeed, speed * acceleration * Time.fixedDeltaTime);
+                speed = Mathf.Min(maxSpeed, speed * acceleration * Time.fixedDeltaTime);
             }
         }
         if (acceleration < 0)
         {
             if (minSpeed != speed)
             {
-                speed = Mathf.Min(minSpeed, speed * acceleration * Time.fixedDeltaTime);
+                speed = Mathf.Max(minSpeed, speed * acceleration * Time.fixedDeltaTime);
             }
 
         }

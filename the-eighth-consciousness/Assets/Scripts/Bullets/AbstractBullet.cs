@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BulletTypes
+{
+    AcceleratingBullet,
+    Bullet,
+    HomingBullet,
+    HomingPropelledBullet,
+    WavyBullet
+}
+
 public abstract class AbstractBullet : MonoBehaviour
 {
     [Header("Basic Parameters")]

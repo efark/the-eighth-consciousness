@@ -274,7 +274,7 @@ MonoBehaviour:
   gameController: {fileID: 2092622406}
   playerPrefab: {fileID: 0}
   startingPoint: {x: 0, y: 0, z: 0}
-  bullet: {fileID: 8515990756729836895, guid: 570c19c9e748c55459b72b4f88c1e659, type: 3}
+  bullet: {fileID: 5775011692779637965, guid: b4db0c8be70fd314ba844b50db330525, type: 3}
   bomb: {fileID: 0}
   HP: 100
   MaxHP: 100
@@ -294,6 +294,7 @@ MonoBehaviour:
   ECDDuration: 4
   firepoints:
   - {fileID: 1707444641}
+  bulletSettings: {fileID: 11400000, guid: 8932a093f078cef408f242b2c322ef05, type: 2}
 --- !u!212 &1191811133
 SpriteRenderer:
   m_ObjectHideFlags: 0
