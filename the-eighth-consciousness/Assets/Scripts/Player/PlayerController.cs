@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         isAlive = true;
 
         //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90
-        spread = new MultiShotSpread(bulletSettings, "Enemy", 1, 3, 3);
+        spread = new MultiShotSpread(bulletSettings, "Enemy", 1, 3, 3, false);
     }
 
     void InitNewLife()
