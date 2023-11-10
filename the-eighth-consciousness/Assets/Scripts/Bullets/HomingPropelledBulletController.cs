@@ -19,7 +19,7 @@ public class HomingPropelledBulletController : AbstractBullet
     public float homingSpeed;
     public float homingDuration;
     public float force;
-    public float InitialForce;
+    public float initialForce;
 
     private float homingAccumTime = 0f;
     private float homingDelayAccumTime = 0f;
@@ -31,7 +31,7 @@ public class HomingPropelledBulletController : AbstractBullet
         rb = transform.GetComponent<Rigidbody2D>();
         Destroy(gameObject, ttl);
 
-        rb.AddForce(direction.normalized * InitialForce);
+        rb.AddForce(direction.normalized * initialForce);
     }
 
     void FixedUpdate()

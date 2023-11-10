@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
     private GameObject[] players;
     private Collider2D[] playerColliders;
 
+    public BulletSettings bulletSettings;
+    public AbstractShotSpread spread;
+
     private bool alternate = false;
 
 
@@ -76,6 +79,9 @@ public class PlayerController : MonoBehaviour
         ECDready = true;
         ECDenabled = false;
         isAlive = true;
+
+        //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90
+        spread = new MultiShotSpread(bulletSettings, "Enemy", 1, 3, 3, false);
     }
 
     void InitNewLife()
@@ -162,8 +168,17 @@ public class PlayerController : MonoBehaviour
                     // End
 
                     // Parameters for an Accelerating Bullet.
-                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    // "Enemy", 1, 3f, 10, 30f, Vector2.up, 2, 0, 20);
+                    /*if (bulletSettings.type == BulletTypes.AcceleratingBullet)
+                    {
+                        GameObject bulletInst = ExtensionMethods.Instantiate(bulletSettings.prefab, firepoints[i].position, Quaternion.identity,
+                        "Enemy", 1, bulletSettings.speed, bulletSettings.damage, bulletSettings.ttl, Vector2.up, bulletSettings.acceleration, bulletSettings.minSpeed, bulletSettings.maxSpeed);
+
+                        for (int j = 0; j < playerColliders.Length; j++)
+                        {
+                            Physics2D.IgnoreCollision(bulletInst.transform.GetComponent<Collider2D>(), playerColliders[j]);
+                        }
+                    }
+                    */
                     // End
 
                     // Parameters for a Wavy Bullet.
@@ -182,16 +197,15 @@ public class PlayerController : MonoBehaviour
                     // End
 
                     // Parameters for a Homing Propelled Bullet.
-                    GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
-                    FindClosestEnemy(), 1f, 1f, 5f, 200f, 500f);
-                    alternate = !alternate;
+                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
+                    // "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
+                    // FindClosestEnemy(), 1f, 1f, 5f, 200f, 500f);
+                    // alternate = !alternate;
                     // End
+                    //Debug.Log(transform.position);
+                    //Debug.Log(transform.eulerAngles);
+                    spread.Fire(transform.position, transform.rotation, Vector2.up);
 
-                    for (int j = 0; j < playerColliders.Length; j++)
-                    {
-                        Physics2D.IgnoreCollision(bulletInst.transform.GetComponent<Collider2D>(), playerColliders[j]);
-                    }
                 }
             }
         }
