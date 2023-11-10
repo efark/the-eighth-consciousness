@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class AbstractShotSpread
 {
-    public abstract void Fire(Vector3 startPosition, Quaternion rotation);
+    public abstract void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction);
 }

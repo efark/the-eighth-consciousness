@@ -26,7 +26,7 @@ public class RadialSpread : AbstractShotSpread
         spreadAngle = _spreadAngle;
     }
 
-    public override void Fire(Vector3 startPosition, Quaternion rotation)
+    public override void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
     {
         /*---------------------------------------------------------------------------------------
         The following code was adapted from ivuecode's RadialBulletSpread repository in Github:
@@ -48,19 +48,6 @@ public class RadialSpread : AbstractShotSpread
             Vector3 projectileMoveDirection = (projectileVector - startPosition).normalized;
             Vector2 projectileFinalDirection = new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
 
-            /*
-             // Default parameters:
-        GameObject original, Vector3 position, Quaternion rotation,
-        // Inherited parameters:
-        string targetType, int player, float speed, int damage, float ttl, Vector2 direction             
-             */
-
-            /*ExtensionMethods.Instantiate(
-                bulletSettings.prefab, startPosition, Quaternion.identity,
-                targetType, playerId, bulletSettings.speed, bulletSettings.damage, bulletSettings.ttl,
-                projectileFinalDirection
-                );
-            */
             Quaternion newRotation = Quaternion.Euler(Vector3.forward * -angle);
             ExtensionMethods.Instantiate(
                 bulletSettings, targetType, playerId, startPosition, newRotation, projectileFinalDirection);

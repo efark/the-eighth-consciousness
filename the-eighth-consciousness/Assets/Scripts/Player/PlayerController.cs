@@ -80,7 +80,8 @@ public class PlayerController : MonoBehaviour
         ECDenabled = false;
         isAlive = true;
 
-        spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90);
+        //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90
+        spread = new MultiShotSpread(bulletSettings, "Enemy", 1, 3, 3);
     }
 
     void InitNewLife()
@@ -203,7 +204,7 @@ public class PlayerController : MonoBehaviour
                     // End
                     //Debug.Log(transform.position);
                     //Debug.Log(transform.eulerAngles);
-                    spread.Fire(transform.position, transform.rotation);
+                    spread.Fire(transform.position, transform.rotation, Vector2.up);
 
                 }
             }
