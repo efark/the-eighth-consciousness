@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public int firePower = 1;
     public int maxFirePower = 5;
     public int minFirePower = 1;
-    public float fireRate = 10;
+    public float fireRate = 0.2f;
     public float ECDCooldown = 10;
     public float ECDDuration = 4;
     public List<Transform> firepoints = new List<Transform>();
@@ -48,10 +48,10 @@ public class PlayerController : MonoBehaviour
     private Collider2D[] playerColliders;
 
     public BulletSettings bulletSettings;
-    public AbstractShotSpread spread;
-
-    private bool alternate = false;
-
+    public SpreadSettings spreadSettings;
+    public BurstSettings burstSettings;
+    private AbstractShotSpread spread;
+    private AbstractShotBurst burst;
 
     public int playerHP
     {
@@ -80,8 +80,9 @@ public class PlayerController : MonoBehaviour
         ECDenabled = false;
         isAlive = true;
 
-        //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90
-        spread = new MultiShotSpread(bulletSettings, "Enemy", 1, 3, 3, false);
+        //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90);
+        spread = ExtensionMethods.InitShotSpread(spreadSettings, "Enemy", 1);
+        burst = new ShotBurst(burstSettings.offset, burstSettings.size, burstSettings.fireRate, spread);
     }
 
     void InitNewLife()
@@ -158,54 +159,11 @@ public class PlayerController : MonoBehaviour
         {
             if (nextFire <= 0)
             {
-                //Debug.Log("Fire!");
                 nextFire = 1 / fireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    // Parameters for a Simple Bullet.
-                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    // "Enemy", 1, 5f, 10, 30f, Vector2.up);
-                    // End
-
-                    // Parameters for an Accelerating Bullet.
-                    /*if (bulletSettings.type == BulletTypes.AcceleratingBullet)
-                    {
-                        GameObject bulletInst = ExtensionMethods.Instantiate(bulletSettings.prefab, firepoints[i].position, Quaternion.identity,
-                        "Enemy", 1, bulletSettings.speed, bulletSettings.damage, bulletSettings.ttl, Vector2.up, bulletSettings.acceleration, bulletSettings.minSpeed, bulletSettings.maxSpeed);
-
-                        for (int j = 0; j < playerColliders.Length; j++)
-                        {
-                            Physics2D.IgnoreCollision(bulletInst.transform.GetComponent<Collider2D>(), playerColliders[j]);
-                        }
-                    }
-                    */
-                    // End
-
-                    // Parameters for a Wavy Bullet.
-                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    // "Enemy", 1, 5f, 10, 30f, Vector2.up,
-                    // float waveSpeed, float amplitude, float waveFrequency, bool waveStartsRight
-                    // 5f, 1f, 1f, alternate);
-                    // alternate = !alternate;
-                    // End
-
-                    // Parameters for a Homing Bullet.
-                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    // "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
-                    // FindClosestEnemy(), 1f, 1f, 5f);
-                    // alternate = !alternate;
-                    // End
-
-                    // Parameters for a Homing Propelled Bullet.
-                    // GameObject bulletInst = ExtensionMethods.Instantiate(bullet, firepoints[i].position, Quaternion.identity,
-                    // "Enemy", 1, 5f, 10, 30f, alternate ? Vector2.right : Vector2.left,
-                    // FindClosestEnemy(), 1f, 1f, 5f, 200f, 500f);
-                    // alternate = !alternate;
-                    // End
-                    //Debug.Log(transform.position);
-                    //Debug.Log(transform.eulerAngles);
-                    spread.Fire(transform.position, transform.rotation, Vector2.up);
-
+                    //spread.Fire(transform.position, transform.rotation, Vector2.up);
+                    StartCoroutine(burst.Fire(transform.position, transform.rotation, Vector2.up));
                 }
             }
         }
