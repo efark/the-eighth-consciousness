@@ -37,10 +37,8 @@ public class EnemyController : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log($"targetPlayer.transform.position: {targetPlayer.transform.position}");
             Vector3 targetDirection = targetPlayer.transform.position - this.transform.position;
-            Debug.DrawRay(transform.position, targetDirection, Color.red, 10f);
-            Debug.Log($"targetDirection: {targetDirection}");
+            //Debug.DrawRay(transform.position, targetDirection, Color.red, 10f);
             StartCoroutine(ap.shotBurst.Fire(transform.position, Quaternion.identity, new Vector2(targetDirection.x, targetDirection.y)));
             yield return new WaitForSeconds(ap.cooldown);
         }

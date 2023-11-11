@@ -5,9 +5,7 @@ using UnityEngine;
 public class RadialSpread : AbstractShotSpread
 {
     private BulletSettings bulletSettings;
-    //public GameObject bullet;
 
-    //public SpreadSettings spreadSettings;
     private int roundSize;
     private float spreadAngle;
     private string targetType;
@@ -41,12 +39,10 @@ public class RadialSpread : AbstractShotSpread
         // Vector2 unitVector = new Vector2(0, 1);
         // float directionAngle = Vector2.SignedAngle(unitVector, direction);
         float directionAngle = CalculateAngle(direction);
-        Debug.Log(directionAngle);
 
         for (int i = 0; i < roundSize; i++)
         {
             // Direction calculations.
-            //eulerAngles.y
             float projectileDirXPosition = startPosition.x + Mathf.Sin(((directionAngle + angle) * Mathf.PI) / 180) * radius;
             float projectileDirYPosition = startPosition.y + Mathf.Cos(((directionAngle + angle) * Mathf.PI) / 180) * radius;
 
@@ -54,7 +50,8 @@ public class RadialSpread : AbstractShotSpread
             Vector3 projectileVector = new Vector3(projectileDirXPosition, projectileDirYPosition, 0);
             Vector3 projectileMoveDirection = (projectileVector - startPosition).normalized;
             Vector2 projectileFinalDirection = new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
-
+            
+            // Rotate the bullet.
             Quaternion newRotation = Quaternion.Euler(Vector3.back * (directionAngle + angle));
             ExtensionMethods.Instantiate(
                 bulletSettings, targetType, playerId, startPosition, newRotation, projectileFinalDirection);
@@ -66,12 +63,15 @@ public class RadialSpread : AbstractShotSpread
         ---------------------------------------------------------------------------------------*/
     }
 
-    /*
+    /*---------------------------------------------------------------------------------------
+    Code adapted from a post in Unity's public forum.
     https://discussions.unity.com/t/calculating-the-angle-of-a-vector2-from-zero/69663/3 
-    */
+    ---------------------------------------------------------------------------------------*/
     public static float CalculateAngle(Vector2 vector2)
     {
-        return 360 - (Mathf.Atan2(vector2.x, vector2.y) * -1 *Mathf.Rad2Deg /** Mathf.Sign(vector2.x)*/);
+        return 360 - (Mathf.Atan2(vector2.x, vector2.y) * -1 * Mathf.Rad2Deg);
     }
-
+    /*---------------------------------------------------------------------------------------
+    End of quoted code.
+    ---------------------------------------------------------------------------------------*/
 }
