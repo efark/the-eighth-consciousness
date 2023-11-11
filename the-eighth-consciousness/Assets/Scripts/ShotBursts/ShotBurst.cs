@@ -2,18 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotBurst: MonoBehaviour
+/*
+The ShotBurst class controls the shots as they are fired in a quick sequence. 
+*/
+public class ShotBurst: AbstractShotBurst
 {
-    public float offset;
-    public float size;
-    public float fireRate;
+    private float offset;
+    private int size;
+    private float fireRate;
+    private AbstractShotSpread shotSpread;
 
-    public void Fire()
-    {
-        StartCoroutine(fire());
+    public ShotBurst(float _offset, int _size, float _fireRate, AbstractShotSpread _shotSpread)
+    { 
+        offset = _offset;
+        size = _size;
+        fireRate = _fireRate;
+        shotSpread = _shotSpread;
     }
 
-    private IEnumerator fire()
+    public override IEnumerator Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
     {
         // Wait for offset
         yield return new WaitForSeconds(offset);
@@ -23,7 +30,9 @@ public class ShotBurst: MonoBehaviour
             {
                 yield return new WaitForSeconds(fireRate);
             }
-            Debug.Log("Fire");
+            shotSpread.Fire(startPosition, rotation, direction);
         }
+
     }
+
 }

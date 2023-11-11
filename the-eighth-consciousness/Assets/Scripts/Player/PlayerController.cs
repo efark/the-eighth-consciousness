@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public int firePower = 1;
     public int maxFirePower = 5;
     public int minFirePower = 1;
-    public float fireRate = 10;
+    public float fireRate = 0.2f;
     public float ECDCooldown = 10;
     public float ECDDuration = 4;
     public List<Transform> firepoints = new List<Transform>();
@@ -48,7 +48,10 @@ public class PlayerController : MonoBehaviour
     private Collider2D[] playerColliders;
 
     public BulletSettings bulletSettings;
-    public AbstractShotSpread spread;
+    public SpreadSettings spreadSettings;
+    public BurstSettings burstSettings;
+    private AbstractShotSpread spread;
+    private AbstractShotBurst burst;
 
     private bool alternate = false;
 
@@ -80,8 +83,9 @@ public class PlayerController : MonoBehaviour
         ECDenabled = false;
         isAlive = true;
 
-        //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90
-        spread = new MultiShotSpread(bulletSettings, "Enemy", 1, 3, 3, false);
+        //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90);
+        spread = ExtensionMethods.InitShotSpread(spreadSettings, "Enemy", 1);
+        burst = new ShotBurst(burstSettings.offset, burstSettings.size, burstSettings.fireRate, spread);
     }
 
     void InitNewLife()
@@ -204,8 +208,8 @@ public class PlayerController : MonoBehaviour
                     // End
                     //Debug.Log(transform.position);
                     //Debug.Log(transform.eulerAngles);
-                    spread.Fire(transform.position, transform.rotation, Vector2.up);
-
+                    //spread.Fire(transform.position, transform.rotation, Vector2.up);
+                    StartCoroutine(burst.Fire(transform.position, transform.rotation, Vector2.up));
                 }
             }
         }

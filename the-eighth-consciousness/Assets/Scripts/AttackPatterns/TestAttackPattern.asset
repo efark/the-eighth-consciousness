@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56765fafecfad54d824697aad0622ba, type: 3}
+  m_Name: TestAttackPattern
+  m_EditorClassIdentifier: 
+  bulletSettings: {fileID: 11400000, guid: 8932a093f078cef408f242b2c322ef05, type: 2}
+  spreadSettings: {fileID: 11400000, guid: 9468219a5fba19540add58d2a148c548, type: 2}
+  burstSettings: {fileID: 11400000, guid: 527be36894ac2ce4e8f29a88fe4c3ce7, type: 2}
+  cooldown: 5
+  numberOfBursts: 1
+  order: 1
+  keepsAiming: 0
+  isStaticAttack: 0
+  isConstantAttack: 0
