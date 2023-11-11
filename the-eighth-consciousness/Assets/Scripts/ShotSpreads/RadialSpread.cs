@@ -55,7 +55,7 @@ public class RadialSpread : AbstractShotSpread
             Vector3 projectileMoveDirection = (projectileVector - startPosition).normalized;
             Vector2 projectileFinalDirection = new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
 
-            Quaternion newRotation = Quaternion.Euler(Vector3.forward * -angle);
+            Quaternion newRotation = Quaternion.Euler(Vector3.back * (directionAngle + angle));
             ExtensionMethods.Instantiate(
                 bulletSettings, targetType, playerId, startPosition, newRotation, projectileFinalDirection);
 
