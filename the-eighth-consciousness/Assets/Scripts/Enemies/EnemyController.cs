@@ -18,7 +18,6 @@ public class EnemyController : MonoBehaviour
     public List<Transform> firepoints = new List<Transform>();
 
     private float nextFire;
-    private float radius = 1f;
     private string targetType = "Player";
 
     private GameObject targetPlayer;
