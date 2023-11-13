@@ -10,5 +10,5 @@ public enum ShotSpreadTypes
 
 public abstract class AbstractShotSpread
 {
-    public abstract void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction);
+    public abstract void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction, AdditionalBulletSettings additionals);
 }

@@ -30,7 +30,7 @@ public class ShotBurst: AbstractShotBurst
             {
                 yield return new WaitForSeconds(fireRate);
             }
-            shotSpread.Fire(startPosition, rotation, direction);
+            shotSpread.Fire(startPosition, rotation, direction, null);
         }
 
     }

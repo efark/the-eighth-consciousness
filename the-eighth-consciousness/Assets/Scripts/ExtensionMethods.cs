@@ -56,7 +56,8 @@ public static class ExtensionMethods
         int player,
         Vector3 position,
         Quaternion rotation,
-        Vector2 direction
+        Vector2 direction,
+        AdditionalBulletSettings additionals
         )
     {
         GameObject bullet;
@@ -85,25 +86,6 @@ public static class ExtensionMethods
                 bc.ttl = bulletSettings.ttl;
                 bc.direction = direction;
                 return bullet;
-            default:
-                // code block
-                return null;
-        }
-    }
-
-    public static GameObject Instantiate(
-    BulletSettings bulletSettings,
-    string targetType,
-    int player,
-    Vector3 position,
-    Quaternion rotation,
-    Vector2 direction,
-    GameObject target
-    )
-    {
-        GameObject bullet;
-        switch (bulletSettings.type)
-        {
             case BulletTypes.HomingBullet:
                 bullet = GameObject.Instantiate(bulletSettings.prefab, position, rotation) as GameObject;
                 HomingBulletController hbc = bullet.GetComponent<HomingBulletController>();
@@ -113,7 +95,7 @@ public static class ExtensionMethods
                 hbc.damage = bulletSettings.damage;
                 hbc.ttl = bulletSettings.ttl;
                 hbc.direction = direction;
-                hbc.target = target;
+                hbc.target = additionals.target;
                 hbc.homingDelay = bulletSettings.homingDelay;
                 hbc.homingSpeed = bulletSettings.homingSpeed;
                 hbc.homingDuration = bulletSettings.homingDuration;
@@ -127,12 +109,26 @@ public static class ExtensionMethods
                 hpbc.damage = bulletSettings.damage;
                 hpbc.ttl = bulletSettings.ttl;
                 hpbc.direction = direction;
-                hpbc.target = target;
+                hpbc.target = additionals.target;
                 hpbc.homingDelay = bulletSettings.homingDelay;
                 hpbc.homingSpeed = bulletSettings.homingSpeed;
                 hpbc.homingDuration = bulletSettings.homingDuration;
                 hpbc.force = bulletSettings.force;
                 hpbc.initialForce = bulletSettings.initialForce;
+                return bullet;
+            case BulletTypes.WavyBullet:
+                bullet = GameObject.Instantiate(bulletSettings.prefab, position, rotation) as GameObject;
+                WavyBulletController wbc = bullet.GetComponent<WavyBulletController>();
+                wbc.targetType = targetType;
+                wbc.player = player;
+                wbc.speed = bulletSettings.speed;
+                wbc.damage = bulletSettings.damage;
+                wbc.ttl = bulletSettings.ttl;
+                wbc.direction = direction;
+                wbc.waveSpeed = bulletSettings.waveSpeed;
+                wbc.amplitude = bulletSettings.amplitude;
+                wbc.waveFrequency = bulletSettings.waveFrequency;
+                wbc.waveStartingSide = additionals.alternate ? 1 : -1;
                 return bullet;
             default:
                 // code block
@@ -140,30 +136,6 @@ public static class ExtensionMethods
         }
     }
 
-    public static GameObject Instantiate(
-    BulletSettings bulletSettings,
-    string targetType,
-    int player,
-    Vector3 position,
-    Quaternion rotation,
-    Vector2 direction,
-    bool startsRight
-    )
-    {
-        GameObject bullet = GameObject.Instantiate(bulletSettings.prefab, position, rotation) as GameObject;
-        WavyBulletController wbc = bullet.GetComponent<WavyBulletController>();
-        wbc.targetType = targetType;
-        wbc.player = player;
-        wbc.speed = bulletSettings.speed;
-        wbc.damage = bulletSettings.damage;
-        wbc.ttl = bulletSettings.ttl;
-        wbc.direction = direction;
-        wbc.waveSpeed = bulletSettings.waveSpeed;
-        wbc.amplitude = bulletSettings.amplitude;
-        wbc.waveFrequency = bulletSettings.waveFrequency;
-        wbc.waveStartingSide = startsRight ? 1 : -1;
-        return bullet;
-    }
 
     public static AbstractShotSpread InitShotSpread(
         SpreadSettings spreadSettings,

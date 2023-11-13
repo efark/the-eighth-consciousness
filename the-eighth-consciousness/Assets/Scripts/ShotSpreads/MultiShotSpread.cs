@@ -29,10 +29,11 @@ public class MultiShotSpread : AbstractShotSpread
         }
     }
 
-    public override void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
+    public override void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction, AdditionalBulletSettings additionals)
     {
         float spacing = -(roundSpacing * Mathf.Floor(roundSize / 2));
         lateralDirection = new Vector3(direction.y, -direction.x, 0);
+        additionals.isAlternating = isAlternating;
 
         for (int i = 0; i < roundSize; i++)
         {
@@ -42,14 +43,11 @@ public class MultiShotSpread : AbstractShotSpread
             spacing += roundSpacing;
             if (isAlternating)
             {
-                ExtensionMethods.Instantiate(
-                bulletSettings, targetType, playerId, bulletPosition, rotation, direction, alternate);
+                additionals.alternate = alternate;
                 alternate = !alternate;
-                continue;
             }
             ExtensionMethods.Instantiate(
-                bulletSettings, targetType, playerId, bulletPosition, rotation, direction);
-
+                bulletSettings, targetType, playerId, bulletPosition, rotation, direction, additionals);
         }
 
     }
