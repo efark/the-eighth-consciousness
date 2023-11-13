@@ -56,7 +56,7 @@ public class PropelledHomingMovement : AbstractMovement
             Vector3 targetDirection = target.transform.position - this.transform.position;
             float singleStep = homingSpeed * Time.fixedDeltaTime;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-            Debug.DrawRay(transform.position, newDirection, Color.red);
+            // Debug.DrawRay(transform.position, newDirection, Color.red);
             transform.rotation = Quaternion.LookRotation(newDirection);
 
             rb.AddForce(newDirection.normalized * force);

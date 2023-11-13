@@ -11,7 +11,7 @@ public class WavyMovement : AbstractMovement
     /* Inherited from Abstract class:
     public float speed;
     public Vector2 direction;
-    private Rigidbody rb;
+    public Rigidbody rb;
     */
     [Header("Wave parameters")]
     [Tooltip("How much the bullet deviates to the sides.")]
@@ -38,6 +38,8 @@ if number < 1 but > 0,  wave will stretch out (meaning it will take longer to re
         startPosition = this.transform.position;
         v3Direction = new Vector3(direction.x, 0, direction.y);
         sineDirection = Vector3.Cross(Vector3.up, v3Direction);
+
+        // Debug.Log($"sineDirection: {sineDirection}");
     }
 
     void FixedUpdate()

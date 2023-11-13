@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private Rigidbody rigidBody;
+    private Rigidbody2D rigidBody;
 
     public int hp;
     public int bombs;
@@ -51,7 +51,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
-        rigidBody = transform.GetComponent<Rigidbody>();
+        rigidBody = transform.GetComponent<Rigidbody2D>();
         nextFire = 5 / fireRate;
         targetPlayer = GetClosestPlayer();
         for(int i = 0; i < constantAttacks.Count; i++)

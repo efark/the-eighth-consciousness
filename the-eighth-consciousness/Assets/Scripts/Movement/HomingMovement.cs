@@ -7,8 +7,9 @@ public class HomingMovement : AbstractMovement
     /* Inherited from Abstract class:
         public float speed;
         public Vector2 direction;
-        private Rigidbody rb;
+        public Rigidbody rb;
     */
+
     [Header("Homing parameters")]
     public GameObject target;
     public float homingDelay;

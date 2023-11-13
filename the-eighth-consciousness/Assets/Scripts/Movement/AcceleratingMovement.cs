@@ -7,8 +7,9 @@ public class AcceleratingMovement : AbstractMovement
     /* Inherited from Abstract class:
     public float speed;
     public Vector2 direction;
-    private Rigidbody rb;
+    public Rigidbody rb;
      */
+
     [Header("Acceleration parameters")]
     public float acceleration;
     public float minSpeed;
