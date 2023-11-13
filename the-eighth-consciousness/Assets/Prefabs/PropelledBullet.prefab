@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8515990756729836883}
   - component: {fileID: 8515990756729836882}
   - component: {fileID: 8515990756729836881}
-  - component: {fileID: 8515990756729836880}
   - component: {fileID: 6120974881670312940}
   m_Layer: 0
   m_Name: PropelledBullet
@@ -118,31 +117,6 @@ PolygonCollider2D:
       - {x: 0.43359375, y: -0.25}
       - {x: 0.43359375, y: 0.25}
       - {x: 0, y: 0.5}
---- !u!114 &8515990756729836880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8515990756729836895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ced7b23507a374bac95969c0f46f50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetType: 
-  player: 0
-  speed: 0
-  damage: 0
-  ttl: 0
-  direction: {x: 0, y: 0}
-  rb: {fileID: 0}
-  target: {fileID: 0}
-  homingDelay: 0
-  homingSpeed: 0
-  homingDuration: 0
-  force: 0
-  InitialForce: 0
 --- !u!50 &6120974881670312940
 Rigidbody2D:
   serializedVersion: 4
