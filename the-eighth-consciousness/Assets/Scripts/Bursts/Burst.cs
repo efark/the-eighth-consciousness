@@ -20,12 +20,7 @@ public class Burst : AbstractBurst
         fireRate = _fireRate;
     }
 
-    public override void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
-    {
-        StartCoroutine(fire(startPosition, rotation, direction));
-    }
-
-    public IEnumerator fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
+    public override IEnumerator Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
     {
         // Wait for offset
         yield return new WaitForSeconds(offset);

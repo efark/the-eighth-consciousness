@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float maxSpeed;
     public float minSpeed;
-    public float tiltAngle;
 
     [Header("Fire")]
     public int firePower = 1;
@@ -164,9 +163,10 @@ public class PlayerController : MonoBehaviour
                 nextFire = 1 / fireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    //spread.Create(transform.position, transform.rotation, Vector2.up);
+                    spread.Create(transform.position, transform.rotation, Vector2.up);
                     //StartCoroutine(burst.Fire(transform.position, transform.rotation, Vector2.up));
-                    burst.Fire(transform.position, transform.rotation, Vector2.up);
+                    //burst.Fire(transform.position, transform.rotation, Vector2.up);
+                    //Fire(transform.position, transform.rotation, Vector2.up);
                 }
             }
         }
