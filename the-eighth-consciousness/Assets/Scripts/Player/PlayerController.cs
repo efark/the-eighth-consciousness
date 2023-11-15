@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public SpreadSettings spreadSettings;
     public BurstSettings burstSettings;
     private AbstractSpread spread;
-    private AbstractShotBurst burst;
+    private AbstractBurst burst;
     private BulletFactory bFactory;
 
     public int playerHP
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
         //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90);
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1);
         spread = ExtensionMethods.InitSpread(bFactory, spreadSettings);
-        burst = new ShotBurst(burstSettings.offset, burstSettings.size, burstSettings.fireRate, spread);
+        burst = new Burst(spread, burstSettings.offset, burstSettings.size, burstSettings.fireRate);
     }
 
     void InitNewLife()
@@ -164,8 +164,9 @@ public class PlayerController : MonoBehaviour
                 nextFire = 1 / fireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    spread.Create(transform.position, transform.rotation, Vector2.up);
+                    //spread.Create(transform.position, transform.rotation, Vector2.up);
                     //StartCoroutine(burst.Fire(transform.position, transform.rotation, Vector2.up));
+                    burst.Fire(transform.position, transform.rotation, Vector2.up);
                 }
             }
         }

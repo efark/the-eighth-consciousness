@@ -5,22 +5,27 @@ using UnityEngine;
 /*
 The ShotBurst class controls the shots as they are fired in a quick sequence. 
 */
-public class ShotBurst: AbstractShotBurst
+public class Burst : AbstractBurst
 {
+    private AbstractSpread spread;
     private float offset;
     private int size;
     private float fireRate;
-    private AbstractSpread shotSpread;
 
-    public ShotBurst(float _offset, int _size, float _fireRate, AbstractSpread _shotSpread)
-    { 
+    public Burst(AbstractSpread _spread, float _offset, int _size, float _fireRate)
+    {
+        spread = _spread;
         offset = _offset;
         size = _size;
         fireRate = _fireRate;
-        shotSpread = _shotSpread;
     }
 
-    public override IEnumerator Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
+    public override void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
+    {
+        StartCoroutine(fire(startPosition, rotation, direction));
+    }
+
+    public IEnumerator fire(Vector3 startPosition, Quaternion rotation, Vector2 direction)
     {
         // Wait for offset
         yield return new WaitForSeconds(offset);
@@ -30,7 +35,7 @@ public class ShotBurst: AbstractShotBurst
             {
                 yield return new WaitForSeconds(fireRate);
             }
-            shotSpread.Create(startPosition, rotation, direction);
+            spread.Create(startPosition, rotation, direction);
         }
 
     }
