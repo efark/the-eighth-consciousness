@@ -520,8 +520,8 @@ GameObject:
   - component: {fileID: 1736071017}
   - component: {fileID: 1736071019}
   - component: {fileID: 1736071020}
-  - component: {fileID: 1736071021}
   - component: {fileID: 1736071022}
+  - component: {fileID: 1736071023}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -638,25 +638,6 @@ MonoBehaviour:
   constantAttacks:
   - {fileID: 11400000, guid: e9a49405777c0b742b5fa51bed7b168d, type: 2}
   oneShotAttacks: []
---- !u!114 &1736071021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736071016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42fcd6891c8fa4941ac6f285baf8f60b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.5
-  direction: {x: 0, y: -3}
-  isEnabled: 1
-  amplitude: 0.5
-  waveFrequency: 0.5
-  waveStartingSide: 1
-  waveSpeed: 2
 --- !u!50 &1736071022
 Rigidbody2D:
   serializedVersion: 4
@@ -678,6 +659,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1736071023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736071016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee1493c1b9989c42932d448e6dd89f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  direction: {x: 0, y: 0}
+  isEnabled: 1
+  radius: 3
+  spiralSpeed: 0
 --- !u!1 &2092622406
 GameObject:
   m_ObjectHideFlags: 0

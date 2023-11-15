@@ -29,7 +29,7 @@ public class SpiralMovement : AbstractMovement
             return;
         }
         angle += speed * Time.fixedDeltaTime;
-        radius *= spiralSpeed * Time.fixedDeltaTime;
+        radius += spiralSpeed * Time.fixedDeltaTime;
 
         Vector2 offset = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * radius;
         transform.position = centre + offset;
