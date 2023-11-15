@@ -27,10 +27,10 @@ public class MovementSettings : ScriptableObject
     public float amplitude;
     public float waveFrequency;
     public float waveSpeed;
+    public bool isAlternating;
+    public bool isRightSided;
 
     [Header("Spiral")]
     public float radius;
-
-    [Header("Additional")]
-    public AdditionalMovementSettings additionals;
+    public bool isDextrotary;
 }

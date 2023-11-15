@@ -7,7 +7,6 @@ public class SpreadSettings : ScriptableObject
 {
     [Header("Basic Parameters")]
     public SpreadTypes type;
-    public ObjectSettings objectSettings;
     public int groupSize;
 
     [Header("RadialSpread")]
@@ -16,5 +15,4 @@ public class SpreadSettings : ScriptableObject
     [Header("MultiSpread")]
     public int internalSpacing;
     public bool isAlternating;
-
 }

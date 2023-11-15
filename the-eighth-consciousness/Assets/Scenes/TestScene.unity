@@ -328,8 +328,8 @@ MonoBehaviour:
   ECDDuration: 4
   firepoints:
   - {fileID: 1707444641}
-  bulletSettings: {fileID: 11400000, guid: 8932a093f078cef408f242b2c322ef05, type: 2}
-  spreadSettings: {fileID: 11400000, guid: 9468219a5fba19540add58d2a148c548, type: 2}
+  bulletSettings: {fileID: 11400000, guid: 0b8b5ec7abacdc9409f77c947a7b6912, type: 2}
+  spreadSettings: {fileID: 11400000, guid: 13f249c5fb871d046ba846d9f7ae76cc, type: 2}
   burstSettings: {fileID: 11400000, guid: 527be36894ac2ce4e8f29a88fe4c3ce7, type: 2}
 --- !u!212 &1191811133
 SpriteRenderer:
@@ -630,6 +630,7 @@ MonoBehaviour:
   damage: 10
   fireRate: 5
   bulletSpeed: 10
+  bulletSettings: {fileID: 0}
   rotationSpeed: 1
   bullet: {fileID: 0}
   firepoints:

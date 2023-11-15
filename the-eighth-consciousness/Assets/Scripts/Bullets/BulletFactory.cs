@@ -5,18 +5,55 @@ using UnityEngine;
 public class BulletFactory : ObjectFactory
 {
     private BulletSettings settings;
+    private TargetTypes targetType;
+    private int playerId;
+    private bool alternate;
 
-    public BulletFactory(BulletSettings _settings)
+    public BulletFactory(BulletSettings _settings, TargetTypes _targetType, int _playerId)
     {
         settings = _settings;
+        targetType = _targetType;
+        playerId = _playerId;
+
+        alternate = settings.mvSettings.isRightSided;
+        
+    }
+
+    private GameObject FindTarget(Vector3 position)
+    {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(targetType.ToString());
+
+        if (targets.Length == 1)
+        {
+            return targets[0];
+        }
+        float min_distance = 0;
+        GameObject closest = null;
+        foreach (GameObject p in targets)
+        {
+            float dist = Vector3.Distance(position, p.transform.position);
+            if (min_distance == 0)
+            {
+                min_distance = dist;
+                closest = p;
+                continue;
+            }
+            if (dist < min_distance)
+            {
+                min_distance = dist;
+                closest = p;
+                continue;
+            }
+        }
+        return closest;
     }
 
     public GameObject Create(Vector3 position, Quaternion rotation, Vector2 direction)
     {
         GameObject bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
         BulletController bc = bullet.GetComponent<BulletController>();
-        bc.targetType = settings.targetType;
-        bc.playerId = settings.playerId;
+        bc.targetType = targetType;
+        bc.playerId = playerId;
         bc.damage = settings.damage;
         bc.ttl = settings.ttl;
 
@@ -24,59 +61,57 @@ public class BulletFactory : ObjectFactory
         {
             case MovementTypes.StraightMovement:
                 StraightMovement sm = bullet.GetComponent<StraightMovement>();
+                sm.isEnabled = true;
                 sm.speed = settings.mvSettings.speed;
                 sm.direction = direction;
                 return bullet;
             case MovementTypes.AcceleratingMovement:
                 AcceleratingMovement am = bullet.GetComponent<AcceleratingMovement>();
+                am.isEnabled = true;
                 am.speed = settings.mvSettings.speed;
                 am.direction = direction;
                 am.acceleration = settings.mvSettings.acceleration;
                 am.minSpeed = settings.mvSettings.minSpeed;
                 am.maxSpeed = settings.mvSettings.maxSpeed;
                 return bullet;
-            /* case MovementTypes.HomingBullet:
-                bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
-                HomingBulletController hbc = bullet.GetComponent<HomingBulletController>();
-                hbc.speed = settings.speed;
-                hbc.damage = settings.damage;
-                hbc.ttl = settings.ttl;
-                hbc.direction = direction;
-                hbc.target = additionals.target;
-                hbc.homingDelay = settings.homingDelay;
-                hbc.homingSpeed = settings.homingSpeed;
-                hbc.homingDuration = settings.homingDuration;
+            case MovementTypes.HomingMovement:
+                HomingMovement hm = bullet.GetComponent<HomingMovement>();
+                hm.isEnabled = true;
+                hm.speed = settings.mvSettings.speed;
+                hm.direction = direction;
+                hm.target = FindTarget(position);
+                hm.homingDelay = settings.mvSettings.homingDelay;
+                hm.homingSpeed = settings.mvSettings.homingSpeed;
+                hm.homingDuration = settings.mvSettings.homingDuration;
                 return bullet;
-            case MovementTypes.HomingPropelledBullet:
-                bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
-                HomingPropelledBulletController hpbc = bullet.GetComponent<HomingPropelledBulletController>();
-                hpbc.targetType = targetType;
-                hpbc.player = player;
-                hpbc.speed = settings.speed;
-                hpbc.damage = settings.damage;
-                hpbc.ttl = settings.ttl;
-                hpbc.direction = direction;
-                hpbc.target = additionals.target;
-                hpbc.homingDelay = settings.homingDelay;
-                hpbc.homingSpeed = settings.homingSpeed;
-                hpbc.homingDuration = settings.homingDuration;
-                hpbc.force = settings.force;
-                hpbc.initialForce = settings.initialForce;
+            case MovementTypes.PropelledHomingMovement:
+                PropelledHomingMovement phm = bullet.GetComponent<PropelledHomingMovement>();
+                phm.isEnabled = true;
+                phm.speed = settings.mvSettings.speed;
+                phm.direction = direction;
+                phm.target = FindTarget(position);
+                phm.homingDelay = settings.mvSettings.homingDelay;
+                phm.homingSpeed = settings.mvSettings.homingSpeed;
+                phm.homingDuration = settings.mvSettings.homingDuration;
+                phm.force = settings.mvSettings.force;
+                phm.initialForce = settings.mvSettings.initialForce;
                 return bullet;
-            case MovementTypes.WavyBullet:
+            case MovementTypes.WavyMovement:
                 bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
-                WavyBulletController wbc = bullet.GetComponent<WavyBulletController>();
-                wbc.targetType = targetType;
-                wbc.player = player;
-                wbc.speed = settings.speed;
-                wbc.damage = settings.damage;
-                wbc.ttl = settings.ttl;
-                wbc.direction = direction;
-                wbc.waveSpeed = settings.waveSpeed;
-                wbc.amplitude = settings.amplitude;
-                wbc.waveFrequency = settings.waveFrequency;
-                wbc.waveStartingSide = additionals.alternate ? 1 : -1;
-                return bullet;*/
+                WavyMovement wm = bullet.GetComponent<WavyMovement>();
+                wm.isEnabled = true;
+                wm.speed = settings.mvSettings.speed;
+                wm.direction = direction;
+                wm.waveSpeed = settings.mvSettings.waveSpeed;
+                wm.amplitude = settings.mvSettings.amplitude;
+                wm.waveFrequency = settings.mvSettings.waveFrequency;
+                wm.waveStartingSide = alternate ? 1 : -1;
+
+                if (settings.mvSettings.isAlternating)
+                {
+                    alternate = !alternate;
+                }
+                return bullet;
             default:
                 // code block
                 return null;

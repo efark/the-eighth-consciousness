@@ -2,16 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletSettings
-{
-    public MovementSettings mvSettings;
-    public GameObject prefab;
-    public TargetTypes targetType;
-    public int playerId;
-    public int damage;
-    public float ttl;
-}
-
 public class BulletController : MonoBehaviour
 {
     public TargetTypes targetType;

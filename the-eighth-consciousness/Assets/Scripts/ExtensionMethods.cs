@@ -151,7 +151,7 @@ public static class ExtensionMethods
                 spreadShot = new RadialSpread(factory, settings.groupSize, settings.spreadAngle);
                 return spreadShot;
             case SpreadTypes.MultiSpread:
-                spreadShot = new MultiSpread(factory, settings.groupSize, settings.internalSpacing, settings.isAlternating);
+                spreadShot = new MultiSpread(factory, settings.groupSize, settings.internalSpacing);
                 return spreadShot;
             default:
                 return null;

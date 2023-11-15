@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         isAlive = true;
 
         //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90);
-        bFactory = new BulletFactory(bulletSettings);
+        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1);
         spread = ExtensionMethods.InitSpread(bFactory, spreadSettings);
         burst = new ShotBurst(burstSettings.offset, burstSettings.size, burstSettings.fireRate, spread);
     }
@@ -164,8 +164,8 @@ public class PlayerController : MonoBehaviour
                 nextFire = 1 / fireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    //spread.Fire(transform.position, transform.rotation, Vector2.up);
-                    StartCoroutine(burst.Fire(transform.position, transform.rotation, Vector2.up));
+                    spread.Create(transform.position, transform.rotation, Vector2.up);
+                    //StartCoroutine(burst.Fire(transform.position, transform.rotation, Vector2.up));
                 }
             }
         }

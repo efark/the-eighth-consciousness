@@ -8,20 +8,13 @@ public class MultiSpread : AbstractSpread
 
     private int groupSize;
     private int internalSpacing;
-    private bool isAlternating;
-    private bool alternate;
     private Vector3 lateralDirection;
 
-    public MultiSpread(ObjectFactory _factory, int _groupSize, int _internalSpacing, bool _isAlternating)
+    public MultiSpread(ObjectFactory _factory, int _groupSize, int _internalSpacing)
     {
         this.factory= _factory;
         this.groupSize = _groupSize;
         this.internalSpacing = _internalSpacing;
-        this.isAlternating = _isAlternating;
-        if (isAlternating)
-        {
-            alternate = true;
-        }
     }
 
     public override void Create(Vector3 startPosition, Quaternion rotation, Vector2 direction)
@@ -35,11 +28,6 @@ public class MultiSpread : AbstractSpread
             itemPosition = new Vector3(itemPosition.x, itemPosition.y, 0);
             // Debug.Log($"bulletPosition: {bulletPosition}");
             spacing += internalSpacing;
-            if (isAlternating)
-            {
-                // additionals.alternate = alternate;
-                alternate = !alternate;
-            }
             factory.Create(itemPosition, rotation, direction);
         }
 
