@@ -2,22 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : AbstractBullet
+public class BulletController : MonoBehaviour
 {
-    /* Inherited from Abstract class:
-    public string targetType;
-    public int player;
-    public float speed;
+    public TargetTypes targetType;
+    public int playerId;
     public int damage;
     public float ttl;
-    private Rigidbody rb;
-    public Vector3 direction;
-     */
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Start()
     {
-        rb.velocity = direction * speed;
+        Destroy(gameObject, ttl);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (targetType == TargetTypes.Enemy && other.gameObject.tag.ToLower() == "enemy")
+        {
+            //other.transform.GetComponent<EnemyController>().AddHP(damage);
+            //Add points to player's score.
+            Destroy(gameObject);
+            return;
+        }
+        if (targetType == TargetTypes.Player && other.gameObject.tag.ToLower() == "player")
+        {
+            other.transform.GetComponent<PlayerController>().playerHP -= damage;
+            Destroy(gameObject);
+            return;
+        }
     }
 
 }

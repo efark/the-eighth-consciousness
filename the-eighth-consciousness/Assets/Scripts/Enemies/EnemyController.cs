@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private Rigidbody rigidBody;
+    private Rigidbody2D rigidBody;
 
     public int hp;
     public int bombs;
     public int damage;
     public float fireRate;
     public int bulletSpeed;
+    public BulletSettings bulletSettings;
 
     public float rotationSpeed = 1f;
     public GameObject bullet;
@@ -18,16 +19,16 @@ public class EnemyController : MonoBehaviour
     public List<Transform> firepoints = new List<Transform>();
 
     private float nextFire;
-    private string targetType = "Player";
+    private TargetTypes targetType;
 
     private GameObject targetPlayer;
 
     public List<AttackPattern> constantAttacks = new List<AttackPattern>();
     public List<AttackPattern> oneShotAttacks = new List<AttackPattern>();
-
+    /*
     private AttackPattern InitAttackPattern(AttackPattern ap)
     {
-        ap.shotSpread = ExtensionMethods.InitShotSpread(ap.spreadSettings, targetType, 0);
+        ap.shotSpread = ExtensionMethods.InitSpread(ap.spreadSettings, targetType, 0);
         ap.shotBurst = new ShotBurst(ap.burstSettings.offset, ap.burstSettings.size, ap.burstSettings.fireRate, ap.shotSpread);
         return ap;
     }
@@ -47,18 +48,18 @@ public class EnemyController : MonoBehaviour
     {
         StartCoroutine(constantFire(ap));
     }
-
+    */
     void Start()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
-        rigidBody = transform.GetComponent<Rigidbody>();
+        rigidBody = transform.GetComponent<Rigidbody2D>();
         nextFire = 5 / fireRate;
         targetPlayer = GetClosestPlayer();
-        for(int i = 0; i < constantAttacks.Count; i++)
+        /*for(int i = 0; i < constantAttacks.Count; i++)
         {
             constantAttacks[i] = InitAttackPattern(constantAttacks[i]);
             StartConstantFire(constantAttacks[i]);
-        }
+        }*/
     }
 
 

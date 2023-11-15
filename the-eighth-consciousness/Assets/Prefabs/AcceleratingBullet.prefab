@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5775011692779637961}
   - component: {fileID: 5775011692779637960}
   - component: {fileID: 5775011692779637967}
-  - component: {fileID: 5775011692779637966}
+  - component: {fileID: -7857529897065351941}
+  - component: {fileID: 7734869888746057497}
   m_Layer: 0
   m_Name: AcceleratingBullet
   m_TagString: Untagged
@@ -136,7 +137,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5775011692779637966
+--- !u!114 &-7857529897065351941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,16 +146,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 5775011692779637965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c77705ce3d3bba543900f41ac8968570, type: 3}
+  m_Script: {fileID: 11500000, guid: f7d45e2df48973c40b1fc3dc9f440d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetType: 
-  player: 0
   speed: 0
-  damage: 0
-  ttl: 0
   direction: {x: 0, y: 0}
-  rb: {fileID: 0}
+  isEnabled: 0
   acceleration: 0
   minSpeed: 0
   maxSpeed: 0
+--- !u!114 &7734869888746057497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775011692779637965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d2bfb4ff5e7db14da77f04e133951b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetType: 0
+  playerId: 0
+  damage: 0
+  ttl: 0

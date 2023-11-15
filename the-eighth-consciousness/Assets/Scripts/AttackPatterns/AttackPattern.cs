@@ -6,9 +6,8 @@ using UnityEngine;
 public class AttackPattern : ScriptableObject
 {
     [Header("Basic Parameters")]
-    public BulletSettings bulletSettings;
     public SpreadSettings spreadSettings;
-    public AbstractShotSpread shotSpread;
+    public AbstractSpread shotSpread;
     public BurstSettings burstSettings;
     public AbstractShotBurst shotBurst;
 
