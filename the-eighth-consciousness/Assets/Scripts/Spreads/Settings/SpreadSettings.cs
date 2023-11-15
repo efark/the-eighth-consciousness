@@ -6,15 +6,15 @@ using UnityEngine;
 public class SpreadSettings : ScriptableObject
 {
     [Header("Basic Parameters")]
-    public ShotSpreadTypes type;
-    public BulletSettings bulletSettings;
-    public int roundSize;
+    public SpreadTypes type;
+    public ObjectSettings objectSettings;
+    public int groupSize;
 
     [Header("RadialSpread")]
     public float spreadAngle;
 
-    [Header("MultiShotSpread")]
-    public int roundSpacing;
+    [Header("MultiSpread")]
+    public int internalSpacing;
     public bool isAlternating;
 
 }

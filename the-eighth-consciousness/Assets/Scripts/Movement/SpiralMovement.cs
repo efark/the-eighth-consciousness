@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircularMovement : AbstractMovement
+public class SpiralMovement : AbstractMovement
 {
     /* Inherited from Abstract class:
     public float speed;
     public Vector2 direction;
     public Rigidbody rb;
     */
-    [Header("Circle parameters")]
-    [Tooltip("How much the bullet deviates to the sides.")]
+    [Header("Spiral parameters")]
     public float radius = 1f;
+    public float spiralSpeed;
 
     private Vector2 centre;
     private float angle;
@@ -28,7 +28,8 @@ public class CircularMovement : AbstractMovement
         {
             return;
         }
-        angle += speed * Time.deltaTime;
+        angle += speed * Time.fixedDeltaTime;
+        radius *= spiralSpeed * Time.fixedDeltaTime;
 
         Vector2 offset = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * radius;
         transform.position = centre + offset;

@@ -50,8 +50,9 @@ public class PlayerController : MonoBehaviour
     public BulletSettings bulletSettings;
     public SpreadSettings spreadSettings;
     public BurstSettings burstSettings;
-    private AbstractShotSpread spread;
+    private AbstractSpread spread;
     private AbstractShotBurst burst;
+    private BulletFactory bFactory;
 
     public int playerHP
     {
@@ -81,7 +82,8 @@ public class PlayerController : MonoBehaviour
         isAlive = true;
 
         //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90);
-        spread = ExtensionMethods.InitShotSpread(spreadSettings, "Enemy", 1);
+        bFactory = new BulletFactory(bulletSettings);
+        spread = ExtensionMethods.InitSpread(bFactory, spreadSettings);
         burst = new ShotBurst(burstSettings.offset, burstSettings.size, burstSettings.fireRate, spread);
     }
 

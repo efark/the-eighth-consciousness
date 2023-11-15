@@ -10,9 +10,9 @@ public class ShotBurst: AbstractShotBurst
     private float offset;
     private int size;
     private float fireRate;
-    private AbstractShotSpread shotSpread;
+    private AbstractSpread shotSpread;
 
-    public ShotBurst(float _offset, int _size, float _fireRate, AbstractShotSpread _shotSpread)
+    public ShotBurst(float _offset, int _size, float _fireRate, AbstractSpread _shotSpread)
     { 
         offset = _offset;
         size = _size;
@@ -30,7 +30,7 @@ public class ShotBurst: AbstractShotBurst
             {
                 yield return new WaitForSeconds(fireRate);
             }
-            shotSpread.Fire(startPosition, rotation, direction, null);
+            shotSpread.Create(startPosition, rotation, direction);
         }
 
     }

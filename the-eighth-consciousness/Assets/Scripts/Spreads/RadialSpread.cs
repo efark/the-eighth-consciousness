@@ -2,45 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RadialSpread : AbstractShotSpread
+public class RadialSpread : AbstractSpread
 {
-    private BulletSettings bulletSettings;
+    private ObjectFactory factory;
 
-    private int roundSize;
+    private int groupSize;
     private float spreadAngle;
-    private string targetType;
-    private int playerId;
 
     private float radius = 1f;
     private float rotationStep;
 
-    public RadialSpread(BulletSettings _bulletSettings, string _targetType, int _playerId,
-        int _roundSize, float _spreadAngle)
+    public RadialSpread(ObjectFactory _factory, int _roundSize, float _spreadAngle)
     {
-        bulletSettings = _bulletSettings;
-        targetType = _targetType;
-        playerId = _playerId;
-        roundSize = _roundSize;
-        spreadAngle = _spreadAngle;
+        this.factory = _factory;
+        this.groupSize = _roundSize;
+        this.spreadAngle = _spreadAngle;
     }
 
-    public override void Fire(Vector3 startPosition, Quaternion rotation, Vector2 direction, AdditionalBulletSettings additionals)
+    public override void Create(Vector3 startPosition, Quaternion rotation, Vector2 direction)
     {
         /*---------------------------------------------------------------------------------------
         The following code was adapted from ivuecode's RadialBulletSpread repository in Github:
         https://github.com/ivuecode/RadialBulletSpread/blob/master/Assets/RadialBulletController.cs
         ---------------------------------------------------------------------------------------*/
 
-        float angleStep = spreadAngle / roundSize;
-        float angle = -(angleStep * Mathf.Floor(roundSize / 2));
+        float angleStep = spreadAngle / groupSize;
+        float angle = -(angleStep * Mathf.Floor(groupSize / 2));
         Vector3 eulerAngles = rotation.eulerAngles;
 
-
-        // Vector2 unitVector = new Vector2(0, 1);
-        // float directionAngle = Vector2.SignedAngle(unitVector, direction);
         float directionAngle = CalculateAngle(direction);
 
-        for (int i = 0; i < roundSize; i++)
+        for (int i = 0; i < groupSize; i++)
         {
             // Direction calculations.
             float projectileDirXPosition = startPosition.x + Mathf.Sin(((directionAngle + angle) * Mathf.PI) / 180) * radius;
@@ -50,11 +42,10 @@ public class RadialSpread : AbstractShotSpread
             Vector3 projectileVector = new Vector3(projectileDirXPosition, projectileDirYPosition, 0);
             Vector3 projectileMoveDirection = (projectileVector - startPosition).normalized;
             Vector2 projectileFinalDirection = new Vector2(projectileMoveDirection.x, projectileMoveDirection.y);
-            
+
             // Rotate the bullet.
             Quaternion newRotation = Quaternion.Euler(Vector3.back * (directionAngle + angle));
-            ExtensionMethods.Instantiate(
-                bulletSettings, targetType, playerId, startPosition, newRotation, projectileFinalDirection, additionals);
+            factory.Create(startPosition, newRotation, projectileFinalDirection);
 
             angle += angleStep;
         }

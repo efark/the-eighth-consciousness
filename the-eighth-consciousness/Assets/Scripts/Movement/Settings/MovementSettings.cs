@@ -28,6 +28,9 @@ public class MovementSettings : ScriptableObject
     public float waveFrequency;
     public float waveSpeed;
 
+    [Header("Spiral")]
+    public float radius;
+
     [Header("Additional")]
     public AdditionalMovementSettings additionals;
 }

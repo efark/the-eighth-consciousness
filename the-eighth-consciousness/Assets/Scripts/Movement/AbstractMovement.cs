@@ -8,7 +8,8 @@ public enum MovementTypes
     StraightMovement,
     HomingMovement,
     PropelledHomingMovement,
-    WavyMovement
+    WavyMovement,
+    SpiralMovement
 }
 
 
