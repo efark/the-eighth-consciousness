@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a566e9bd80919b44698cbfc7d8713671, type: 3}
-  m_Name: 4Shots
+  m_Script: {fileID: 11500000, guid: 78933467ed9132c469202bb57c788b52, type: 3}
+  m_Name: 3ShotBurst
   m_EditorClassIdentifier: 
   offset: 0
-  size: 4
-  fireRate: 0.5
+  size: 3
+  fireRate: 1

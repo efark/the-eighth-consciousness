@@ -7,9 +7,9 @@ public class AttackPattern : ScriptableObject
 {
     [Header("Basic Parameters")]
     public SpreadSettings spreadSettings;
-    public AbstractSpread shotSpread;
+    public AbstractSpread spread;
     public BurstSettings burstSettings;
-    public AbstractShotBurst shotBurst;
+    public AbstractBurst burst;
 
     public float cooldown;
     public int numberOfBursts;

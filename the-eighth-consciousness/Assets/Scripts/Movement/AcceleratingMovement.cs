@@ -19,7 +19,7 @@ public class AcceleratingMovement : AbstractMovement
     {
         if (isEnabled)
         {
-            speed = Helpers.Clamp(maxSpeed * acceleration * Time.fixedDeltaTime, minSpeed, maxSpeed);
+            speed = Helpers.Clamp(speed + acceleration * Time.fixedDeltaTime, minSpeed, maxSpeed);
             rb.velocity = direction * speed;
         }
     }

@@ -319,18 +319,17 @@ MonoBehaviour:
   speed: 7
   maxSpeed: 0
   minSpeed: 0
-  tiltAngle: 0
   firePower: 1
   maxFirePower: 5
   minFirePower: 1
-  fireRate: 10
+  fireRate: 0.5
   ECDCooldown: 10
   ECDDuration: 4
   firepoints:
   - {fileID: 1707444641}
   bulletSettings: {fileID: 11400000, guid: 0b8b5ec7abacdc9409f77c947a7b6912, type: 2}
   spreadSettings: {fileID: 11400000, guid: 13f249c5fb871d046ba846d9f7ae76cc, type: 2}
-  burstSettings: {fileID: 11400000, guid: 527be36894ac2ce4e8f29a88fe4c3ce7, type: 2}
+  burstSettings: {fileID: 11400000, guid: 49026993e6c99ef408f26b712d59da3f, type: 2}
 --- !u!212 &1191811133
 SpriteRenderer:
   m_ObjectHideFlags: 0
