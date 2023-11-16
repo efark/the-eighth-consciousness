@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4325948269747075800}
   - component: {fileID: 4325948269747075806}
   - component: {fileID: 4325948269747075804}
+  - component: {fileID: 8149767488211969924}
   m_Layer: 0
   m_Name: WavyBullet
   m_TagString: Untagged
@@ -123,3 +124,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &8149767488211969924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4325948269747075803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fcd6891c8fa4941ac6f285baf8f60b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  direction: {x: 0, y: 0}
+  isEnabled: 1
+  order: 0
+  amplitude: 1
+  waveFrequency: 2
+  waveStartingSide: 0
+  waveSpeed: 0

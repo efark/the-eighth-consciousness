@@ -2,65 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : AbstractEnemyController
 {
-    private Rigidbody2D rigidBody;
+    //private Rigidbody2D rigidBody;
 
-    public int hp;
-    public int bombs;
-    public int damage;
-    public float fireRate;
-    public int bulletSpeed;
-    public BulletSettings bulletSettings;
-
-    public float rotationSpeed = 1f;
+    public int hp = 100;
+    private TargetTypes targetType = TargetTypes.Player;
     private GameObject[] players = new GameObject[2];
-    public List<Transform> firepoints = new List<Transform>();
-
-    private float nextFire;
-    private TargetTypes targetType;
-
     private GameObject targetPlayer;
+    private bool isAlive = true;
 
-    public List<AttackPattern> constantAttacks = new List<AttackPattern>();
-    public List<AttackPattern> oneShotAttacks = new List<AttackPattern>();
-    /*
-    private AttackPattern InitAttackPattern(AttackPattern ap)
-    {
-        ap.shotSpread = ExtensionMethods.InitSpread(ap.spreadSettings, targetType, 0);
-        ap.shotBurst = new ShotBurst(ap.burstSettings.offset, ap.burstSettings.size, ap.burstSettings.fireRate, ap.shotSpread);
-        return ap;
-    }
+    public List<AttackPattern> attackPatterns = new List<AttackPattern>();
+    private int currentOrder = 0;
+    private int lastStarted = -1;
+    private int maxOrder = 0;
+    private int simultaneousOneShots = 0;
 
-    private IEnumerator constantFire(AttackPattern ap)
+    private IEnumerator fire(AttackPattern ap)
     {
-        while (true)
+        int count = 0;
+        while (ap.isActive)
         {
             Vector3 targetDirection = targetPlayer.transform.position - this.transform.position;
             //Debug.DrawRay(transform.position, targetDirection, Color.red, 10f);
-            StartCoroutine(ap.shotBurst.Fire(transform.position, Quaternion.identity, new Vector2(targetDirection.x, targetDirection.y)));
+            StartCoroutine(ap.burst.Fire(transform.position, Quaternion.identity, new Vector2(targetDirection.x, targetDirection.y)));
             yield return new WaitForSeconds(ap.cooldown);
+            if (!ap.isConstantAttack)
+            {
+                simultaneousOneShots++;
+                count++;
+                if (count >= ap.numberOfBursts)
+                {
+                    ap.isActive = false;
+                    ap.isRunning = false;
+                    simultaneousOneShots--;
+                    if (simultaneousOneShots == 0)
+                    {
+                        currentOrder++;
+                    }
+                }
+            }
         }
     }
 
-    private void StartConstantFire(AttackPattern ap)
+    private void StartFire(AttackPattern ap)
     {
-        StartCoroutine(constantFire(ap));
+        ap.isActive = true;
+        ap.isRunning = true;
+        StartCoroutine(fire(ap));
     }
-    */
-    void Start()
-    {
-        players = GameObject.FindGameObjectsWithTag("Player");
-        rigidBody = transform.GetComponent<Rigidbody2D>();
-        nextFire = 5 / fireRate;
-        targetPlayer = GetClosestPlayer();
-        /*for(int i = 0; i < constantAttacks.Count; i++)
-        {
-            constantAttacks[i] = InitAttackPattern(constantAttacks[i]);
-            StartConstantFire(constantAttacks[i]);
-        }*/
-    }
-
 
     private GameObject GetClosestPlayer()
     {
@@ -89,9 +79,48 @@ public class EnemyController : MonoBehaviour
         return closest;
     }
 
+    void Start()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
+        targetPlayer = GetClosestPlayer();
+        //rigidBody = transform.GetComponent<Rigidbody2D>();
+        //nextFire = 5 / fireRate;
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (isAlive)
+        {
+            foreach (AttackPattern ap in attackPatterns)
+            {
+                if (currentOrder > lastStarted)
+                {
+                    if (ap.order == currentOrder)
+                    {
+                        if (ap.isRunning)
+                        {
+                            continue;
+                        }
+
+                        ap.Init(targetType);
+                        StartFire(ap);
+                    }
+
+                }
+                if (ap.order > maxOrder)
+                { 
+                    maxOrder = ap.order;
+                }
+            }
+            lastStarted = currentOrder;
+        }
+        if (currentOrder > maxOrder)
+        {
+            currentOrder = 0;
+            lastStarted = -1;
+        }
+
     }
 }

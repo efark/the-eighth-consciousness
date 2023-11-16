@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f56765fafecfad54d824697aad0622ba, type: 3}
-  m_Name: TestAttackPattern
+  m_Name: NewAttackPattern
   m_EditorClassIdentifier: 
-  spreadSettings: {fileID: 11400000, guid: 13f249c5fb871d046ba846d9f7ae76cc, type: 2}
-  burstSettings: {fileID: 11400000, guid: 49026993e6c99ef408f26b712d59da3f, type: 2}
-  bulletSettings: {fileID: 11400000, guid: 0b8b5ec7abacdc9409f77c947a7b6912, type: 2}
-  cooldown: 5
-  numberOfBursts: 1
-  order: 1
+  spreadSettings: {fileID: 11400000, guid: 2ea58cf9464a77747b979c45e6914a81, type: 2}
+  burstSettings: {fileID: 11400000, guid: 67d133d4cad4b9844a8318b1c512ac4c, type: 2}
+  bulletSettings: {fileID: 11400000, guid: 0411b732bb9703648936bddc1fc7f4c6, type: 2}
+  cooldown: 4
+  numberOfBursts: 2
+  order: 0
   keepsAiming: 0
   isStaticAttack: 0
   isConstantAttack: 0
