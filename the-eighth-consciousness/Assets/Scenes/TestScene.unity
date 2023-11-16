@@ -305,17 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e5047f6edc51947aee67981c59adf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameController: {fileID: 2092622406}
-  playerPrefab: {fileID: 0}
-  startingPoint: {x: 0, y: 0, z: 0}
   bullet: {fileID: 5775011692779637965, guid: b4db0c8be70fd314ba844b50db330525, type: 3}
   bomb: {fileID: 0}
-  HP: 100
-  MaxHP: 100
-  MinHP: 0
-  lives: 3
-  continues: 3
-  bombs: 3
   speed: 7
   maxSpeed: 0
   minSpeed: 0
@@ -327,6 +318,7 @@ MonoBehaviour:
   ECDDuration: 4
   firepoints:
   - {fileID: 1707444641}
+  stats: {fileID: 11400000, guid: f4c4efdf39bfdb345935263987767223, type: 2}
   bulletSettings: {fileID: 11400000, guid: 0b8b5ec7abacdc9409f77c947a7b6912, type: 2}
   spreadSettings: {fileID: 11400000, guid: 13f249c5fb871d046ba846d9f7ae76cc, type: 2}
   burstSettings: {fileID: 11400000, guid: 49026993e6c99ef408f26b712d59da3f, type: 2}
@@ -685,6 +677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2092622407}
   - component: {fileID: 2092622408}
+  - component: {fileID: 2092622409}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -720,3 +713,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowMoScale: 0.5
+--- !u!114 &2092622409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092622406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb1790ae07fbb74bb75372ba4fc5c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statsPlayer1: {fileID: 11400000, guid: f4c4efdf39bfdb345935263987767223, type: 2}
+  statsPlayer2: {fileID: 11400000, guid: 027a7a414e30d70478efb8e66648e7b2, type: 2}
+  isActivePlayer1: 1
+  isActivePlayer2: 0

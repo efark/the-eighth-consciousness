@@ -25,7 +25,7 @@ public class BulletController : MonoBehaviour
         }
         if (targetType == TargetTypes.Player && other.gameObject.tag.ToLower() == "player")
         {
-            other.transform.GetComponent<PlayerController>().playerHP -= damage;
+            other.transform.GetComponent<PlayerController>().stats.UpdateHP(-damage);
             Destroy(gameObject);
             return;
         }

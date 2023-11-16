@@ -14,7 +14,6 @@ public class EnemyController : MonoBehaviour
     public BulletSettings bulletSettings;
 
     public float rotationSpeed = 1f;
-    public GameObject bullet;
     private GameObject[] players = new GameObject[2];
     public List<Transform> firepoints = new List<Transform>();
 
