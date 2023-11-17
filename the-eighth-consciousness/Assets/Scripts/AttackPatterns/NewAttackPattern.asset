@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: NewAttackPattern
   m_EditorClassIdentifier: 
   spreadSettings: {fileID: 11400000, guid: 2ea58cf9464a77747b979c45e6914a81, type: 2}
-  burstSettings: {fileID: 11400000, guid: 67d133d4cad4b9844a8318b1c512ac4c, type: 2}
   bulletSettings: {fileID: 11400000, guid: 0411b732bb9703648936bddc1fc7f4c6, type: 2}
+  burstOffset: 1
+  burstSize: 4
+  burstSpacing: 1
   cooldown: 4
   numberOfBursts: 2
   order: 0

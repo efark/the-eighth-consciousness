@@ -8,10 +8,14 @@ public class AttackPattern : ScriptableObject
     [Header("Basic Parameters")]
     public SpreadSettings spreadSettings;
     public AbstractSpread spread;
-    public BurstSettings burstSettings;
-    public AbstractBurst burst;
     public BulletSettings bulletSettings;
 
+    [Header("Burst Parameters")]
+    public float burstOffset;
+    public int burstSize;
+    public float burstSpacing;
+
+    [Header("Attack Parameters")]
     public float cooldown;
     public int numberOfBursts;
     public int order;
@@ -25,7 +29,7 @@ public class AttackPattern : ScriptableObject
     {
         BulletFactory bf = new BulletFactory(bulletSettings, targetType, 0);
         this.spread = ExtensionMethods.InitSpread(bf, spreadSettings);
-        this.burst = new Burst(this.spread, burstSettings.offset, burstSettings.size, burstSettings.fireRate);
+        //this.burst = new Burst(this.spread, burstSettings.offset, burstSettings.size, burstSettings.fireRate);
         //return ap;
     }
 }
