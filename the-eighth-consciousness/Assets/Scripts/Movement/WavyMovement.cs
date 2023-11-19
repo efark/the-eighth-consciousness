@@ -30,16 +30,22 @@ if number < 1 but > 0,  wave will stretch out (meaning it will take longer to re
     private Vector3 v3Direction;
     private Vector3 forwardDirection, sineDirection;
     private float forwardSpeed, forwardProgress, sineProgress;
+    private Vector3 crossDirection;
+    private float time;
 
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
 
         startPosition = this.transform.position;
-        v3Direction = new Vector3(direction.x, 0, direction.y);
-        sineDirection = Vector3.Cross(Vector3.up, v3Direction);
-
+        // v3Direction = new Vector3(direction.x, 0, direction.y);
+        // sineDirection = Vector3.Cross(Vector3.up, v3Direction);
+        crossDirection = new Vector3(direction.y, -direction.x, 0);
+        time = 0.0f;
         // Debug.Log($"sineDirection: {sineDirection}");
+        direction = direction.normalized;
+        crossDirection = new Vector2(direction.y, -direction.x); // A quick right angle for 2D
+        startPosition = transform.position;
     }
 
     void FixedUpdate()
@@ -48,13 +54,20 @@ if number < 1 but > 0,  wave will stretch out (meaning it will take longer to re
         {
             return;
         }
-        forwardProgress += speed * Time.fixedDeltaTime;
-        Vector3 position = startPosition + forwardProgress * new Vector3(v3Direction.x, v3Direction.z, 0);
+        //forwardProgress += speed * Time.fixedDeltaTime;
+        //Vector3 position = startPosition + forwardProgress * new Vector3(v3Direction.x, v3Direction.z, 0);
 
-        sineProgress += waveSpeed * Time.fixedDeltaTime;
-        position += sineDirection * Mathf.Sin(sineProgress * waveFrequency) * amplitude * waveStartingSide;
+        //sineProgress += waveSpeed * Time.fixedDeltaTime;
+        //position += sineDirection * Mathf.Sin(sineProgress * waveFrequency) * amplitude * waveStartingSide;
 
+        //Vector3 position = startPosition + (new Vector3(direction.x, direction.y, 0).normalized * speed * time);
+        //position += sineDirection * Mathf.Sin(time * waveFrequency) * amplitude * waveStartingSide;
+        //transform.position = position;
+
+        transform.position = startPosition + (new Vector3(direction.x, direction.y, 0) * speed * time);
+        transform.position += (crossDirection * Mathf.Sin(time * waveFrequency)) * amplitude * waveStartingSide;
+        time += Time.fixedDeltaTime;
         //Debug.Log($"{position}");
-        this.transform.position = position;
+        //this.transform.position = position;
     }
 }
