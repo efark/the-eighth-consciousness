@@ -16,12 +16,11 @@ MonoBehaviour:
   bulletSettings: {fileID: 11400000, guid: 0b8b5ec7abacdc9409f77c947a7b6912, type: 2}
   burstOffset: 0
   burstSize: 3
-  burstSpacing: 2
-  cooldown: 5
+  burstSpacing: 0.5
+  cooldown: 2
   numberOfBursts: 1
   order: 1
   keepsAiming: 0
   isStaticAttack: 0
   isConstantAttack: 0
   isActive: 0
-  isRunning: 0

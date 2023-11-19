@@ -19,18 +19,14 @@ public class EnemyController : AbstractEnemyController
 
     public IEnumerator Burst(AttackPattern ap, int index)
     {
-        Debug.Log("Here0!");
         // Wait for offset
         yield return new WaitForSeconds(ap.burstOffset);
         for (int i = 0; (ap.isConstantAttack || i < ap.numberOfBursts); i++)
         {
-            Debug.Log("Here1!");
             for (int j = 0; j < ap.burstSize; j++)
             {
-                Debug.Log("Here2!");
                 if (j > 0)
                 {
-                    Debug.Log("Here3!");
                     yield return new WaitForSeconds(ap.burstSpacing);
                 }
                 Vector3 targetDirection = targetPlayer.transform.position - this.transform.position;
@@ -42,19 +38,18 @@ public class EnemyController : AbstractEnemyController
         attackPatterns[index].UpdateIsRunning(false);
         if (simultaneousOneShots == 0)
         {
-            currentOrder++;
+            currentOrder = currentOrder + 1 > maxOrder ? 0 : currentOrder +1;
         }
     }
 
     private void StartFire(AttackPattern ap, int index)
     {
         ap.UpdateIsRunning(true);
-        StartCoroutine(Burst(ap, index));
-        Debug.Log("Here4!");
         if (!ap.isConstantAttack)
         {
             simultaneousOneShots++;
         }
+        StartCoroutine(Burst(ap, index));
     }
 
     private GameObject GetClosestPlayer()
@@ -97,11 +92,9 @@ public class EnemyController : AbstractEnemyController
             attackPatterns.Add(clone);
             if (ap.order > maxOrder)
             {
-                maxOrder = currentOrder;
+                maxOrder = ap.order;
             }
-            Debug.Log($"{clone}");
         }
-
     }
 
     void Update()
@@ -114,20 +107,13 @@ public class EnemyController : AbstractEnemyController
                 AttackPattern ap = attackPatterns[i];
                 if (ap.order == currentOrder)
                 {
-                    Debug.Log("Here99!");
                     if (ap.IsRunning)
                     {
                         continue;
                     }
                     StartFire(ap, i);
                 }
-
             }
         }
-        if (currentOrder > maxOrder)
-        {
-            currentOrder = 0;
-        }
-
     }
 }
