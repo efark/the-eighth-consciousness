@@ -617,9 +617,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  attackPatterns:
-  - {fileID: 11400000, guid: e9a49405777c0b742b5fa51bed7b168d, type: 2}
+  attackPatternsValues:
   - {fileID: 11400000, guid: 5af73d64a704df14096f26bea0091001, type: 2}
+  - {fileID: 11400000, guid: e9a49405777c0b742b5fa51bed7b168d, type: 2}
 --- !u!50 &1736071022
 Rigidbody2D:
   serializedVersion: 4

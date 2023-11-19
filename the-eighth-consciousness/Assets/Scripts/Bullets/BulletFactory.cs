@@ -97,7 +97,6 @@ public class BulletFactory : ObjectFactory
                 phm.initialForce = settings.mvSettings.initialForce;
                 return bullet;
             case MovementTypes.WavyMovement:
-                bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
                 WavyMovement wm = bullet.GetComponent<WavyMovement>();
                 wm.isEnabled = true;
                 wm.speed = settings.mvSettings.speed;

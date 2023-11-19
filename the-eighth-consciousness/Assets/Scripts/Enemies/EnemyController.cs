@@ -11,7 +11,8 @@ public class EnemyController : AbstractEnemyController
     private GameObject targetPlayer;
     private bool isAlive = true;
 
-    public List<AttackPattern> attackPatterns = new List<AttackPattern>();
+    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
+    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private int currentOrder = 0;
     private int maxOrder = 0;
     private int simultaneousOneShots = 0;
@@ -33,12 +34,12 @@ public class EnemyController : AbstractEnemyController
                     yield return new WaitForSeconds(ap.burstSpacing);
                 }
                 Vector3 targetDirection = targetPlayer.transform.position - this.transform.position;
-                ap.spread.Create(transform.position, transform.rotation, new Vector2(targetDirection.x, targetDirection.z));
+                ap.spread.Create(transform.position, transform.rotation, new Vector2(targetDirection.x, targetDirection.y));
             }
         }
         yield return new WaitForSeconds(ap.cooldown);
         simultaneousOneShots--;
-        attackPatterns[index].isRunning = false;
+        attackPatterns[index].UpdateIsRunning(false);
         if (simultaneousOneShots == 0)
         {
             currentOrder++;
@@ -47,7 +48,7 @@ public class EnemyController : AbstractEnemyController
 
     private void StartFire(AttackPattern ap, int index)
     {
-        ap.isRunning = true;
+        ap.UpdateIsRunning(true);
         StartCoroutine(Burst(ap, index));
         Debug.Log("Here4!");
         if (!ap.isConstantAttack)
@@ -88,9 +89,21 @@ public class EnemyController : AbstractEnemyController
         players = GameObject.FindGameObjectsWithTag("Player");
         targetPlayer = GetClosestPlayer();
 
+        for (int i = 0; i < attackPatternsValues.Count; i++)
+        {
+            AttackPattern ap = attackPatternsValues[i];
+            AttackPattern clone = Instantiate(ap);
+            clone.Init(targetType);
+            attackPatterns.Add(clone);
+            if (ap.order > maxOrder)
+            {
+                maxOrder = currentOrder;
+            }
+            Debug.Log($"{clone}");
+        }
+
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -102,18 +115,13 @@ public class EnemyController : AbstractEnemyController
                 if (ap.order == currentOrder)
                 {
                     Debug.Log("Here99!");
-                    if (ap.isRunning)
+                    if (ap.IsRunning)
                     {
                         continue;
                     }
-                    ap.Init(targetType);
                     StartFire(ap, i);
                 }
 
-                if (ap.order > maxOrder)
-                { 
-                    maxOrder = currentOrder;
-                }
             }
         }
         if (currentOrder > maxOrder)

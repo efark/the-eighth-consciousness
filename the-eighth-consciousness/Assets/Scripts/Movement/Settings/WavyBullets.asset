@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed5d89bb97b75e49ab9b4c788f7d2e2, type: 3}
   m_Name: WavyBullets
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 2
   type: 4
   acceleration: 0
   minSpeed: 0
@@ -22,9 +22,9 @@ MonoBehaviour:
   homingDuration: 0
   force: 0
   initialForce: 0
-  amplitude: 2
-  waveFrequency: 1
-  waveSpeed: 3
+  amplitude: 0.25
+  waveFrequency: 10
+  waveSpeed: 1
   isAlternating: 1
   isRightSided: 0
   radius: 0

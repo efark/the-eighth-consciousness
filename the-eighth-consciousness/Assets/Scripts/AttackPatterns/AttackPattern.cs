@@ -23,13 +23,16 @@ public class AttackPattern : ScriptableObject
     public bool isStaticAttack;
     public bool isConstantAttack;
     public bool isActive = false;
-    public bool isRunning = false;
+    private bool isRunning = false;
+    public bool IsRunning => isRunning;
+    public void UpdateIsRunning(bool value) {
+        isRunning = value;
+    }
+
 
     public void Init(TargetTypes targetType)
     {
         BulletFactory bf = new BulletFactory(bulletSettings, targetType, 0);
         this.spread = ExtensionMethods.InitSpread(bf, spreadSettings);
-        //this.burst = new Burst(this.spread, burstSettings.offset, burstSettings.size, burstSettings.fireRate);
-        //return ap;
     }
 }

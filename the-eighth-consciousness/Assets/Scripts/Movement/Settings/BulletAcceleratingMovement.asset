@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed5d89bb97b75e49ab9b4c788f7d2e2, type: 3}
   m_Name: BulletAcceleratingMovement
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 4
   type: 0
   acceleration: 3
   minSpeed: 0
