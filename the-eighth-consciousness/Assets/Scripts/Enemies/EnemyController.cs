@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyController : AbstractEnemyController
 {
-
-    public int hp = 100;
     private TargetTypes targetType = TargetTypes.Player;
     private GameObject[] players = new GameObject[2];
     private GameObject targetPlayer;
@@ -16,6 +14,7 @@ public class EnemyController : AbstractEnemyController
     private int currentOrder = 0;
     private int maxOrder = 0;
     private int simultaneousOneShots = 0;
+
 
     public IEnumerator Burst(AttackPattern ap, int index)
     {
@@ -81,6 +80,7 @@ public class EnemyController : AbstractEnemyController
 
     void Start()
     {
+        hp = 100;
         players = GameObject.FindGameObjectsWithTag("Player");
         targetPlayer = GetClosestPlayer();
 
@@ -99,6 +99,7 @@ public class EnemyController : AbstractEnemyController
 
     void Update()
     {
+        Debug.Log($"HP: {HP}");
 
         if (isAlive)
         {

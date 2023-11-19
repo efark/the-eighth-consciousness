@@ -10,9 +10,8 @@ public class PlayerController : MonoBehaviour
     public GameObject bomb;
 
     [Header("Movement")]
-    public float speed;
-    public float maxSpeed;
-    public float minSpeed;
+    public float speed = 12;
+    public float ECDSpeed = 16;
 
     [Header("Fire")]
     public int firePower = 1;
@@ -146,7 +145,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("ECD start!");
         ECDenabled = true;
         ECDready = false;
-        activeSpeed *= 1.25f;
+        activeSpeed = ECDSpeed;
         //gameController.transform.GetComponent<TimeController>().SlowMotionEffect(true);
         OnTriggerECD?.Invoke(true);
         StartCoroutine(endSlowMo(ECDDuration));
