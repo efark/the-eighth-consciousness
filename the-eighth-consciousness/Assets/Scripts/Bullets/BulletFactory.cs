@@ -111,6 +111,14 @@ public class BulletFactory : ObjectFactory
                     alternate = !alternate;
                 }
                 return bullet;
+            case MovementTypes.SpiralMovement:
+                SpiralMovement sp = bullet.GetComponent<SpiralMovement>();
+                sp.isEnabled = true;
+                //sp.speed = settings.mvSettings.speed;
+                sp.speed = settings.mvSettings.speed;
+                sp.spiralSpeed = settings.mvSettings.spiralSpeed;
+                sp.radius = settings.mvSettings.radius;
+                return bullet;
             default:
                 // code block
                 return null;

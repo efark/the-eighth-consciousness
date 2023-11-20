@@ -308,8 +308,7 @@ MonoBehaviour:
   bullet: {fileID: 5775011692779637965, guid: b4db0c8be70fd314ba844b50db330525, type: 3}
   bomb: {fileID: 0}
   speed: 7
-  maxSpeed: 0
-  minSpeed: 0
+  ECDSpeed: 16
   firePower: 1
   maxFirePower: 5
   minFirePower: 1
@@ -616,10 +615,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a8d640dd6f1bd84497a59d4fc7960eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
   attackPatternsValues:
   - {fileID: 11400000, guid: 5af73d64a704df14096f26bea0091001, type: 2}
   - {fileID: 11400000, guid: e9a49405777c0b742b5fa51bed7b168d, type: 2}
+  - {fileID: 11400000, guid: 2a2c6dd1bcd7a524899d03646b4c0b3f, type: 2}
 --- !u!50 &1736071022
 Rigidbody2D:
   serializedVersion: 4
