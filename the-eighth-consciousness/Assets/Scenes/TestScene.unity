@@ -616,9 +616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPatternsValues:
-  - {fileID: 11400000, guid: 5af73d64a704df14096f26bea0091001, type: 2}
-  - {fileID: 11400000, guid: e9a49405777c0b742b5fa51bed7b168d, type: 2}
   - {fileID: 11400000, guid: 2a2c6dd1bcd7a524899d03646b4c0b3f, type: 2}
+  - {fileID: 11400000, guid: e32643895dba142429604a4c244fb6ca, type: 2}
 --- !u!50 &1736071022
 Rigidbody2D:
   serializedVersion: 4
@@ -658,6 +657,7 @@ MonoBehaviour:
   order: 0
   radius: 3
   spiralSpeed: 0
+  center: {x: 0, y: 0}
 --- !u!1 &2092622406
 GameObject:
   m_ObjectHideFlags: 0

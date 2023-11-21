@@ -9,7 +9,8 @@ public enum MovementTypes
     HomingMovement,
     PropelledHomingMovement,
     WavyMovement,
-    SpiralMovement
+    SpiralMovement,
+    CircularMovement
 }
 
 

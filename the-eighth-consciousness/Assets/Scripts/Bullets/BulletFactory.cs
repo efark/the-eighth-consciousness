@@ -12,19 +12,17 @@ public class BulletFactory : ObjectFactory
 
     public BulletFactory(BulletSettings _settings, TargetTypes _targetType, int _playerId, float _offset)
     {
-        settings = _settings;
-        targetType = _targetType;
-        playerId = _playerId;
-        offset = _offset;
+        this.settings = _settings;
+        this.targetType = _targetType;
+        this.playerId = _playerId;
+        this.offset = _offset;
 
-        alternate = settings.mvSettings.isRightSided;
-        
+        this.alternate = settings.mvSettings.isRightSided;
     }
 
     private GameObject FindTarget(Vector3 position)
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag(targetType.ToString());
-
         if (targets.Length == 1)
         {
             return targets[0];
@@ -52,6 +50,7 @@ public class BulletFactory : ObjectFactory
 
     public GameObject Create(Vector3 position, Quaternion rotation, Vector2 direction)
     {
+        Vector2 center = new Vector2(direction.x, direction.y);
         position += new Vector3(direction.normalized.x, direction.normalized.y, 0) * offset;
         GameObject bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
         BulletController bc = bullet.GetComponent<BulletController>();
@@ -118,9 +117,19 @@ public class BulletFactory : ObjectFactory
                 SpiralMovement sp = bullet.GetComponent<SpiralMovement>();
                 sp.isEnabled = true;
                 sp.direction = direction;
+                sp.center = center;
                 sp.speed = settings.mvSettings.speed;
                 sp.spiralSpeed = settings.mvSettings.spiralSpeed;
                 sp.radius = settings.mvSettings.radius;
+                sp.Init();
+                return bullet;
+            case MovementTypes.CircularMovement:
+                CircularMovement cm = bullet.GetComponent<CircularMovement>();
+                cm.isEnabled = true;
+                cm.direction = direction;
+                cm.speed = settings.mvSettings.speed;
+                cm.rotationSpeed = settings.mvSettings.rotationSpeed;
+                cm.radius = settings.mvSettings.radius;
                 return bullet;
             default:
                 // code block

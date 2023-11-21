@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56765fafecfad54d824697aad0622ba, type: 3}
+  m_Name: Spiral
+  m_EditorClassIdentifier: 
+  spreadSettings: {fileID: 11400000, guid: 63ba785ca671e104aae4adc1471bcdba, type: 2}
+  bulletSettings: {fileID: 11400000, guid: bf1364dce0dbdf24b994bd62c73e9f57, type: 2}
+  burstOffset: 0
+  burstSize: 3
+  burstSpacing: 1
+  offset: 1
+  cooldown: 2
+  numberOfBursts: 4
+  order: 0
+  keepsAiming: 0
+  isStaticAttack: 0
+  isConstantAttack: 0
+  isActive: 0

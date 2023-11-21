@@ -33,4 +33,7 @@ public class MovementSettings : ScriptableObject
     [Header("Spiral")]
     public float radius;
     public float spiralSpeed;
+    
+    [Header("Circular")]
+    public float rotationSpeed;
 }

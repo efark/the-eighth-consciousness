@@ -29,10 +29,12 @@ public class AttackPattern : ScriptableObject
     public void UpdateIsRunning(bool value) {
         isRunning = value;
     }
+    public bool isOpposite = false;
 
 
     public void Init(TargetTypes targetType)
     {
+        Debug.Log($"targetType: {targetType.ToString()}");
         BulletFactory bf = new BulletFactory(bulletSettings, targetType, 0, offset);
         this.spread = ExtensionMethods.InitSpread(bf, spreadSettings);
     }

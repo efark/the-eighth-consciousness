@@ -12,15 +12,25 @@ public class SpiralMovement : AbstractMovement
     [Header("Spiral parameters")]
     public float radius = 1f;
     public float spiralSpeed;
-    private float T = 3f;
+    //private float T = 3f;
 
-    private Vector2 centre;
+    private Vector2 originalDirection;
+    public Vector2 center;
     private float angle;
 
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
-        centre = transform.position;
+        center = transform.position;
+        //originalDirection = direction.normalized;
+        //angle = Vector3.Angle(originalDirection, transform.forward);
+        //Debug.Log($"originalDirection: {originalDirection}");
+        //Debug.Log($"angle: {angle}");
+    }
+
+    public void Init()
+    {
+        angle = Vector2.Angle(direction, Vector2.up);
     }
 
     void FixedUpdate()
@@ -30,22 +40,14 @@ public class SpiralMovement : AbstractMovement
             return;
         }
 
+        
+        angle += speed * Time.fixedDeltaTime;
         radius += spiralSpeed * Time.fixedDeltaTime;
-        angle += speed * Time.fixedDeltaTime * 1.1455f;
 
         Vector2 offset = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * radius;
-        transform.position = centre + offset;
-
-        //direction = rotateVector2(direction.normalized, 10f);
-        //rb.velocity = direction * (speed * 1.2f);
-        //rb.rotation += 45f * Time.fixedDeltaTime;
-        //rb.MoveRotation(rb.rotation + spiralSpeed * Time.fixedDeltaTime);
+        transform.position = center + offset;        
+        
 
     }
 
-    Vector2 rotateVector2(Vector2 vec, float angle)
-    {
-        float newAngle = Mathf.Atan2(vec.y, vec.x) + angle * Mathf.Deg2Rad;
-        return new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle));
-    }
 }

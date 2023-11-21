@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : AbstractEnemyController
 {
-    private TargetTypes targetType = TargetTypes.Player;
+    private TargetTypes targetType;
     private GameObject[] players = new GameObject[2];
     private GameObject targetPlayer;
     private bool isAlive = true;
@@ -28,8 +28,13 @@ public class EnemyController : AbstractEnemyController
                 {
                     yield return new WaitForSeconds(ap.burstSpacing);
                 }
-                Vector3 targetDirection = targetPlayer.transform.position - this.transform.position;
-                ap.spread.Create(transform.position, transform.rotation, new Vector2(targetDirection.x, targetDirection.y));
+                Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+                Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
+                if (ap.isOpposite)
+                {
+                    targetDirection *= -1;
+                }
+                ap.spread.Create(transform.position, transform.rotation, targetDirection);
             }
         }
         yield return new WaitForSeconds(ap.cooldown);
@@ -81,7 +86,8 @@ public class EnemyController : AbstractEnemyController
     void Start()
     {
         hp = 100;
-        players = GameObject.FindGameObjectsWithTag("Player");
+        targetType = TargetTypes.Player;
+        players = GameObject.FindGameObjectsWithTag(targetType.ToString());
         targetPlayer = GetClosestPlayer();
 
         for (int i = 0; i < attackPatternsValues.Count; i++)
