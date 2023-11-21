@@ -9,17 +9,23 @@ public class MultiSpread : AbstractSpread
     private int groupSize;
     private int internalSpacing;
     private Vector3 lateralDirection;
+    private bool isCentered;
 
-    public MultiSpread(ObjectFactory _factory, int _groupSize, int _internalSpacing)
+    public MultiSpread(ObjectFactory _factory, int _groupSize, int _internalSpacing, bool _isCentered)
     {
         this.factory= _factory;
         this.groupSize = _groupSize;
         this.internalSpacing = _internalSpacing;
+        this.isCentered = _isCentered;
     }
 
     public override void Create(Vector3 startPosition, Quaternion rotation, Vector2 direction)
     {
-        float spacing = -(internalSpacing * Mathf.Floor(groupSize / 2));
+        float spacing = 0;
+        if (isCentered)
+        {
+            spacing = -(internalSpacing * Mathf.Floor(groupSize / 2));
+        }
         lateralDirection = new Vector3(direction.y, -direction.x, 0);
 
         for (int i = 0; i < groupSize; i++)

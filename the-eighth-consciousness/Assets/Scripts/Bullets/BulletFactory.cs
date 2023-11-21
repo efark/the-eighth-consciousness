@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class BulletFactory : ObjectFactory
 {
+    private float offset;
     private BulletSettings settings;
     private TargetTypes targetType;
     private int playerId;
     private bool alternate;
 
-    public BulletFactory(BulletSettings _settings, TargetTypes _targetType, int _playerId)
+    public BulletFactory(BulletSettings _settings, TargetTypes _targetType, int _playerId, float _offset)
     {
         settings = _settings;
         targetType = _targetType;
         playerId = _playerId;
+        offset = _offset;
 
         alternate = settings.mvSettings.isRightSided;
         
@@ -50,6 +52,7 @@ public class BulletFactory : ObjectFactory
 
     public GameObject Create(Vector3 position, Quaternion rotation, Vector2 direction)
     {
+        position += new Vector3(direction.normalized.x, direction.normalized.y, 0) * offset;
         GameObject bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
         BulletController bc = bullet.GetComponent<BulletController>();
         bc.targetType = targetType;
@@ -114,7 +117,7 @@ public class BulletFactory : ObjectFactory
             case MovementTypes.SpiralMovement:
                 SpiralMovement sp = bullet.GetComponent<SpiralMovement>();
                 sp.isEnabled = true;
-                //sp.speed = settings.mvSettings.speed;
+                sp.direction = direction;
                 sp.speed = settings.mvSettings.speed;
                 sp.spiralSpeed = settings.mvSettings.spiralSpeed;
                 sp.radius = settings.mvSettings.radius;

@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         ECDenabled = false;
 
         //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90);
-        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1);
+        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f);
         spread = ExtensionMethods.InitSpread(bFactory, spreadSettings);
         burst = new Burst(spread, burstSettings.offset, burstSettings.size, burstSettings.fireRate);
     }

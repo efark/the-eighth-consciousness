@@ -15,4 +15,5 @@ public class SpreadSettings : ScriptableObject
     [Header("MultiSpread")]
     public int internalSpacing;
     public bool isAlternating;
+    public bool isCentered;
 }

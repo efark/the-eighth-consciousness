@@ -28,4 +28,4 @@ MonoBehaviour:
   isAlternating: 0
   isRightSided: 0
   radius: 1
-  spiralSpeed: 4
+  spiralSpeed: 3
