@@ -48,6 +48,10 @@ public class PropelledHomingMovement : AbstractMovement
 
         if (isHoming)
         {
+            if (target == null)
+            {
+                return;
+            }
             homingAccumTime += Time.fixedDeltaTime;
             if (homingAccumTime >= homingDuration)
             {

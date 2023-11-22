@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     public void Death(int playerId)
     {
+        PlayerStats.OnPlayerDeath -= Death;
         // Trigger some sound.
         // Trigger visual effect.
         // Update some values in state.
