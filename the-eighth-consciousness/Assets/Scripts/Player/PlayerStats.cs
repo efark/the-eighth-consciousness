@@ -43,8 +43,8 @@ public class PlayerStats : ScriptableObject
         currentLives = _lives;
         currentBombs = _bombs;
         currentFirePower = _firePower;
-
     }
+
     public void UpdateHP(int summand)
     {
         currentHP = Mathf.Clamp(currentHP + summand, _minHP, _maxHP);
@@ -54,12 +54,19 @@ public class PlayerStats : ScriptableObject
             if (currentLives == 0)
             {
                 isActive = false;
+                OnPlayerDeath?.Invoke(playerId);
                 OnGameOver?.Invoke(playerId);
                 return;
             }
             --currentLives;
             OnPlayerDeath?.Invoke(playerId);
         }
+    }
+
+    public void SetFullHP()
+    {
+        currentHP = _maxHP;
+        OnPlayerHPChange?.Invoke(playerId);
     }
 
     public void UpdateLives(int summand)

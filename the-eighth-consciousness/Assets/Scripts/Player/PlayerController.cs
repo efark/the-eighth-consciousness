@@ -35,9 +35,7 @@ public class PlayerController : MonoBehaviour
 
     public BulletSettings bulletSettings;
     public SpreadSettings spreadSettings;
-    public BurstSettings burstSettings;
     private AbstractSpread spread;
-    private AbstractBurst burst;
     private BulletFactory bFactory;
 
     public static event Action<bool> OnTriggerECD;
@@ -52,10 +50,18 @@ public class PlayerController : MonoBehaviour
         ECDready = true;
         ECDenabled = false;
 
-        //spread = new RadialSpread(bulletSettings, "Enemy", 1, 3, 90);
+        PlayerStats.OnPlayerDeath += Death;
+
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f);
         spread = ExtensionMethods.InitSpread(bFactory, spreadSettings);
-        burst = new Burst(spread, burstSettings.offset, burstSettings.size, burstSettings.fireRate);
+    }
+
+    public void Death(int playerId)
+    {
+        // Trigger some sound.
+        // Trigger visual effect.
+        // Update some values in state.
+        Destroy(gameObject);
     }
 
     // Code taken from Unity Reference: https://docs.unity3d.com/ScriptReference/GameObject.FindGameObjectsWithTag.html

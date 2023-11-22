@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
     public bool isActivePlayer2;
     public GameObject playerPrefab1;
     public GameObject playerPrefab2;
+    public Vector3 InitialPosition1;
+    public Vector3 InitialPosition2;
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +37,20 @@ public class GameController : MonoBehaviour
     }
 
     public void Respawn(int playerId)
-    { 
-        // Instantiate prefab.
-        // Get PlayerController component.
-        // Assign playerStats.
+    {
+        if (playerId == 1)
+        {
+            if (statsPlayer1.CurrentLives > 0)
+            {
+                // Instantiate prefab.
+                GameObject pgo = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
+                // Get PlayerController component.
+                PlayerController pc = pgo.GetComponent<PlayerController>();
+                // Assign playerStats.
+                statsPlayer1.SetFullHP();
+            }
+
+        }
     }
 
     public void GameOver(int playerId)
@@ -62,7 +74,8 @@ public class GameController : MonoBehaviour
     {
         if (playerId == 1)
         {
-            statsText1.text = $"HP: {statsPlayer1.CurrentHP}";
+            statsText1.text = $"HP: {statsPlayer1.CurrentHP}\n";
+            statsText1.text += $"Lives: {statsPlayer1.CurrentLives}";
         }
         if (playerId == 2)
         {
