@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPatternsValues:
-  - {fileID: 11400000, guid: 2a2c6dd1bcd7a524899d03646b4c0b3f, type: 2}
+  - {fileID: 11400000, guid: 67f5f2c1c79f5b24a8fc0e339dd41358, type: 2}
   - {fileID: 11400000, guid: e32643895dba142429604a4c244fb6ca, type: 2}
 --- !u!50 &1736071022
 Rigidbody2D:

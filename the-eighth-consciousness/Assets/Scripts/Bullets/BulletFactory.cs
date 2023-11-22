@@ -129,7 +129,7 @@ public class BulletFactory : ObjectFactory
                 cm.direction = direction;
                 cm.speed = settings.mvSettings.speed;
                 cm.rotationSpeed = settings.mvSettings.rotationSpeed;
-                cm.radius = settings.mvSettings.radius;
+                //cm.radius = settings.mvSettings.radius;
                 return bullet;
             default:
                 // code block

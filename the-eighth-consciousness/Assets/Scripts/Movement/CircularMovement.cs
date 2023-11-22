@@ -10,7 +10,7 @@ public class CircularMovement : AbstractMovement
     public Rigidbody rb;
     */
     [Header("Circle parameters")]
-    public float radius = 1f;
+    //public float radius = 1f;
     public float rotationSpeed;
 
     //private Vector2 centre;
