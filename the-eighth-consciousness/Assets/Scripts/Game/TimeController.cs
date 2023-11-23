@@ -33,6 +33,8 @@ public class TimeController : MonoBehaviour
             tmpData.defaultPitch = audios[i].pitch;
             audioSources[i] = tmpData;
         }
+
+        PlayerController.OnTriggerECD += SlowMotionEffect;
     }
 
     public void SlowMotionEffect(bool newStatus)

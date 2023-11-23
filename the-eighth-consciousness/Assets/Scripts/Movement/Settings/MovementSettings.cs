@@ -32,5 +32,8 @@ public class MovementSettings : ScriptableObject
 
     [Header("Spiral")]
     public float radius;
-    public bool isDextrotary;
+    public float spiralSpeed;
+    
+    [Header("Circular")]
+    public float rotationSpeed;
 }

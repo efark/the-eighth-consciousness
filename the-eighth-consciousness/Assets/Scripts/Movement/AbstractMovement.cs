@@ -9,7 +9,8 @@ public enum MovementTypes
     HomingMovement,
     PropelledHomingMovement,
     WavyMovement,
-    SpiralMovement
+    SpiralMovement,
+    CircularMovement
 }
 
 
@@ -20,6 +21,7 @@ public class AbstractMovement : MonoBehaviour
     public Vector2 direction;
     public bool isEnabled = true;
     [System.NonSerialized] public Rigidbody2D rb;
+    public int order;
 
     public bool IsEnabled
     {

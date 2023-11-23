@@ -18,14 +18,18 @@ public class BulletController : MonoBehaviour
     {
         if (targetType == TargetTypes.Enemy && other.gameObject.tag.ToLower() == "enemy")
         {
-            //other.transform.GetComponent<EnemyController>().AddHP(damage);
+            other.transform.GetComponent<AbstractEnemyController>().HP = -damage;
             //Add points to player's score.
             Destroy(gameObject);
             return;
         }
         if (targetType == TargetTypes.Player && other.gameObject.tag.ToLower() == "player")
         {
-            other.transform.GetComponent<PlayerController>().playerHP -= damage;
+            if (other == null)
+            {
+                return;
+            }
+            other.transform.GetComponent<PlayerController>().stats.UpdateHP(-damage);
             Destroy(gameObject);
             return;
         }

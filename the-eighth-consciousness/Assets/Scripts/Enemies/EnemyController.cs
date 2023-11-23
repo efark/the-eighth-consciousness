@@ -1,67 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : AbstractEnemyController
 {
-    private Rigidbody2D rigidBody;
-
-    public int hp;
-    public int bombs;
-    public int damage;
-    public float fireRate;
-    public int bulletSpeed;
-    public BulletSettings bulletSettings;
-
-    public float rotationSpeed = 1f;
-    public GameObject bullet;
-    private GameObject[] players = new GameObject[2];
-    public List<Transform> firepoints = new List<Transform>();
-
-    private float nextFire;
     private TargetTypes targetType;
-
+    private GameObject[] players = new GameObject[2];
     private GameObject targetPlayer;
+    private bool isAlive = true;
 
-    public List<AttackPattern> constantAttacks = new List<AttackPattern>();
-    public List<AttackPattern> oneShotAttacks = new List<AttackPattern>();
-    /*
-    private AttackPattern InitAttackPattern(AttackPattern ap)
-    {
-        ap.shotSpread = ExtensionMethods.InitSpread(ap.spreadSettings, targetType, 0);
-        ap.shotBurst = new ShotBurst(ap.burstSettings.offset, ap.burstSettings.size, ap.burstSettings.fireRate, ap.shotSpread);
-        return ap;
-    }
+    public TMP_Text statsText;
+    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
+    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
+    private int currentOrder = 0;
+    private int maxOrder = 0;
+    private int simultaneousOneShots = 0;
 
-    private IEnumerator constantFire(AttackPattern ap)
+    public override int HP
     {
-        while (true)
-        {
-            Vector3 targetDirection = targetPlayer.transform.position - this.transform.position;
-            //Debug.DrawRay(transform.position, targetDirection, Color.red, 10f);
-            StartCoroutine(ap.shotBurst.Fire(transform.position, Quaternion.identity, new Vector2(targetDirection.x, targetDirection.y)));
-            yield return new WaitForSeconds(ap.cooldown);
+        get {
+            return hp;
+        }
+        set {
+            hp += value;
+            UpdateGUI();
         }
     }
 
-    private void StartConstantFire(AttackPattern ap)
+    public IEnumerator Burst(AttackPattern ap, int index)
     {
-        StartCoroutine(constantFire(ap));
-    }
-    */
-    void Start()
-    {
-        players = GameObject.FindGameObjectsWithTag("Player");
-        rigidBody = transform.GetComponent<Rigidbody2D>();
-        nextFire = 5 / fireRate;
+        players = GameObject.FindGameObjectsWithTag(targetType.ToString());
         targetPlayer = GetClosestPlayer();
-        /*for(int i = 0; i < constantAttacks.Count; i++)
+        // Wait for offset
+        yield return new WaitForSeconds(ap.burstOffset);
+        for (int i = 0; (ap.isConstantAttack || i < ap.numberOfBursts); i++)
         {
-            constantAttacks[i] = InitAttackPattern(constantAttacks[i]);
-            StartConstantFire(constantAttacks[i]);
-        }*/
+            for (int j = 0; j < ap.burstSize; j++)
+            {
+                if (j > 0)
+                {
+                    yield return new WaitForSeconds(ap.burstSpacing);
+                }
+                if (targetPlayer == null)
+                {
+                    continue;
+                }
+                Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+                Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
+                if (ap.isOpposite)
+                {
+                    targetDirection *= -1;
+                }
+                ap.spread.Create(transform.position, transform.rotation, targetDirection);
+            }
+        }
+        yield return new WaitForSeconds(ap.cooldown);
+        simultaneousOneShots--;
+        attackPatterns[index].UpdateIsRunning(false);
+        if (simultaneousOneShots == 0)
+        {
+            currentOrder = currentOrder + 1 > maxOrder ? 0 : currentOrder +1;
+        }
     }
 
+    private void StartFire(AttackPattern ap, int index)
+    {
+        ap.UpdateIsRunning(true);
+        if (!ap.isConstantAttack)
+        {
+            simultaneousOneShots++;
+        }
+        StartCoroutine(Burst(ap, index));
+    }
 
     private GameObject GetClosestPlayer()
     {
@@ -90,9 +101,53 @@ public class EnemyController : MonoBehaviour
         return closest;
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        hp = 500;
+        UpdateGUI();
+        targetType = TargetTypes.Player;
+
+        for (int i = 0; i < attackPatternsValues.Count; i++)
+        {
+            AttackPattern ap = attackPatternsValues[i];
+            AttackPattern clone = Instantiate(ap);
+            clone.Init(targetType);
+            attackPatterns.Add(clone);
+            if (ap.order > maxOrder)
+            {
+                maxOrder = ap.order;
+            }
+        }
+    }
+
     void Update()
     {
-        
+        //Debug.Log($"HP: {HP}");
+
+        if (isAlive)
+        {
+            for(int i = 0; i < attackPatterns.Count; i++)
+            {
+                AttackPattern ap = attackPatterns[i];
+                if (ap.order == currentOrder)
+                {
+                    if (ap.IsRunning)
+                    {
+                        continue;
+                    }
+                    StartFire(ap, i);
+                }
+            }
+        }
+    }
+
+    public void UpdateGUI()
+    {
+        if (hp <= 0)
+        {
+            statsText.text = "";
+            Destroy(gameObject);
+        }
+        statsText.text = $"Enemy HP: {hp}";
     }
 }
