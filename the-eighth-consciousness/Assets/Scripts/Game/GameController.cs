@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public TMP_Text statsText1;
     public TMP_Text statsText2;
+    public TMP_Text gameOverText;
     public PlayerStats statsPlayer1;
     public PlayerStats statsPlayer2;
     public bool isActivePlayer1;
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour
     {
         if (playerId == 1)
         {
-            if (statsPlayer1.CurrentLives > 0)
+            if (statsPlayer1.IsActive)
             {
                 // Instantiate prefab.
                 GameObject pgo = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
@@ -56,15 +57,21 @@ public class GameController : MonoBehaviour
     public void GameOver(int playerId)
     {
         if (playerId == 1)
-        { isActivePlayer1 = false; }
+        {
+            statsPlayer1.UpdateIsActive(false);
+            UpdatePlayerStats(1);
+        }
         if (playerId == 2)
-        { isActivePlayer2 = false; }
+        {
+            statsPlayer2.UpdateIsActive(false);
+            UpdatePlayerStats(2);
+        }
         FinishGame();
     }
 
     public void FinishGame()
     {
-        if (!isActivePlayer1 && !isActivePlayer2)
+        if (!statsPlayer1.IsActive && !statsPlayer2.IsActive)
         {
             Debug.Log("Game Over!");
         }
@@ -74,12 +81,23 @@ public class GameController : MonoBehaviour
     {
         if (playerId == 1)
         {
-            statsText1.text = $"HP: {statsPlayer1.CurrentHP}\n";
-            statsText1.text += $"Lives: {statsPlayer1.CurrentLives}";
+            if (statsPlayer1.IsActive)
+            {
+                statsText1.text = $"HP: {statsPlayer1.CurrentHP}\n";
+                statsText1.text += $"Lives: {statsPlayer1.CurrentLives}";
+                return;
+            }
+            statsText1.text = "Game Over";
         }
         if (playerId == 2)
         {
-            statsText2.text = $"HP: {statsPlayer1.CurrentHP}";
+            if (statsPlayer2.IsActive)
+            {
+                statsText2.text = $"HP: {statsPlayer2.CurrentHP}\n";
+                statsText2.text += $"Lives: {statsPlayer2.CurrentLives}";
+                return;
+            }
+            statsText2.text = "Game Over";
         }
     }
 }

@@ -18,6 +18,8 @@ public class EnemyController : AbstractEnemyController
 
     public IEnumerator Burst(AttackPattern ap, int index)
     {
+        players = GameObject.FindGameObjectsWithTag(targetType.ToString());
+        targetPlayer = GetClosestPlayer();
         // Wait for offset
         yield return new WaitForSeconds(ap.burstOffset);
         for (int i = 0; (ap.isConstantAttack || i < ap.numberOfBursts); i++)
@@ -91,8 +93,6 @@ public class EnemyController : AbstractEnemyController
     {
         hp = 100;
         targetType = TargetTypes.Player;
-        players = GameObject.FindGameObjectsWithTag(targetType.ToString());
-        targetPlayer = GetClosestPlayer();
 
         for (int i = 0; i < attackPatternsValues.Count; i++)
         {

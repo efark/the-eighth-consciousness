@@ -63,6 +63,11 @@ public class PlayerStats : ScriptableObject
         }
     }
 
+    public void UpdateIsActive(bool value)
+    {
+        isActive = false;
+    }
+
     public void SetFullHP()
     {
         currentHP = _maxHP;
