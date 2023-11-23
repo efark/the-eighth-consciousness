@@ -18,7 +18,7 @@ public class BulletController : MonoBehaviour
     {
         if (targetType == TargetTypes.Enemy && other.gameObject.tag.ToLower() == "enemy")
         {
-            other.transform.GetComponent<AbstractEnemyController>().HP -= damage;
+            other.transform.GetComponent<AbstractEnemyController>().HP = -damage;
             //Add points to player's score.
             Destroy(gameObject);
             return;

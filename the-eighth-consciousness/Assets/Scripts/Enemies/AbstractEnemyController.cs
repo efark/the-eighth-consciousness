@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbstractEnemyController : MonoBehaviour
+public abstract class AbstractEnemyController : MonoBehaviour
 {
     protected int hp;
-    public int HP
+    public abstract int HP
     {
-        get { return hp; }
-        set { hp = value; }
+        get;
+        set;
     }
 
     // Start is called before the first frame update

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyController : AbstractEnemyController
 {
@@ -9,12 +10,23 @@ public class EnemyController : AbstractEnemyController
     private GameObject targetPlayer;
     private bool isAlive = true;
 
+    public TMP_Text statsText;
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
     private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private int currentOrder = 0;
     private int maxOrder = 0;
     private int simultaneousOneShots = 0;
 
+    public override int HP
+    {
+        get {
+            return hp;
+        }
+        set {
+            hp += value;
+            UpdateGUI();
+        }
+    }
 
     public IEnumerator Burst(AttackPattern ap, int index)
     {
@@ -91,7 +103,8 @@ public class EnemyController : AbstractEnemyController
 
     void Start()
     {
-        hp = 100;
+        hp = 500;
+        UpdateGUI();
         targetType = TargetTypes.Player;
 
         for (int i = 0; i < attackPatternsValues.Count; i++)
@@ -109,7 +122,7 @@ public class EnemyController : AbstractEnemyController
 
     void Update()
     {
-        Debug.Log($"HP: {HP}");
+        //Debug.Log($"HP: {HP}");
 
         if (isAlive)
         {
@@ -126,5 +139,15 @@ public class EnemyController : AbstractEnemyController
                 }
             }
         }
+    }
+
+    public void UpdateGUI()
+    {
+        if (hp <= 0)
+        {
+            statsText.text = "";
+            Destroy(gameObject);
+        }
+        statsText.text = $"Enemy HP: {hp}";
     }
 }

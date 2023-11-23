@@ -763,6 +763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a8d640dd6f1bd84497a59d4fc7960eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsText: {fileID: 2105061573}
   attackPatternsValues:
   - {fileID: 11400000, guid: 67f5f2c1c79f5b24a8fc0e339dd41358, type: 2}
   - {fileID: 11400000, guid: e32643895dba142429604a4c244fb6ca, type: 2}
@@ -1004,8 +1005,6 @@ MonoBehaviour:
   gameOverText: {fileID: 1739521338}
   statsPlayer1: {fileID: 11400000, guid: f4c4efdf39bfdb345935263987767223, type: 2}
   statsPlayer2: {fileID: 11400000, guid: 027a7a414e30d70478efb8e66648e7b2, type: 2}
-  isActivePlayer1: 1
-  isActivePlayer2: 0
   playerPrefab1: {fileID: 3699922697332024804, guid: 72cb14296186c9a4aa8c12a94fe6eb21, type: 3}
   playerPrefab2: {fileID: 0}
   InitialPosition1: {x: -2, y: -6, z: 0}
@@ -1045,7 +1044,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 264, y: -196}
+  m_AnchoredPosition: {x: -61, y: 133}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2105061573

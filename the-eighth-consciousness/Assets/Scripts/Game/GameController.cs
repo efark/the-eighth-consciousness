@@ -11,8 +11,6 @@ public class GameController : MonoBehaviour
     public TMP_Text gameOverText;
     public PlayerStats statsPlayer1;
     public PlayerStats statsPlayer2;
-    public bool isActivePlayer1;
-    public bool isActivePlayer2;
     public GameObject playerPrefab1;
     public GameObject playerPrefab2;
     public Vector3 InitialPosition1;
@@ -28,7 +26,7 @@ public class GameController : MonoBehaviour
         statsPlayer1.Init();
 
         UpdatePlayerStats(1);
-        //UpdatePlayerStats(2);
+        UpdatePlayerStats(2);
     }
 
     // Update is called once per frame
@@ -73,7 +71,6 @@ public class GameController : MonoBehaviour
     {
         if (!statsPlayer1.IsActive && !statsPlayer2.IsActive)
         {
-            Debug.Log("Game Over!");
             gameOverText.text = "Game Over!";
         }
     }

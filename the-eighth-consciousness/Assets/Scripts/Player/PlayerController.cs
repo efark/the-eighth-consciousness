@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f);
         spread = ExtensionMethods.InitSpread(bFactory, spreadSettings);
+
+        Debug.Log($"bFactory: {bFactory}");
     }
 
     public void Death(int playerId)
