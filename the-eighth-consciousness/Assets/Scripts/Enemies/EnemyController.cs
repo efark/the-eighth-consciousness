@@ -30,11 +30,11 @@ public class EnemyController : AbstractEnemyController
                 {
                     yield return new WaitForSeconds(ap.burstSpacing);
                 }
-                Vector3 targetDir = new Vector3(0,0,0);
-                if (targetPlayer != null)
+                if (targetPlayer == null)
                 {
-                    targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
-                }                
+                    continue;
+                }
+                Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
                 Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
                 if (ap.isOpposite)
                 {

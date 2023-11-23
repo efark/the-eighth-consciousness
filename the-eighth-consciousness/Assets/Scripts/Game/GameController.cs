@@ -74,6 +74,7 @@ public class GameController : MonoBehaviour
         if (!statsPlayer1.IsActive && !statsPlayer2.IsActive)
         {
             Debug.Log("Game Over!");
+            gameOverText.text = "Game Over!";
         }
     }
 
