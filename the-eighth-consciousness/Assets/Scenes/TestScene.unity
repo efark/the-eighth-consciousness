@@ -767,6 +767,7 @@ MonoBehaviour:
   attackPatternsValues:
   - {fileID: 11400000, guid: 67f5f2c1c79f5b24a8fc0e339dd41358, type: 2}
   - {fileID: 11400000, guid: e32643895dba142429604a4c244fb6ca, type: 2}
+  - {fileID: 11400000, guid: acf053e7828a77d4a8acb1aaf8a068e1, type: 2}
 --- !u!50 &1736071022
 Rigidbody2D:
   serializedVersion: 4

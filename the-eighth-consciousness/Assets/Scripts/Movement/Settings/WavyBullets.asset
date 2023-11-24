@@ -22,10 +22,11 @@ MonoBehaviour:
   homingDuration: 0
   force: 0
   initialForce: 0
-  amplitude: 1
+  amplitude: 2
   waveFrequency: 8
   waveSpeed: 5
   isAlternating: 1
   isRightSided: 0
   radius: 0
-  isDextrotary: 0
+  spiralSpeed: 0
+  rotationSpeed: 0
