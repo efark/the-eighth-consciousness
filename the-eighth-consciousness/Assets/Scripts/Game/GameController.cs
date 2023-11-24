@@ -29,12 +29,6 @@ public class GameController : MonoBehaviour
         UpdatePlayerStats(2);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Respawn(int playerId)
     {
         if (playerId == 1)

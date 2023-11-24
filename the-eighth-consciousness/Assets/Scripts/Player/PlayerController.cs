@@ -121,9 +121,6 @@ public class PlayerController : MonoBehaviour
                 for (int i = 0; i < firepoints.Count; i++)
                 {
                     spread.Create(transform.position, transform.rotation, Vector2.up);
-                    //StartCoroutine(burst.Fire(transform.position, transform.rotation, Vector2.up));
-                    //burst.Fire(transform.position, transform.rotation, Vector2.up);
-                    //Fire(transform.position, transform.rotation, Vector2.up);
                 }
             }
         }
@@ -168,7 +165,6 @@ public class PlayerController : MonoBehaviour
         activeSpeed = speed;
         activeFireRate = fireRate;
         activeECDCooldown = ECDCooldown;
-        //gameController.transform.GetComponent<TimeController>().SlowMotionEffect(false);
         OnTriggerECD?.Invoke(false);
     }
 
