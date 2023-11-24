@@ -14,10 +14,9 @@ public class PlayerController : MonoBehaviour
     public float ECDSpeed = 16;
 
     [Header("Fire")]
-    public int firePower = 1;
-    public int maxFirePower = 5;
-    public int minFirePower = 1;
-    public float fireRate = 0.2f;
+    public float fireRate = 4f;
+    public float ECDFireRate = 6f;
+    private float activeFireRate;
     public float ECDCooldown = 10;
     public float ECDDuration = 4;
     public List<Transform> firepoints = new List<Transform>();
@@ -44,7 +43,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rigidBody = transform.GetComponent<Rigidbody2D>();
-        nextFire = 1 / fireRate;
+        activeFireRate = fireRate;
+        nextFire = 1 / activeFireRate;
         activeECDCooldown = ECDCooldown;
         activeSpeed = speed;
         ECDready = true;
@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f);
         spread = ExtensionMethods.InitSpread(bFactory, spreadSettings);
 
-        Debug.Log($"bFactory: {bFactory}");
     }
 
     public void Death(int playerId)
@@ -118,7 +117,7 @@ public class PlayerController : MonoBehaviour
         {
             if (nextFire <= 0)
             {
-                nextFire = 1 / fireRate;
+                nextFire = 1 / activeFireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
                     spread.Create(transform.position, transform.rotation, Vector2.up);
@@ -155,7 +154,7 @@ public class PlayerController : MonoBehaviour
         ECDenabled = true;
         ECDready = false;
         activeSpeed = ECDSpeed;
-        //gameController.transform.GetComponent<TimeController>().SlowMotionEffect(true);
+        activeFireRate = ECDFireRate;
         OnTriggerECD?.Invoke(true);
         StartCoroutine(endSlowMo(ECDDuration));
     }
@@ -167,6 +166,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("ECD stop!");
         ECDenabled = false;
         activeSpeed = speed;
+        activeFireRate = fireRate;
         activeECDCooldown = ECDCooldown;
         //gameController.transform.GetComponent<TimeController>().SlowMotionEffect(false);
         OnTriggerECD?.Invoke(false);
