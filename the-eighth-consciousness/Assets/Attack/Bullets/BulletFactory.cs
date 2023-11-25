@@ -82,6 +82,9 @@ public class BulletFactory : ObjectFactory
                 hm.speed = settings.mvSettings.speed;
                 hm.direction = direction;
                 hm.target = FindTarget(position);
+                hm.acceleration = settings.mvSettings.acceleration;
+                hm.minSpeed = settings.mvSettings.minSpeed;
+                hm.maxSpeed = settings.mvSettings.maxSpeed;
                 hm.homingDelay = settings.mvSettings.homingDelay;
                 hm.homingSpeed = settings.mvSettings.homingSpeed;
                 hm.homingDuration = settings.mvSettings.homingDuration;

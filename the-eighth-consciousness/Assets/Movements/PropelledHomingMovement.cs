@@ -22,6 +22,7 @@ public class PropelledHomingMovement : AbstractMovement
     private float homingDelayAccumTime = 0f;
     private bool homingStarted = false;
     private bool isHoming = false;
+    private Vector3 lastDirection;
 
     void Start()
     {
@@ -57,9 +58,14 @@ public class PropelledHomingMovement : AbstractMovement
             {
                 isHoming = false;
             }
-            Vector3 targetDirection = target.transform.position - this.transform.position;
-            float singleStep = homingSpeed * Time.fixedDeltaTime;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+            Vector3 newDirection = lastDirection;
+            if (target != null)
+            {
+                Vector3 targetDirection = target.transform.position - this.transform.position;
+                float singleStep = homingSpeed * Time.fixedDeltaTime;
+                newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+                lastDirection = newDirection;
+            }
             // Debug.DrawRay(transform.position, newDirection, Color.red);
             transform.rotation = Quaternion.LookRotation(newDirection);
 

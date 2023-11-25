@@ -9,6 +9,10 @@ public class HomingMovement : AbstractMovement
         public Vector2 direction;
         public Rigidbody rb;
     */
+    [Header("Homing parameters")]
+    public float acceleration;
+    public float minSpeed;
+    public float maxSpeed;
 
     [Header("Homing parameters")]
     public GameObject target;
@@ -20,6 +24,7 @@ public class HomingMovement : AbstractMovement
     private float homingDelayAccumTime = 0f;
     private bool homingStarted = false;
     private bool isHoming = false;
+    private Vector3 lastDirection;
 
     void FixedUpdate()
     {
@@ -53,9 +58,18 @@ public class HomingMovement : AbstractMovement
             {
                 isHoming = false;
             }
-            Vector3 targetDirection = target.transform.position - this.transform.position;
-            float singleStep = homingSpeed * Time.fixedDeltaTime;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+            if (acceleration != 0)
+            {
+                speed = Mathf.Clamp(speed + acceleration * Time.fixedDeltaTime, minSpeed, maxSpeed);
+            }
+            Vector3 newDirection = lastDirection;
+            if (target != null)
+            {
+                Vector3 targetDirection = target.transform.position - this.transform.position;
+                float singleStep = homingSpeed * Time.fixedDeltaTime;
+                newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+                lastDirection = newDirection;
+            }
             Debug.DrawRay(transform.position, newDirection, Color.red);
             transform.rotation = Quaternion.LookRotation(newDirection);
             rb.velocity = newDirection * speed;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class EnemyController : AbstractEnemyController
+public class BaseEnemy : AbstractEnemyController
 {
     private TargetTypes targetType;
     private GameObject[] players = new GameObject[2];
