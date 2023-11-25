@@ -63,14 +63,15 @@ public class HomingMovement : AbstractMovement
                 speed = Mathf.Clamp(speed + acceleration * Time.fixedDeltaTime, minSpeed, maxSpeed);
             }
             Vector3 newDirection = lastDirection;
+            float singleStep = homingSpeed * Time.fixedDeltaTime;
             if (target != null)
             {
                 Vector3 targetDirection = target.transform.position - this.transform.position;
-                float singleStep = homingSpeed * Time.fixedDeltaTime;
                 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
                 lastDirection = newDirection;
             }
             Debug.DrawRay(transform.position, newDirection, Color.red);
+
             transform.rotation = Quaternion.LookRotation(Vector3.forward, newDirection);
             rb.velocity = newDirection * speed;
         }
