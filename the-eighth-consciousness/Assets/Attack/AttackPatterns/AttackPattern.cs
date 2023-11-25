@@ -32,7 +32,6 @@ public class AttackPattern : ScriptableObject
     }
     public bool isOpposite = false;
 
-
     public void Init(TargetTypes targetType)
     {
         BulletFactory bf = new BulletFactory(bulletSettings, targetType, 0, offset);

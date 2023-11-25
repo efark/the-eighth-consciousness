@@ -17,7 +17,7 @@ public class BulletFactory : ObjectFactory
         this.playerId = _playerId;
         this.offset = _offset;
 
-        this.alternate = settings.mvSettings.isRightSided;
+        this.alternate = this.settings.mvSettings.isRightSided;
     }
 
     private GameObject FindTarget(Vector3 position)
