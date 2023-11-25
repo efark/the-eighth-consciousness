@@ -67,7 +67,7 @@ public class PropelledHomingMovement : AbstractMovement
                 lastDirection = newDirection;
             }
             // Debug.DrawRay(transform.position, newDirection, Color.red);
-            transform.rotation = Quaternion.LookRotation(newDirection);
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, newDirection);
 
             rb.AddForce(newDirection.normalized * force);
         }

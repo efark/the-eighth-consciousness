@@ -18,7 +18,7 @@ MonoBehaviour:
   minSpeed: 5
   maxSpeed: 13
   homingDelay: 1
-  homingSpeed: 2
+  homingSpeed: 50
   homingDuration: 5
   force: 0
   initialForce: 0
