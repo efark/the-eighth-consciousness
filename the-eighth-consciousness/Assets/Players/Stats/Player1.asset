@@ -17,6 +17,6 @@ MonoBehaviour:
   _minHP: 0
   _lives: 3
   _bombs: 3
-  _firePower: 1
+  _firePower: 0
   _maxFirePower: 5
-  _minFirePower: 1
+  _minFirePower: 0
