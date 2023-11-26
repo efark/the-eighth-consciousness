@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject bullet;
+    //public GameObject bullet;
     public GameObject bomb;
 
     [Header("Movement")]
