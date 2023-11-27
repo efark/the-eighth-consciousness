@@ -9,15 +9,22 @@ public class BulletFactory : ObjectFactory
     private TargetTypes targetType;
     private int playerId;
     private bool alternate;
+    private float factor;
 
-    public BulletFactory(BulletSettings _settings, TargetTypes _targetType, int _playerId, float _offset)
+    public BulletFactory(BulletSettings _settings, TargetTypes _targetType, int _playerId, float _offset, float _factor)
     {
         this.settings = _settings;
         this.targetType = _targetType;
         this.playerId = _playerId;
         this.offset = _offset;
+        this.factor = _factor;
 
         this.alternate = this.settings.mvSettings.isRightSided;
+    }
+
+    public void UpdateFactor(float newFactor)
+    { 
+        this.factor = newFactor;
     }
 
     private GameObject FindTarget(Vector3 position)
@@ -50,13 +57,14 @@ public class BulletFactory : ObjectFactory
 
     public GameObject Create(Vector3 position, Quaternion rotation, Vector2 direction)
     {
+        Debug.Log($"factor: {factor}");
         Vector2 center = new Vector2(direction.x, direction.y);
         position += new Vector3(direction.normalized.x, direction.normalized.y, 0) * offset;
         GameObject bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
         BulletController bc = bullet.GetComponent<BulletController>();
         bc.targetType = targetType;
         bc.playerId = playerId;
-        bc.damage = settings.damage;
+        bc.damage = (int)(settings.damage * factor);
         bc.ttl = settings.ttl;
 
         switch (settings.mvSettings.type)

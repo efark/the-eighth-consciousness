@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject bullet;
     public GameObject bomb;
 
     [Header("Movement")]
@@ -52,9 +51,17 @@ public class PlayerController : MonoBehaviour
 
         PlayerStats.OnPlayerDeath += Death;
 
-        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f);
+        //Debug.Log($"stats.CurrentFirePower: {stats.CurrentFirePower}");
+
+        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
 
+    }
+
+    public void UpdateFirePower(int i)
+    {
+        stats.UpdateFirePower(i);
+        bFactory.UpdateFactor(1f + stats.CurrentFirePower * 0.2f);
     }
 
     public void Death(int playerId)
@@ -66,28 +73,6 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Code taken from Unity Reference: https://docs.unity3d.com/ScriptReference/GameObject.FindGameObjectsWithTag.html
-    public GameObject FindClosestEnemy()
-    {
-        GameObject[] gos;
-        gos = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject closest = null;
-        float distance = Mathf.Infinity;
-        Vector3 position = transform.position;
-        foreach (GameObject go in gos)
-        {
-            Vector3 diff = go.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
-            {
-                closest = go;
-                distance = curDistance;
-            }
-        }
-        return closest;
-    }
-    // End of quoted code.
-
     void FixedUpdate()
     {
         // Character movement.
@@ -96,7 +81,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movement = new Vector2(moveHorizontal, moveVertical);
         rigidBody.velocity = movement * activeSpeed;
-
 
     }
 

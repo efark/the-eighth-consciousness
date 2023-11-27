@@ -13,9 +13,9 @@ public class PlayerStats : ScriptableObject
     public int _bombs = 3;
 
     [Header("Fire")]
-    public int _firePower = 1;
+    public int _firePower = 0;
     public int _maxFirePower = 5;
-    public int _minFirePower = 1;
+    public int _minFirePower = 0;
 
     private int score;
     private bool isActive = false;
@@ -86,7 +86,12 @@ public class PlayerStats : ScriptableObject
 
     public void UpdateFirePower(int summand)
     {
-        currentFirePower += summand;
+        if (currentFirePower == _maxFirePower)
+        {
+            // Add points and return.
+            return;
+        }
+        currentFirePower = Mathf.Clamp(currentFirePower + summand, _minFirePower, _maxFirePower);
     }
 
     public void UpdateScore(int summand)

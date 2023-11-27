@@ -34,7 +34,7 @@ public class AttackPattern : ScriptableObject
 
     public void Init(TargetTypes targetType)
     {
-        BulletFactory bf = new BulletFactory(bulletSettings, targetType, 0, offset);
+        BulletFactory bf = new BulletFactory(bulletSettings, targetType, 0, offset, 1f);
         this.spread = AuxiliaryMethods.InitSpread(bf, spreadSettings);
     }
 }
