@@ -32,11 +32,9 @@ public class BaseEnemy : AbstractEnemyController
 
     public IEnumerator Burst(AttackPattern ap, int index)
     {
-        players = GameObject.FindGameObjectsWithTag(targetType.ToString());
-        targetPlayer = GetClosestPlayer();
         // Wait for offset
         yield return new WaitForSeconds(ap.burstOffset);
-        for (int i = 0; (ap.isConstantAttack || i < ap.numberOfBursts); i++)
+        for (int i = 0; i < ap.numberOfBursts; i++)
         {
             for (int j = 0; j < ap.burstSize; j++)
             {
@@ -44,6 +42,8 @@ public class BaseEnemy : AbstractEnemyController
                 {
                     yield return new WaitForSeconds(ap.burstSpacing);
                 }
+                players = GameObject.FindGameObjectsWithTag(targetType.ToString());
+                targetPlayer = GetClosestPlayer();
                 if (targetPlayer == null)
                 {
                     continue;
@@ -72,8 +72,47 @@ public class BaseEnemy : AbstractEnemyController
         if (!ap.isConstantAttack)
         {
             simultaneousOneShots++;
+            StartCoroutine(Burst(ap, index));
         }
-        StartCoroutine(Burst(ap, index));
+    }
+
+    private IEnumerator constantAttack(int index)
+    {
+        AttackPattern ap = attackPatterns[index];
+        ap.UpdateNextFire(-Time.deltaTime);
+        if (ap.NextFire <= 0)
+        {
+            ap.UpdateNextFire(ap.cooldown);
+            ap.UpdateIsRunning(true);
+
+            yield return new WaitForSeconds(ap.burstOffset);
+            for (int i = 0; i < ap.numberOfBursts; i++)
+            {
+                for (int j = 0; j < ap.burstSize; j++)
+                {
+                    if (j > 0)
+                    {
+                        yield return new WaitForSeconds(ap.burstSpacing);
+                    }
+                    players = GameObject.FindGameObjectsWithTag(targetType.ToString());
+                    targetPlayer = GetClosestPlayer();
+                    if (targetPlayer == null)
+                    {
+                        continue;
+                    }
+                    Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+                    Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
+                    if (ap.isOpposite)
+                    {
+                        targetDirection *= -1;
+                    }
+                    ap.spread.Create(transform.position, transform.rotation, targetDirection);
+                }
+            }
+            // yield return new WaitForSeconds(ap.cooldown);
+            ap.UpdateIsRunning(false);
+            attackPatterns[index] = ap;
+        }
     }
 
     private GameObject GetClosestPlayer()
@@ -124,8 +163,6 @@ public class BaseEnemy : AbstractEnemyController
 
     void Update()
     {
-        //Debug.Log($"HP: {HP}");
-
         if (isAlive)
         {
             for (int i = 0; i < attackPatterns.Count; i++)
@@ -133,6 +170,14 @@ public class BaseEnemy : AbstractEnemyController
                 AttackPattern ap = attackPatterns[i];
                 if (ap.order == currentOrder)
                 {
+                    if (ap.isConstantAttack)
+                    {
+                        if (ap.IsRunning)
+                        {
+                            continue;
+                        }
+                        StartCoroutine(constantAttack(i));
+                    }
                     if (ap.IsRunning)
                     {
                         continue;

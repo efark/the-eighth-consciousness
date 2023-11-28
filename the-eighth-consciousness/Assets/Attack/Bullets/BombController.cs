@@ -18,7 +18,6 @@ public class BombController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"Bomb - Collision - other: {other.tag.ToLower()}");
         if (other.tag.ToLower() == "enemybullet" || other.tag.ToLower() == "enemy")
         {
             Destroy(other.gameObject);

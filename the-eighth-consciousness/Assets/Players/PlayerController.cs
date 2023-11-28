@@ -53,8 +53,6 @@ public class PlayerController : MonoBehaviour
 
         PlayerStats.OnPlayerDeath += Death;
 
-        //Debug.Log($"stats.CurrentFirePower: {stats.CurrentFirePower}");
-
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
 
