@@ -13,6 +13,7 @@ public class BaseEnemy : AbstractEnemyController
     public TMP_Text statsText;
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
     private List<AttackPattern> attackPatterns = new List<AttackPattern>();
+    private List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
     private int currentOrder = 0;
     private int maxOrder = 0;
     private int simultaneousOneShots = 0;
@@ -32,11 +33,9 @@ public class BaseEnemy : AbstractEnemyController
 
     public IEnumerator Burst(AttackPattern ap, int index)
     {
-        players = GameObject.FindGameObjectsWithTag(targetType.ToString());
-        targetPlayer = GetClosestPlayer();
         // Wait for offset
         yield return new WaitForSeconds(ap.burstOffset);
-        for (int i = 0; (ap.isConstantAttack || i < ap.numberOfBursts); i++)
+        for (int i = 0; i < ap.numberOfBursts; i++)
         {
             for (int j = 0; j < ap.burstSize; j++)
             {
@@ -44,6 +43,8 @@ public class BaseEnemy : AbstractEnemyController
                 {
                     yield return new WaitForSeconds(ap.burstSpacing);
                 }
+                players = GameObject.FindGameObjectsWithTag(targetType.ToString());
+                targetPlayer = GetClosestPlayer();
                 if (targetPlayer == null)
                 {
                     continue;
@@ -72,8 +73,47 @@ public class BaseEnemy : AbstractEnemyController
         if (!ap.isConstantAttack)
         {
             simultaneousOneShots++;
+            StartCoroutine(Burst(ap, index));
         }
-        StartCoroutine(Burst(ap, index));
+    }
+
+    private IEnumerator constantAttack(int index)
+    {
+        AttackPattern ap = constantAttackPatterns[index];
+        ap.UpdateNextFire(-Time.deltaTime);
+        if (ap.NextFire <= 0)
+        {
+            ap.UpdateNextFire(ap.cooldown);
+            ap.UpdateIsRunning(true);
+
+            yield return new WaitForSeconds(ap.burstOffset);
+            for (int i = 0; i < ap.numberOfBursts; i++)
+            {
+                for (int j = 0; j < ap.burstSize; j++)
+                {
+                    if (j > 0)
+                    {
+                        yield return new WaitForSeconds(ap.burstSpacing);
+                    }
+                    players = GameObject.FindGameObjectsWithTag(targetType.ToString());
+                    targetPlayer = GetClosestPlayer();
+                    if (targetPlayer == null)
+                    {
+                        continue;
+                    }
+                    Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+                    Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
+                    if (ap.isOpposite)
+                    {
+                        targetDirection *= -1;
+                    }
+                    ap.spread.Create(transform.position, transform.rotation, targetDirection);
+                }
+            }
+            // yield return new WaitForSeconds(ap.cooldown);
+            ap.UpdateIsRunning(false);
+            constantAttackPatterns[index] = ap;
+        }
     }
 
     private GameObject GetClosestPlayer()
@@ -114,7 +154,15 @@ public class BaseEnemy : AbstractEnemyController
             AttackPattern ap = attackPatternsValues[i];
             AttackPattern clone = Instantiate(ap);
             clone.Init(targetType);
-            attackPatterns.Add(clone);
+            if (ap.isConstantAttack)
+            {
+                constantAttackPatterns.Add(clone);
+            }
+            if (!ap.isConstantAttack)
+            {
+                attackPatterns.Add(clone);
+            }
+
             if (ap.order > maxOrder)
             {
                 maxOrder = ap.order;
@@ -122,24 +170,37 @@ public class BaseEnemy : AbstractEnemyController
         }
     }
 
+    private void loopOneShotAttacks()
+    {
+        for (int i = 0; i < attackPatterns.Count; i++)
+        {
+            AttackPattern ap = attackPatterns[i];
+            if (ap.order == currentOrder)
+            {
+                if (ap.IsRunning)
+                {
+                    continue;
+                }
+                StartFire(ap, i);
+            }
+
+        }
+    }
+
+    private void loopConstantAttacks()
+    {
+        for (int i = 0; i < constantAttackPatterns.Count; i++)
+        {
+            StartCoroutine(constantAttack(i));
+        }
+    }
+
     void Update()
     {
-        //Debug.Log($"HP: {HP}");
-
         if (isAlive)
         {
-            for (int i = 0; i < attackPatterns.Count; i++)
-            {
-                AttackPattern ap = attackPatterns[i];
-                if (ap.order == currentOrder)
-                {
-                    if (ap.IsRunning)
-                    {
-                        continue;
-                    }
-                    StartFire(ap, i);
-                }
-            }
+            loopOneShotAttacks();
+            loopConstantAttacks();
         }
     }
 

@@ -158,8 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4739dcfcbea8bac488cb2bda7867a0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 0}
-  bomb: {fileID: 0}
+  bomb: {fileID: 137817258388388087, guid: df351a712de24614186608ecc5af6158, type: 3}
   speed: 12
   ECDSpeed: 16
   fireRate: 4

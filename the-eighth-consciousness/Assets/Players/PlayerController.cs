@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     public SpreadSettings spreadSettings;
     private AbstractSpread spread;
     private BulletFactory bFactory;
+    private float bombCooldown;
+    private bool bombIsActive;
 
     public static event Action<bool> OnTriggerECD;
 
@@ -50,8 +52,6 @@ public class PlayerController : MonoBehaviour
         ECDenabled = false;
 
         PlayerStats.OnPlayerDeath += Death;
-
-        //Debug.Log($"stats.CurrentFirePower: {stats.CurrentFirePower}");
 
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
@@ -88,7 +88,8 @@ public class PlayerController : MonoBehaviour
     {
         nextFire = Mathf.Max(nextFire - Time.deltaTime, 0);
         bool fireButton = Input.GetButton("Fire1");
-        bool slowMoButton = Input.GetButton("Fire3");
+        bool bombButton = Input.GetButtonDown("Fire2");
+        bool slowMoButton = Input.GetButtonDown("Fire3");
 
         // This should be modified later.
         players = GameObject.FindGameObjectsWithTag("Player");
@@ -108,7 +109,16 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
+        if (bombButton)
+        {
+            if (stats.CurrentBombs > 0 && !bombIsActive)
+            {
+                bombIsActive = true;
+                stats.UpdateBombs(-1);
+                Instantiate(bomb, transform.position, Quaternion.identity);
+                StartCoroutine(waitBombCooldown(bombCooldown));
+            }
+        }
         if (slowMoButton)
         {
             if (ECDready && !ECDenabled)
@@ -150,6 +160,12 @@ public class PlayerController : MonoBehaviour
         activeFireRate = fireRate;
         activeECDCooldown = ECDCooldown;
         OnTriggerECD?.Invoke(false);
+    }
+
+    private IEnumerator waitBombCooldown(float timeout)
+    {
+        yield return new WaitForSecondsRealtime(timeout);
+        bombIsActive = false;
     }
 
 }

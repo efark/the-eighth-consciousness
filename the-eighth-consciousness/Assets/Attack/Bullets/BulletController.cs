@@ -16,6 +16,7 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other == null)
         {
             return;
@@ -23,7 +24,7 @@ public class BulletController : MonoBehaviour
         if (targetType == TargetTypes.Enemy && other.gameObject.tag.ToLower() == "enemy")
         {
             other.transform.GetComponent<AbstractEnemyController>().HP = -damage;
-            //Add points to player's score.
+            // Add points to player's score.
             Destroy(gameObject);
             return;
         }

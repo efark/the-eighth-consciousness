@@ -57,10 +57,10 @@ public class BulletFactory : ObjectFactory
 
     public GameObject Create(Vector3 position, Quaternion rotation, Vector2 direction)
     {
-        Debug.Log($"factor: {factor}");
         Vector2 center = new Vector2(direction.x, direction.y);
         position += new Vector3(direction.normalized.x, direction.normalized.y, 0) * offset;
         GameObject bullet = GameObject.Instantiate(settings.prefab, position, rotation) as GameObject;
+        bullet.tag = targetType.ToString().ToLower() == "player" ? "EnemyBullet" : "PlayerBullet";
         BulletController bc = bullet.GetComponent<BulletController>();
         bc.targetType = targetType;
         bc.playerId = playerId;

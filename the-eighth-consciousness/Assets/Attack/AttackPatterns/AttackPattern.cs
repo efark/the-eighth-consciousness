@@ -24,17 +24,26 @@ public class AttackPattern : ScriptableObject
     public bool isStaticAttack;
     public bool isConstantAttack;
     public bool isActive = false;
+    private float nextFire;
     private bool isRunning = false;
     public bool IsRunning => isRunning;
+    public float NextFire => nextFire;
+
     public void UpdateIsRunning(bool value)
     {
         isRunning = value;
     }
     public bool isOpposite = false;
 
+    public void UpdateNextFire(float value)
+    {
+        nextFire += value;
+    }
+
     public void Init(TargetTypes targetType)
     {
         BulletFactory bf = new BulletFactory(bulletSettings, targetType, 0, offset, 1f);
         this.spread = AuxiliaryMethods.InitSpread(bf, spreadSettings);
+        nextFire = burstOffset;
     }
 }
