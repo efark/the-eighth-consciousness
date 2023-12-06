@@ -132,7 +132,6 @@ public class BulletFactory : ObjectFactory
                 sp.speed = settings.mvSettings.speed;
                 sp.spiralSpeed = settings.mvSettings.spiralSpeed;
                 sp.radius = settings.mvSettings.radius;
-                sp.Init();
                 return bullet;
             case MovementTypes.CircularMovement:
                 CircularMovement cm = bullet.GetComponent<CircularMovement>();

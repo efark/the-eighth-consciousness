@@ -26,12 +26,12 @@ public class SpiralMovement : AbstractMovement
         //angle = Vector3.Angle(originalDirection, transform.forward);
         //Debug.Log($"originalDirection: {originalDirection}");
         //Debug.Log($"angle: {angle}");
+        //angle = Vector2.Angle(direction, Vector2.up);
+        angle = GetAngleMeasure(direction, Vector2.right);
+        //Debug.Log($"angle: {angle}");
+        angle *= Mathf.Deg2Rad;
     }
 
-    public void Init()
-    {
-        angle = Vector2.Angle(direction, Vector2.up);
-    }
 
     void FixedUpdate()
     {
@@ -47,7 +47,16 @@ public class SpiralMovement : AbstractMovement
         Vector2 offset = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * radius;
         transform.position = center + offset;
 
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+    }
 
+    private static float GetAngleMeasure(Vector2 from, Vector2 to)
+    {
+        float x = from.x - to.x;
+        float y = from.y - to.y;
+        float value = (float)((System.Math.Atan2(x, y) / System.Math.PI) * 180f);
+        if (value < 0) value += 360f;
+        return value;
     }
 
 }

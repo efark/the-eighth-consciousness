@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38be96cc68c257743a56627414ffbf1a, type: 3}
+  m_Name: SpiralCrescent
+  m_EditorClassIdentifier: 
+  mvSettings: {fileID: 11400000, guid: 5c4325ac99e5ab143b3febffcf877709, type: 2}
+  prefab: {fileID: 1377705975154293860, guid: 19bf301e4e160a64b891013ab96d9abe, type: 3}
+  damage: 20
+  ttl: 10

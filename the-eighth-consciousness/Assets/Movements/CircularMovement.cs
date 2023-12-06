@@ -30,7 +30,7 @@ public class CircularMovement : AbstractMovement
         }
         direction = rotateVector2(direction.normalized, rotationSpeed);
         rb.velocity = direction * (speed * 1.2f);
-
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
     }
 
     Vector2 rotateVector2(Vector2 vec, float angle)

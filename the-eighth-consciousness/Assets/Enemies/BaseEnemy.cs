@@ -18,6 +18,7 @@ public class BaseEnemy : AbstractEnemyController
     private int maxOrder = 0;
     private int simultaneousOneShots = 0;
 
+    private float time;
     public override int HP
     {
         get
@@ -145,6 +146,7 @@ public class BaseEnemy : AbstractEnemyController
 
     void Start()
     {
+        time = 0f;
         hp = 500;
         UpdateGUI();
         targetType = TargetTypes.Player;
@@ -199,9 +201,11 @@ public class BaseEnemy : AbstractEnemyController
     {
         if (isAlive)
         {
+            //Debug.Log($"time: {time} x = {Mathf.Sin(time)} - y = {Mathf.Cos(time)}");
             loopOneShotAttacks();
             loopConstantAttacks();
         }
+        time += Time.fixedDeltaTime;
     }
 
     public void UpdateGUI()
