@@ -22,13 +22,12 @@ public class SpiralMovement : AbstractMovement
     {
         rb = transform.GetComponent<Rigidbody2D>();
         center = transform.position;
-        //originalDirection = direction.normalized;
-        //angle = Vector3.Angle(originalDirection, transform.forward);
-        //Debug.Log($"originalDirection: {originalDirection}");
-        //Debug.Log($"angle: {angle}");
-        //angle = Vector2.Angle(direction, Vector2.up);
-        angle = GetAngleMeasure(direction, Vector2.right);
-        //Debug.Log($"angle: {angle}");
+        angle = GetAngleMeasure(direction, center);
+        if (angle >= 180)
+        {
+            angle = -angle;
+            speed *= -1;
+        }
         angle *= Mathf.Deg2Rad;
     }
 
@@ -39,7 +38,6 @@ public class SpiralMovement : AbstractMovement
         {
             return;
         }
-
 
         angle += speed * Time.fixedDeltaTime;
         radius += spiralSpeed * Time.fixedDeltaTime;
@@ -55,7 +53,10 @@ public class SpiralMovement : AbstractMovement
         float x = from.x - to.x;
         float y = from.y - to.y;
         float value = (float)((System.Math.Atan2(x, y) / System.Math.PI) * 180f);
-        if (value < 0) value += 360f;
+        if (value < 0)
+        {
+            value += 360f;
+        }
         return value;
     }
 
