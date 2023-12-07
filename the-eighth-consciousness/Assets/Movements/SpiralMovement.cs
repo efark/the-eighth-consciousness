@@ -14,15 +14,17 @@ public class SpiralMovement : AbstractMovement
     public float spiralSpeed;
     //private float T = 3f;
 
-    private Vector2 originalDirection;
+    //private Vector2 originalDirection;
     public Vector2 center;
+    private Vector2 vectorZero;
     private float angle;
 
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
-        //center = transform.position;
-        angle = GetAngleMeasure(direction, center);
+        center = transform.position;
+        vectorZero = new Vector2(0, 0);
+        angle = GetAngleMeasure(direction, vectorZero);
         /*if (angle >= 180)
         {
             angle = -angle;
