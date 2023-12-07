@@ -350,7 +350,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -459,7 +459,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 741392108}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1671004855}
@@ -483,9 +483,9 @@ MonoBehaviour:
   isEnabled: 1
   order: 0
   amplitude: 3
-  waveFrequency: 3
+  waveFrequency: 2
   waveStartingSide: 1
-  waveSpeed: 6
+  waveSpeed: 4
 --- !u!50 &741392112
 Rigidbody2D:
   serializedVersion: 4
@@ -551,7 +551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statsText: {fileID: 273807631}
   attackPatternsValues:
-  - {fileID: 11400000, guid: 1fcb80ddd5d8af3419c418aaf5ab2c6e, type: 2}
+  - {fileID: 11400000, guid: 17c45624c3a11894eb71f6667641301e, type: 2}
 --- !u!1 &839064800
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,12 +782,12 @@ PrefabInstance:
     - target: {fileID: 4383251580355074028, guid: 29b7dff760015c144b7d2dfef9383de5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4383251580355074028, guid: 29b7dff760015c144b7d2dfef9383de5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4
+      value: -3.7
       objectReference: {fileID: 0}
     - target: {fileID: 4383251580355074028, guid: 29b7dff760015c144b7d2dfef9383de5,
         type: 3}

@@ -75,9 +75,27 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        float leftLimit = -16.1f;
+        float rightLimit = 16.1f;
+        float upLimit = 7.6f;
+        float bottomLimit = -7.6f;
         // Character movement.
         float moveVertical = Input.GetAxis("Vertical");
         float moveHorizontal = Input.GetAxis("Horizontal");
+
+        // Reached Vertical limit of screen.
+        if ((moveVertical > 0 && transform.position.y >= upLimit) ||
+            (moveVertical < 0 && transform.position.y <= bottomLimit))
+        {
+            moveVertical = 0;
+        }
+
+        // Reached Horizontal limit of screen.
+        if ((moveHorizontal < 0 && transform.position.x <= leftLimit) ||
+            (moveHorizontal > 0 && transform.position.x >= rightLimit))
+        {
+            moveHorizontal = 0;
+        }
 
         Vector3 movement = new Vector2(moveHorizontal, moveVertical);
         rigidBody.velocity = movement * activeSpeed;
