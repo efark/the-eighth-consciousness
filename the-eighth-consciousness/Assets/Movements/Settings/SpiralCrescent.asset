@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737216b3c3250a3499167057835eb39f, type: 3}
   m_Name: SpiralCrescent
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 3
   type: 5
   acceleration: 0
   minSpeed: 0

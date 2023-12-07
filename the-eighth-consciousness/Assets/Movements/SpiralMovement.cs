@@ -21,14 +21,14 @@ public class SpiralMovement : AbstractMovement
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
-        center = transform.position;
-        angle = GetAngleMeasure(direction, center.normalized);
+        //center = transform.position;
+        angle = GetAngleMeasure(direction, center);
         /*if (angle >= 180)
         {
             angle = -angle;
             speed *= -1;
         }*/
-        Debug.Log($"center: {center.normalized} - direction: {direction} - angle: {angle}");
+        Debug.Log($"center: {center} - direction: {direction} - angle: {angle}");
         angle *= Mathf.Deg2Rad;
     }
 
