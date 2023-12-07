@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 6Radial360Deg
   m_EditorClassIdentifier: 
   type: 0
-  groupSize: 6
+  groupSize: 4
   spreadAngle: 360
   internalSpacing: 0
   isAlternating: 0

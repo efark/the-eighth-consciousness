@@ -22,12 +22,13 @@ public class SpiralMovement : AbstractMovement
     {
         rb = transform.GetComponent<Rigidbody2D>();
         center = transform.position;
-        angle = GetAngleMeasure(direction, center);
-        if (angle >= 180)
+        angle = GetAngleMeasure(direction, center.normalized);
+        /*if (angle >= 180)
         {
             angle = -angle;
             speed *= -1;
-        }
+        }*/
+        Debug.Log($"center: {center.normalized} - direction: {direction} - angle: {angle}");
         angle *= Mathf.Deg2Rad;
     }
 
@@ -45,7 +46,7 @@ public class SpiralMovement : AbstractMovement
         Vector2 offset = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * radius;
         transform.position = center + offset;
 
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, offset);
     }
 
     private static float GetAngleMeasure(Vector2 from, Vector2 to)

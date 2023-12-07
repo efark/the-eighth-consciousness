@@ -459,7 +459,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 741392108}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1671004855}
@@ -551,7 +551,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statsText: {fileID: 273807631}
   attackPatternsValues:
-  - {fileID: 11400000, guid: 1fcb80ddd5d8af3419c418aaf5ab2c6e, type: 2}
   - {fileID: 11400000, guid: 17c45624c3a11894eb71f6667641301e, type: 2}
 --- !u!1 &839064800
 GameObject:
