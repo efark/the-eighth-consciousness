@@ -128,7 +128,6 @@ public class BulletFactory : ObjectFactory
                 SpiralMovement sp = bullet.GetComponent<SpiralMovement>();
                 sp.isEnabled = true;
                 sp.direction = direction;
-                sp.center = center;
                 sp.speed = settings.mvSettings.speed;
                 sp.spiralSpeed = settings.mvSettings.spiralSpeed;
                 sp.radius = settings.mvSettings.radius;

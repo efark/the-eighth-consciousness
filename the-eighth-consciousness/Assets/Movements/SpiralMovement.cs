@@ -12,25 +12,15 @@ public class SpiralMovement : AbstractMovement
     [Header("Spiral parameters")]
     public float radius = 1f;
     public float spiralSpeed;
-    //private float T = 3f;
 
-    //private Vector2 originalDirection;
-    public Vector2 center;
-    private Vector2 vectorZero;
+    private Vector2 center;
     private float angle;
 
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
         center = transform.position;
-        vectorZero = new Vector2(0, 0);
-        angle = GetAngleMeasure(direction, vectorZero);
-        /*if (angle >= 180)
-        {
-            angle = -angle;
-            speed *= -1;
-        }*/
-        Debug.Log($"center: {center} - direction: {direction} - angle: {angle}");
+        angle = GetAngleAmplitude(direction);
         angle *= Mathf.Deg2Rad;
     }
 
@@ -41,7 +31,6 @@ public class SpiralMovement : AbstractMovement
         {
             return;
         }
-
         angle += speed * Time.fixedDeltaTime;
         radius += spiralSpeed * Time.fixedDeltaTime;
 
@@ -51,11 +40,9 @@ public class SpiralMovement : AbstractMovement
         transform.rotation = Quaternion.LookRotation(Vector3.forward, offset);
     }
 
-    private static float GetAngleMeasure(Vector2 from, Vector2 to)
+    private static float GetAngleAmplitude(Vector2 v)
     {
-        float x = from.x - to.x;
-        float y = from.y - to.y;
-        float value = (float)((System.Math.Atan2(x, y) / System.Math.PI) * 180f);
+        float value = (float)((System.Math.Atan2(v.x, v.y) / System.Math.PI) * 180f);
         if (value < 0)
         {
             value += 360f;
