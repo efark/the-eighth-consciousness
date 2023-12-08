@@ -11,6 +11,10 @@ public class StraightMovement : AbstractMovement
     */
     void FixedUpdate()
     {
-        rb.velocity = transform.forward * speed;
+        if (!isEnabled)
+        {
+            return;
+        }
+        rb.velocity = this.transform.forward * speed * Time.fixedDeltaTime;
     }
 }
