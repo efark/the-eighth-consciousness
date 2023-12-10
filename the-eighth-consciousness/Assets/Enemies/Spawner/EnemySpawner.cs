@@ -74,6 +74,7 @@ public class EnemySpawner : MonoBehaviour
                 
             }
             // Create(Vector3 startPosition, Quaternion rotation, Vector2 direction
+            Debug.Log($"waveNumber: {waveNumber}");
             this.spread.Create(this.transform.position, this.transform.rotation, direction);
             nextWave = settings.cooldown;
             waveNumber++;
