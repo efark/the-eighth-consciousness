@@ -18,3 +18,5 @@ MonoBehaviour:
   startDelay: 2
   cooldown: 2
   autoTarget: 0
+  hasFixedDirection: 1
+  fixedDirection: {x: 0, y: -1}

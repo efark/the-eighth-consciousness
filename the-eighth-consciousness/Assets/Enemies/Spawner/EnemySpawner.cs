@@ -61,6 +61,10 @@ public class EnemySpawner : MonoBehaviour
     {
         if (nextWave <= 0)
         {
+            if (settings.hasFixedDirection)
+            {
+                direction = settings.fixedDirection;
+            }
             if (!settings.autoTarget)
             {
                 players = GameObject.FindGameObjectsWithTag(TargetTypes.Player.ToString());
@@ -71,10 +75,7 @@ public class EnemySpawner : MonoBehaviour
                     direction.x = dir3.x;
                     direction.y = dir3.y;
                 }
-                
             }
-            // Create(Vector3 startPosition, Quaternion rotation, Vector2 direction
-            Debug.Log($"waveNumber: {waveNumber}");
             this.spread.Create(this.transform.position, this.transform.rotation, direction);
             nextWave = settings.cooldown;
             waveNumber++;
