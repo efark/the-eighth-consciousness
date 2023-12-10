@@ -58,7 +58,7 @@ public class VFlyer : AbstractEnemyController
                 maxOrder = ap.order;
             }
         }
-        Debug.Log($"attackPatterns: {attackPatterns[0]}");
+        //Debug.Log($"attackPatterns: {attackPatterns[0]}");
     }
 
     void Update()
