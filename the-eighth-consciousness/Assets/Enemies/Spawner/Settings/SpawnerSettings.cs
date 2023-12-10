@@ -19,4 +19,6 @@ public class SpawnerSettings : ScriptableObject
     [Tooltip("If hasFixedDirection is on, then the spawner will send the enemy in the predetermined direction.")]
     public bool hasFixedDirection;
     public Vector2 fixedDirection;
+    public Vector2 fixedDirectionRange;
+
 }

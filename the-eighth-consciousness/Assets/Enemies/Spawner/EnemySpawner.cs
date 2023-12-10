@@ -64,6 +64,8 @@ public class EnemySpawner : MonoBehaviour
             if (settings.hasFixedDirection)
             {
                 direction = settings.fixedDirection;
+                direction.x += Random.Range(-settings.fixedDirectionRange.x, settings.fixedDirectionRange.x);
+                direction.y += Random.Range(-settings.fixedDirectionRange.y, settings.fixedDirectionRange.y);
             }
             if (!settings.autoTarget)
             {
