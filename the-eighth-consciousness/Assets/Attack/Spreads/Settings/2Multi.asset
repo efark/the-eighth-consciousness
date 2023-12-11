@@ -15,6 +15,6 @@ MonoBehaviour:
   type: 1
   groupSize: 2
   spreadAngle: 0
-  internalSpacing: 0
-  isAlternating: 1
+  internalSpacing: 3
+  isAlternating: 0
   isCentered: 1
