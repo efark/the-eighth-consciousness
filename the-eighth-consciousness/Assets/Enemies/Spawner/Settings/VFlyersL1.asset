@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: VFlyersL1
   m_EditorClassIdentifier: 
   prefab: {fileID: 1456057149979271541, guid: cfa3c37cdacef354f80134081e272582, type: 3}
-  spreadSettings: {fileID: 11400000, guid: 11d16dde998f8f949ae8ffd17e6d9482, type: 2}
-  waves: 4
+  spreadSettings: {fileID: 11400000, guid: 66969cc92bc94f44389e1df50e789dca, type: 2}
+  waves: 99
   startDelay: 2
   cooldown: 2
   autoTarget: 0
   hasFixedDirection: 1
   fixedDirection: {x: 0, y: -1}
-  fixedDirectionRange: {x: 3, y: 0}
+  fixedDirectionRange: {x: 3, y: 2}
