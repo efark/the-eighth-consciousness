@@ -73,18 +73,20 @@ public class EnemySpawner : MonoBehaviour
                 direction.x += Random.Range(-settings.targetPointRange.x, settings.targetPointRange.x);
                 direction.y += Random.Range(-settings.targetPointRange.y, settings.targetPointRange.y);
             }
-            if (!settings.autoTarget)
+            if (settings.isAimingPlayer)
             {
                 players = GameObject.FindGameObjectsWithTag(TargetTypes.Player.ToString());
                 targetPlayer = GetClosestPlayer();
                 if (targetPlayer != null)
                 {
+                    //Debug.Log("Attacking player");
                     Vector3 dir3 = targetPlayer.transform.position - this.transform.position;
                     direction.x = dir3.x;
                     direction.y = dir3.y;
                 }
             }
-            this.spread.Create(this.transform.position, this.transform.rotation, direction);
+            Debug.Log($"Attack Direction: {direction}");
+            this.spread.Create(this.transform.position, this.transform.rotation, direction.normalized);
             nextWave = settings.cooldown;
             waveNumber++;
         }

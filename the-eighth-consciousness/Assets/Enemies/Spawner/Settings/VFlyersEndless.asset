@@ -17,7 +17,7 @@ MonoBehaviour:
   waves: 20
   startDelay: 0
   cooldown: 1
-  autoTarget: 1
+  isAimingPlayer: 1
   hasFixedDirection: 0
   fixedDirection: {x: 0, y: 0}
   fixedDirectionRange: {x: 0, y: 0}

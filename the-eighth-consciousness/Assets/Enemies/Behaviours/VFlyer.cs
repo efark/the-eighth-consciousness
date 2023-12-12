@@ -58,6 +58,7 @@ public class VFlyer : AbstractEnemyController
                 maxOrder = ap.order;
             }
         }
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         //Debug.Log($"attackPatterns: {attackPatterns[0]}");
     }
 
@@ -69,6 +70,7 @@ public class VFlyer : AbstractEnemyController
             mvController.direction.y *= -1;
             hasTurned = true;
             loopOneShotAttacks();
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         }
             
     }

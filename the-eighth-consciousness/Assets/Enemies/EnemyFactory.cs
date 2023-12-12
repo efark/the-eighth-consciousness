@@ -11,9 +11,11 @@ public class EnemyFactory : ObjectFactory
         this.prefab = _prefab;
     }
 
-    public GameObject Create(Vector3 position, Quaternion rotation, Vector2 _)
+    public GameObject Create(Vector3 position, Quaternion rotation, Vector2 direction)
     {
         GameObject e = GameObject.Instantiate(this.prefab, position, rotation) as GameObject;
+        AbstractMovement am = e.GetComponent<AbstractMovement>();
+        am.direction = direction;
         return e;
     }
 }

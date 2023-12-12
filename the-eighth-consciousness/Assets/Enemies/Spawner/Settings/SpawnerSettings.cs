@@ -14,8 +14,8 @@ public class SpawnerSettings : ScriptableObject
     public float startDelay;
     [Tooltip("Time between waves.")]
     public float cooldown;
-    [Tooltip("If autotarget is on, then the spawned enemy will find the direction on its own. Otherwise, the spawner will find the closest enemy.")]
-    public bool autoTarget;
+    [Tooltip("If isAimingPlayer is on, then the spawned enemy will start pointing in the direction of the player.")]
+    public bool isAimingPlayer;
     [Tooltip("If hasFixedDirection is on, then the spawner will send the enemy in the predetermined direction.")]
     public bool hasFixedDirection;
     public Vector2 fixedDirection;

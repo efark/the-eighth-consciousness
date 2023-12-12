@@ -782,6 +782,7 @@ GameObject:
   - component: {fileID: 1723227320}
   - component: {fileID: 1723227321}
   - component: {fileID: 1723227322}
+  - component: {fileID: 1723227323}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -816,12 +817,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  direction: {x: 0, y: 1}
+  direction: {x: 0, y: -1}
   isEnabled: 1
   order: 0
   amplitude: 3
   waveFrequency: 2
-  waveStartingSide: 0
+  waveStartingSide: 1
   waveSpeed: 4
 --- !u!114 &1723227322
 MonoBehaviour:
@@ -836,6 +837,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: cdd08d4803fb40141adf024ea58ab2ff, type: 2}
+--- !u!50 &1723227323
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723227319}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &1766936560
 PrefabInstance:
   m_ObjectHideFlags: 0
