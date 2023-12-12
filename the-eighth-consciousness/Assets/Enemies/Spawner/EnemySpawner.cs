@@ -67,6 +67,12 @@ public class EnemySpawner : MonoBehaviour
                 direction.x += Random.Range(-settings.fixedDirectionRange.x, settings.fixedDirectionRange.x);
                 direction.y += Random.Range(-settings.fixedDirectionRange.y, settings.fixedDirectionRange.y);
             }
+            if (settings.hasTargetPoint)
+            {
+                direction = settings.targetPoint - new Vector2(this.transform.position.x, this.transform.position.y);
+                direction.x += Random.Range(-settings.targetPointRange.x, settings.targetPointRange.x);
+                direction.y += Random.Range(-settings.targetPointRange.y, settings.targetPointRange.y);
+            }
             if (!settings.autoTarget)
             {
                 players = GameObject.FindGameObjectsWithTag(TargetTypes.Player.ToString());
