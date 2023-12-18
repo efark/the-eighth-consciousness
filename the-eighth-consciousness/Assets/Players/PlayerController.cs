@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
         activeECDCooldown = ECDCooldown;
         activeSpeed = speed;
         ECDready = true;
+        stats.UpdateECDStatus("Ready");
         ECDenabled = false;
 
         PlayerStats.OnPlayerDeath += Death;
@@ -88,10 +89,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // float leftLimit = -16.1f;
-        // float rightLimit = 16.1f;
-        // float upLimit = 7.6f;
-        // float bottomLimit = -7.6f;
         // Character movement.
         float moveVertical = Input.GetAxis("Vertical");
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -165,6 +162,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("ECD Ready!");
                 ECDready = true;
+                stats.UpdateECDStatus("Ready");
             }
         }
 
@@ -177,6 +175,7 @@ public class PlayerController : MonoBehaviour
         ECDready = false;
         activeSpeed = ECDSpeed;
         activeFireRate = ECDFireRate;
+        stats.UpdateECDStatus("Active");
         OnTriggerECD?.Invoke(true);
         StartCoroutine(endSlowMo(ECDDuration));
     }
@@ -187,6 +186,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeout);
         Debug.Log("ECD stop!");
         ECDenabled = false;
+        stats.UpdateECDStatus("Charging");
         activeSpeed = speed;
         activeFireRate = fireRate;
         activeECDCooldown = ECDCooldown;

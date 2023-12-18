@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
         PlayerStats.OnPlayerHPChange += UpdatePlayerStats;
         PlayerStats.OnPlayerDeath += Respawn;
         PlayerStats.OnGameOver += GameOver;
+        PlayerStats.OnPlayerECDChange += UpdatePlayerStats;
 
         statsPlayer1.Init();
 
@@ -76,7 +77,8 @@ public class GameController : MonoBehaviour
             if (statsPlayer1.IsActive)
             {
                 statsText1.text = $"HP: {statsPlayer1.CurrentHP}\n";
-                statsText1.text += $"Lives: {statsPlayer1.CurrentLives}";
+                statsText1.text += $"Lives: {statsPlayer1.CurrentLives}\n";
+                statsText1.text += $"ECD: {statsPlayer1.CurrentECDstatus}";
                 return;
             }
             statsText1.text = "Game Over";
@@ -87,6 +89,7 @@ public class GameController : MonoBehaviour
             {
                 statsText2.text = $"HP: {statsPlayer2.CurrentHP}\n";
                 statsText2.text += $"Lives: {statsPlayer2.CurrentLives}";
+                statsText2.text += $"ECD: {statsPlayer2.CurrentECDstatus}";
                 return;
             }
             statsText2.text = "Game Over";

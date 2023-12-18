@@ -23,7 +23,7 @@ public class PlayerStats : ScriptableObject
     private int currentLives;
     private int currentBombs;
     private int currentFirePower;
-
+    private string currentECDstatus;
     // 
     public bool IsActive => isActive;
     public int CurrentHP => currentHP;
@@ -31,10 +31,12 @@ public class PlayerStats : ScriptableObject
     public int CurrentBombs => currentBombs;
     public int CurrentFirePower => currentFirePower;
     public int CurrentScore => score;
+    public string CurrentECDstatus => currentECDstatus;
 
     public static event Action<int> OnPlayerDeath;
     public static event Action<int> OnGameOver;
     public static event Action<int> OnPlayerHPChange;
+    public static event Action<int> OnPlayerECDChange;
 
     public void Init()
     {
@@ -61,6 +63,12 @@ public class PlayerStats : ScriptableObject
             --currentLives;
             OnPlayerDeath?.Invoke(playerId);
         }
+    }
+
+    public void UpdateECDStatus(string value)
+    { 
+        currentECDstatus = value;
+        OnPlayerECDChange?.Invoke(playerId);
     }
 
     public void UpdateIsActive(bool value)
