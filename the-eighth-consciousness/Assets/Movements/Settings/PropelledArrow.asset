@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PropelledArrow
   m_EditorClassIdentifier: 
   speed: 0
-  type: 3
+  type: 2
   acceleration: 0
   minSpeed: 0
   maxSpeed: 0

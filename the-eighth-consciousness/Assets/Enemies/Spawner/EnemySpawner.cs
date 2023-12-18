@@ -85,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
                     direction.y = dir3.y;
                 }
             }
-            Debug.Log($"Attack Direction: {direction}");
+            // Debug.Log($"Attack Direction: {direction}");
             this.spread.Create(this.transform.position, this.transform.rotation, direction.normalized);
             nextWave = settings.cooldown;
             waveNumber++;

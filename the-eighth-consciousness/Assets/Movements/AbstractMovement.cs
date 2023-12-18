@@ -5,7 +5,6 @@ using UnityEngine;
 public enum MovementTypes
 {
     AcceleratingMovement,
-    StraightMovement,
     HomingMovement,
     PropelledHomingMovement,
     WavyMovement,

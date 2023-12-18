@@ -168,8 +168,8 @@ MonoBehaviour:
   firepoints:
   - {fileID: 4383251579981250606}
   stats: {fileID: 11400000, guid: 3ce5cb6028dff9d408560cc987803692, type: 2}
-  bulletSettings: {fileID: 11400000, guid: a9357144adb3aaa42b14f3ca3efe4fe1, type: 2}
-  spreadSettings: {fileID: 11400000, guid: 66969cc92bc94f44389e1df50e789dca, type: 2}
+  bulletSettings: {fileID: 11400000, guid: 98bcfe17447e3a143afa68df99636d99, type: 2}
+  spreadSettings: {fileID: 11400000, guid: db77433feba54c145accd09849cefebf, type: 2}
 --- !u!50 &4383251580355074002
 Rigidbody2D:
   serializedVersion: 4

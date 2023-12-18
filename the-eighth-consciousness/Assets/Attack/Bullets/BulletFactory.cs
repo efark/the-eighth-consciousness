@@ -69,12 +69,6 @@ public class BulletFactory : ObjectFactory
 
         switch (settings.mvSettings.type)
         {
-            case MovementTypes.StraightMovement:
-                StraightMovement sm = bullet.GetComponent<StraightMovement>();
-                sm.isEnabled = true;
-                sm.speed = settings.mvSettings.speed;
-                sm.direction = direction;
-                return bullet;
             case MovementTypes.AcceleratingMovement:
                 AcceleratingMovement am = bullet.GetComponent<AcceleratingMovement>();
                 am.isEnabled = true;
