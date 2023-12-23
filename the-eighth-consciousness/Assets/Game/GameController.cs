@@ -19,10 +19,9 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerStats.OnPlayerHPChange += UpdatePlayerStats;
+        PlayerStats.OnPlayerGUIChange += UpdatePlayerStats;
         PlayerStats.OnPlayerDeath += Respawn;
         PlayerStats.OnGameOver += GameOver;
-        PlayerStats.OnPlayerECDChange += UpdatePlayerStats;
 
         statsPlayer1.Init();
 
@@ -78,6 +77,7 @@ public class GameController : MonoBehaviour
             {
                 statsText1.text = $"HP: {statsPlayer1.CurrentHP}\n";
                 statsText1.text += $"Lives: {statsPlayer1.CurrentLives}\n";
+                statsText1.text += $"Bombs: {statsPlayer1.CurrentBombs}\n";
                 statsText1.text += $"ECD: {statsPlayer1.CurrentECDstatus}";
                 return;
             }
@@ -89,6 +89,7 @@ public class GameController : MonoBehaviour
             {
                 statsText2.text = $"HP: {statsPlayer2.CurrentHP}\n";
                 statsText2.text += $"Lives: {statsPlayer2.CurrentLives}";
+                statsText2.text += $"Bombs: {statsPlayer2.CurrentBombs}\n";
                 statsText2.text += $"ECD: {statsPlayer2.CurrentECDstatus}";
                 return;
             }

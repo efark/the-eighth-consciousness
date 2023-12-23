@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
 
+        // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
         cam = Camera.main;
         bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
@@ -133,7 +134,7 @@ public class PlayerController : MonoBehaviour
                 nextFire = 1 / activeFireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    spread.Create(transform.position, transform.rotation, Vector2.up);
+                    spread.Create(firepoints[i].transform.position, firepoints[i].transform.rotation, Vector2.up);
                 }
             }
         }
@@ -160,7 +161,7 @@ public class PlayerController : MonoBehaviour
             activeECDCooldown = Mathf.Max(activeECDCooldown - Time.deltaTime, 0);
             if (activeECDCooldown == 0)
             {
-                Debug.Log("ECD Ready!");
+                //Debug.Log("ECD Ready!");
                 ECDready = true;
                 stats.UpdateECDStatus("Ready");
             }
@@ -170,7 +171,7 @@ public class PlayerController : MonoBehaviour
 
     private void triggerSlowMo()
     {
-        Debug.Log("ECD start!");
+        //Debug.Log("ECD start!");
         ECDenabled = true;
         ECDready = false;
         activeSpeed = ECDSpeed;
@@ -184,7 +185,7 @@ public class PlayerController : MonoBehaviour
     {
         //Wait until timeout seconds pass.
         yield return new WaitForSecondsRealtime(timeout);
-        Debug.Log("ECD stop!");
+        //Debug.Log("ECD stop!");
         ECDenabled = false;
         stats.UpdateECDStatus("Charging");
         activeSpeed = speed;

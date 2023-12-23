@@ -35,8 +35,7 @@ public class PlayerStats : ScriptableObject
 
     public static event Action<int> OnPlayerDeath;
     public static event Action<int> OnGameOver;
-    public static event Action<int> OnPlayerHPChange;
-    public static event Action<int> OnPlayerECDChange;
+    public static event Action<int> OnPlayerGUIChange;
 
     public void Init()
     {
@@ -50,7 +49,7 @@ public class PlayerStats : ScriptableObject
     public void UpdateHP(int summand)
     {
         currentHP = Mathf.Clamp(currentHP + summand, _minHP, _maxHP);
-        OnPlayerHPChange?.Invoke(playerId);
+        OnPlayerGUIChange?.Invoke(playerId);
         if (currentHP == _minHP)
         {
             if (currentLives == 0)
@@ -68,7 +67,7 @@ public class PlayerStats : ScriptableObject
     public void UpdateECDStatus(string value)
     { 
         currentECDstatus = value;
-        OnPlayerECDChange?.Invoke(playerId);
+        OnPlayerGUIChange?.Invoke(playerId);
     }
 
     public void UpdateIsActive(bool value)
@@ -79,7 +78,7 @@ public class PlayerStats : ScriptableObject
     public void SetFullHP()
     {
         currentHP = _maxHP;
-        OnPlayerHPChange?.Invoke(playerId);
+        OnPlayerGUIChange?.Invoke(playerId);
     }
 
     public void UpdateLives(int summand)
@@ -89,7 +88,8 @@ public class PlayerStats : ScriptableObject
 
     public void UpdateBombs(int summand)
     {
-        currentLives += summand;
+        currentBombs += summand;
+        OnPlayerGUIChange?.Invoke(playerId);
     }
 
     public void UpdateFirePower(int summand)
