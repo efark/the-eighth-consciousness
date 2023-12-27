@@ -9,6 +9,7 @@ public class Straighter : AbstractEnemyController
     private TargetTypes targetType;
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
     private List<AttackPattern> attackPatterns = new List<AttackPattern>();
+    private Vector2 lastDirection;
     private bool isAlive = true;
 
     // public TMP_Text statsText;
@@ -46,17 +47,18 @@ public class Straighter : AbstractEnemyController
                     }
                     players = GameObject.FindGameObjectsWithTag(targetType.ToString());
                     targetPlayer = GetClosestPlayer();
-                    if (targetPlayer == null)
+                    if (targetPlayer != null)
                     {
-                        continue;
+                        Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+                        Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
+                        if (ap.isOpposite)
+                        {
+                            targetDirection *= -1;
+                        }
+                        lastDirection = targetDirection;
                     }
-                    Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
-                    Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
-                    if (ap.isOpposite)
-                    {
-                        targetDirection *= -1;
-                    }
-                    ap.spread.Create(transform.position, transform.rotation, targetDirection);
+
+                    ap.spread.Create(transform.position, transform.rotation, lastDirection);
                 }
             }
             // yield return new WaitForSeconds(ap.cooldown);
