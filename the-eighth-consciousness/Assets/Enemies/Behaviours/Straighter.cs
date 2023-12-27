@@ -7,18 +7,11 @@ public class Straighter : AbstractEnemyController
 {
 
     private TargetTypes targetType;
-    //private GameObject[] players = new GameObject[2];
-    //private GameObject targetPlayer;
+    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
+    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private bool isAlive = true;
 
     // public TMP_Text statsText;
-    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
-    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
-    private List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
-    private int currentOrder = 0;
-    private int maxOrder = 0;
-    private int simultaneousOneShots = 0;
-
     private float time;
     public override int HP
     {
@@ -33,25 +26,77 @@ public class Straighter : AbstractEnemyController
         }
     }
 
-    // Start is called before the first frame update
+    private IEnumerator constantAttack(int index)
+    {
+        AttackPattern ap = attackPatterns[index];
+        ap.UpdateNextFire(-Time.deltaTime);
+        if (ap.NextFire <= 0)
+        {
+            ap.UpdateNextFire(ap.cooldown);
+            ap.UpdateIsRunning(true);
+
+            yield return new WaitForSeconds(ap.burstOffset);
+            for (int i = 0; i < ap.numberOfBursts; i++)
+            {
+                for (int j = 0; j < ap.burstSize; j++)
+                {
+                    if (j > 0)
+                    {
+                        yield return new WaitForSeconds(ap.burstSpacing);
+                    }
+                    players = GameObject.FindGameObjectsWithTag(targetType.ToString());
+                    targetPlayer = GetClosestPlayer();
+                    if (targetPlayer == null)
+                    {
+                        continue;
+                    }
+                    Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+                    Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
+                    if (ap.isOpposite)
+                    {
+                        targetDirection *= -1;
+                    }
+                    ap.spread.Create(transform.position, transform.rotation, targetDirection);
+                }
+            }
+            // yield return new WaitForSeconds(ap.cooldown);
+            ap.UpdateIsRunning(false);
+            attackPatterns[index] = ap;
+        }
+    }
+
+    private void loopConstantAttacks()
+    {
+        for (int i = 0; i < attackPatterns.Count; i++)
+        {
+            StartCoroutine(constantAttack(i));
+        }
+    }
+
     void Start()
     {
-        
+        time = 0f;
+        hp = 500;
+        UpdateGUI();
+        targetType = TargetTypes.Player;
+
+        for (int i = 0; i < attackPatternsValues.Count; i++)
+        {
+            AttackPattern ap = attackPatternsValues[i];
+            AttackPattern clone = Instantiate(ap);
+            clone.Init(targetType);
+            attackPatterns.Add(clone);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (isAlive)
+        {
+            //Debug.Log($"time: {time} x = {Mathf.Sin(time)} - y = {Mathf.Cos(time)}");
+            loopConstantAttacks();
+        }
+        time += Time.fixedDeltaTime;
     }
 
-    public void UpdateGUI()
-    {
-        if (hp <= 0)
-        {
-            statsText.text = "";
-            Destroy(gameObject);
-        }
-        statsText.text = $"Enemy HP: {hp}";
-    }
 }
