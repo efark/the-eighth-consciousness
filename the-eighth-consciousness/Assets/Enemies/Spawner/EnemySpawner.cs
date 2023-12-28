@@ -4,13 +4,36 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public SpawnerSettings settings;
+
+    [Header("Settings")]
+    public GameObject prefab;
+    public SpreadSettings spreadSettings;
+    [Tooltip("Number of waves that the spawner will generate.")]
+    public int waves;
+    [Tooltip("Wait before the spawner created the first wave.")]
+    public float startDelay;
+    [Tooltip("Time between waves.")]
+    public float cooldown;
+    [Tooltip("If isAimingPlayer is on, then the spawned enemy will start pointing in the direction of the player.")]
+    public bool isAimingPlayer;
+    [Tooltip("If hasFixedDirection is on, then the spawner will send the enemy in the predetermined direction.")]
+    public bool hasFixedDirection;
+    public Vector2 fixedDirection;
+    public Vector2 fixedDirectionRange;
+    [Tooltip("If hasFixedDirection is on, then the spawner will send the enemy in the predetermined direction.")]
+    public bool hasTargetPoint;
+    public Vector2 targetPoint;
+    public Vector2 targetPointRange;
+
+    //public SpawnerSettings settings;
     private AbstractSpread spread;
     private float nextWave;
     private int waveNumber;
     private Vector2 direction;
     private GameObject[] players = new GameObject[2];
     private GameObject targetPlayer;
+
+
     /*---------------------------------------------------
     SpawnerSettings
     public GameObject prefab;
@@ -50,9 +73,9 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        EnemyFactory ef = new EnemyFactory(settings.prefab);
-        this.spread = AuxiliaryMethods.InitSpread(ef, settings.spreadSettings);
-        nextWave = settings.startDelay;
+        EnemyFactory ef = new EnemyFactory(prefab);
+        this.spread = AuxiliaryMethods.InitSpread(ef, spreadSettings);
+        nextWave = startDelay;
         waveNumber = 1;
     }
 
@@ -61,19 +84,19 @@ public class EnemySpawner : MonoBehaviour
     {
         if (nextWave <= 0)
         {
-            if (settings.hasFixedDirection)
+            if (hasFixedDirection)
             {
-                direction = settings.fixedDirection;
-                direction.x += Random.Range(-settings.fixedDirectionRange.x, settings.fixedDirectionRange.x);
-                direction.y += Random.Range(-settings.fixedDirectionRange.y, settings.fixedDirectionRange.y);
+                direction = fixedDirection;
+                direction.x += Random.Range(-fixedDirectionRange.x, fixedDirectionRange.x);
+                direction.y += Random.Range(-fixedDirectionRange.y, fixedDirectionRange.y);
             }
-            if (settings.hasTargetPoint)
+            if (hasTargetPoint)
             {
-                direction = settings.targetPoint - new Vector2(this.transform.position.x, this.transform.position.y);
-                direction.x += Random.Range(-settings.targetPointRange.x, settings.targetPointRange.x);
-                direction.y += Random.Range(-settings.targetPointRange.y, settings.targetPointRange.y);
+                direction = targetPoint - new Vector2(this.transform.position.x, this.transform.position.y);
+                direction.x += Random.Range(-targetPointRange.x, targetPointRange.x);
+                direction.y += Random.Range(-targetPointRange.y, targetPointRange.y);
             }
-            if (settings.isAimingPlayer)
+            if (isAimingPlayer)
             {
                 players = GameObject.FindGameObjectsWithTag(TargetTypes.Player.ToString());
                 targetPlayer = GetClosestPlayer();
@@ -87,11 +110,11 @@ public class EnemySpawner : MonoBehaviour
             }
             // Debug.Log($"Attack Direction: {direction}");
             this.spread.Create(this.transform.position, this.transform.rotation, direction.normalized);
-            nextWave = settings.cooldown;
+            nextWave = cooldown;
             waveNumber++;
         }
         nextWave -= Time.deltaTime;
-        if (settings.waves == waveNumber)
+        if (waves == waveNumber)
         {
             Destroy(gameObject);
         }
