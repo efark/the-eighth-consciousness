@@ -11,8 +11,11 @@ public class MissileRack : AbstractEnemyController
     private bool isAlive = true;
 
     // public TMP_Text statsText;
+    public bool isAimedAtPoint;
     public Vector2 targetPoint;
     public float distanceToTarget;
+    public bool isTimeBased;
+    public float explosionDelay;
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
     private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private int currentOrder = 0;
@@ -60,6 +63,10 @@ public class MissileRack : AbstractEnemyController
         UpdateGUI();
         targetType = TargetTypes.Player;
 
+        HomingMovement mvController = this.GetComponent<HomingMovement>();
+        GameObject target = AuxiliaryMethods.FindTarget(targetType.ToString(), this.transform.position);
+        mvController.target = target;
+
         for (int i = 0; i < attackPatternsValues.Count; i++)
         {
             AttackPattern ap = attackPatternsValues[i];
@@ -72,10 +79,26 @@ public class MissileRack : AbstractEnemyController
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.y), targetPoint) < distanceToTarget)
+        time += Time.deltaTime;
+        if (isTimeBased)
         {
-            fire();
-            Destroy(gameObject);
+            if (time > explosionDelay)
+            {
+                fire();
+                Destroy(gameObject);
+                return;
+            }
+            return;
+        }
+        if (isAimedAtPoint)
+        {
+            if (Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.y), targetPoint) < distanceToTarget)
+            {
+                fire();
+                Destroy(gameObject);
+                return;
+            }
+            return;
         }
     }
 

@@ -24,4 +24,32 @@ public static class AuxiliaryMethods
                 return null;
         }
     }
+
+    public static GameObject FindTarget(string targetType, Vector3 position)
+    {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(targetType);
+        if (targets.Length == 1)
+        {
+            return targets[0];
+        }
+        float min_distance = 0;
+        GameObject closest = null;
+        foreach (GameObject p in targets)
+        {
+            float dist = Vector3.Distance(position, p.transform.position);
+            if (min_distance == 0)
+            {
+                min_distance = dist;
+                closest = p;
+                continue;
+            }
+            if (dist < min_distance)
+            {
+                min_distance = dist;
+                closest = p;
+                continue;
+            }
+        }
+        return closest;
+    }
 }

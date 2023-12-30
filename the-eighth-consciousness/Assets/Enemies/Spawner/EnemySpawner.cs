@@ -107,9 +107,15 @@ public class EnemySpawner : MonoBehaviour
                     direction.x = dir3.x;
                     direction.y = dir3.y;
                 }
+                else 
+                {
+                    direction.x = 0;
+                    direction.y = 0;
+                }
             }
+            Quaternion rota = Quaternion.LookRotation(Vector3.forward, direction);
             // Debug.Log($"Attack Direction: {direction}");
-            this.spread.Create(this.transform.position, this.transform.rotation, direction.normalized);
+            this.spread.Create(this.transform.position, rota, direction.normalized);
             nextWave = cooldown;
             waveNumber++;
         }

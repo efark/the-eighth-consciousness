@@ -81,7 +81,6 @@ public class Straighter : AbstractEnemyController
         hp = 500;
         UpdateGUI();
         targetType = TargetTypes.Player;
-        AbstractMovement mvController = this.GetComponent<AbstractMovement>();
 
         for (int i = 0; i < attackPatternsValues.Count; i++)
         {
@@ -91,14 +90,12 @@ public class Straighter : AbstractEnemyController
             attackPatterns.Add(clone);
         }
 
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
     }
 
     void Update()
     {
         if (isAlive)
         {
-            //Debug.Log($"time: {time} x = {Mathf.Sin(time)} - y = {Mathf.Cos(time)}");
             loopConstantAttacks();
         }
         time += Time.fixedDeltaTime;
