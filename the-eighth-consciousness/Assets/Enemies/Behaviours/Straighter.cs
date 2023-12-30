@@ -81,6 +81,7 @@ public class Straighter : AbstractEnemyController
         hp = 500;
         UpdateGUI();
         targetType = TargetTypes.Player;
+        AbstractMovement mvController = this.GetComponent<AbstractMovement>();
 
         for (int i = 0; i < attackPatternsValues.Count; i++)
         {
@@ -89,6 +90,8 @@ public class Straighter : AbstractEnemyController
             clone.Init(targetType);
             attackPatterns.Add(clone);
         }
+
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
     }
 
     void Update()
