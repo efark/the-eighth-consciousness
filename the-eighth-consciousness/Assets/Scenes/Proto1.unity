@@ -130,9 +130,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 445611586}
-  - component: {fileID: 445611585}
   - component: {fileID: 445611584}
   - component: {fileID: 445611583}
+  - component: {fileID: 445611585}
   m_Layer: 0
   m_Name: MissileRackL1
   m_TagString: Untagged
@@ -194,15 +194,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 445611582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d2163f10fb4ea849b2e5462e84dc664, type: 3}
+  m_Script: {fileID: 11500000, guid: 280855af7fbcd2240a61a7f32136a4d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 0
   direction: {x: 0, y: 0}
   isEnabled: 1
   order: 0
-  radius: 15
-  spiralSpeed: 0
+  amplitude: 3
+  waveFrequency: 2
+  waveStartingSide: 0
+  waveSpeed: 3
 --- !u!4 &445611586
 Transform:
   m_ObjectHideFlags: 0
@@ -211,7 +213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445611582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 7.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

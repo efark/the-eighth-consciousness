@@ -154,14 +154,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34abdf829c928b7419b08fa945786a17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
+  speed: 6
   direction: {x: 0, y: 0}
   isEnabled: 1
   order: 0
-  acceleration: 4
-  minSpeed: 3
+  acceleration: 2
+  minSpeed: 6
   maxSpeed: 16
   target: {fileID: 0}
   homingDelay: 2
-  homingSpeed: 5
+  homingSpeed: 3
   homingDuration: 8

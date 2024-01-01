@@ -22,11 +22,19 @@ public class HomingMovement : AbstractMovement
     private float homingDelayAccumTime = 0f;
     private bool homingStarted = false;
     private bool isHoming = false;
+    private Vector3 startPosition;
     private Vector3 lastDirection;
+
+
+    void Start()
+    {
+        startPosition = this.transform.position;
+        lastDirection = direction.normalized;
+    }
 
     void FixedUpdate()
     {
-        Debug.Log($"speed: {speed}");
+        //Debug.Log($"speed: {speed}");
         if (!isEnabled)
         {
             return;
@@ -62,15 +70,13 @@ public class HomingMovement : AbstractMovement
             if (target != null)
             {
                 Vector3 targetDirection = target.transform.position - this.transform.position;
-                newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+                newDirection = Vector3.RotateTowards(transform.up, targetDirection, singleStep, 0.0f);
                 lastDirection = newDirection.normalized;
             }
             // Debug.DrawRay(transform.position, newDirection, Color.red);
 
             transform.rotation = Quaternion.LookRotation(Vector3.forward, newDirection);
-            rb.velocity = lastDirection * speed;
-            return;
         }
-        rb.velocity = direction.normalized * speed;
+        transform.position += (new Vector3(lastDirection.x, lastDirection.y, 0) * speed * Time.fixedDeltaTime);
     }
 }
