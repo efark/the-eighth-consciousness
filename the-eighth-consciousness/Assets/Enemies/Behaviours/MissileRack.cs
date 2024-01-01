@@ -86,7 +86,6 @@ public class MissileRack : AbstractEnemyController
             {
                 fire();
                 Destroy(gameObject);
-                return;
             }
             return;
         }
@@ -96,7 +95,6 @@ public class MissileRack : AbstractEnemyController
             {
                 fire();
                 Destroy(gameObject);
-                return;
             }
             return;
         }

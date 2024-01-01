@@ -13,8 +13,6 @@ public class HomingMovement : AbstractMovement
     public float acceleration;
     public float minSpeed;
     public float maxSpeed;
-
-    [Header("Homing parameters")]
     public GameObject target;
     public float homingDelay;
     public float homingSpeed;
@@ -28,6 +26,7 @@ public class HomingMovement : AbstractMovement
 
     void FixedUpdate()
     {
+        Debug.Log($"speed: {speed}");
         if (!isEnabled)
         {
             return;
@@ -40,10 +39,6 @@ public class HomingMovement : AbstractMovement
             {
                 homingStarted = true;
                 isHoming = true;
-            }
-            else
-            {
-                rb.velocity = direction * speed;
             }
         }
 
@@ -60,7 +55,7 @@ public class HomingMovement : AbstractMovement
             }
             if (acceleration != 0)
             {
-                speed = Mathf.Clamp(speed + acceleration * Time.fixedDeltaTime, minSpeed, maxSpeed);
+                speed = Mathf.Clamp(speed + (acceleration * Time.fixedDeltaTime), minSpeed, maxSpeed);
             }
             Vector3 newDirection = lastDirection;
             float singleStep = homingSpeed * Time.fixedDeltaTime;
@@ -68,13 +63,14 @@ public class HomingMovement : AbstractMovement
             {
                 Vector3 targetDirection = target.transform.position - this.transform.position;
                 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-                lastDirection = newDirection;
+                lastDirection = newDirection.normalized;
             }
-            Debug.DrawRay(transform.position, newDirection, Color.red);
+            // Debug.DrawRay(transform.position, newDirection, Color.red);
 
             transform.rotation = Quaternion.LookRotation(Vector3.forward, newDirection);
-            rb.velocity = newDirection * speed;
+            rb.velocity = lastDirection * speed;
+            return;
         }
-
+        rb.velocity = direction.normalized * speed;
     }
 }

@@ -730,7 +730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1393684376
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1817,6 +1817,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Straighter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723425226927078684, guid: 7bad4a11f707a9547994ac9f82950917,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2723425226927078686, guid: 7bad4a11f707a9547994ac9f82950917,
         type: 3}
