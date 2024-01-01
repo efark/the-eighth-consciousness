@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5348079716934436500}
   - component: {fileID: -2092129865402438340}
   m_Layer: 0
-  m_Name: Cross
+  m_Name: MissileRack
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   isTimeBased: 1
   explosionDelay: 10
   attackPatternsValues:
-  - {fileID: 11400000, guid: 1fcb80ddd5d8af3419c418aaf5ab2c6e, type: 2}
+  - {fileID: 11400000, guid: 2537e2fe424b0fe4d817c041284a67dd, type: 2}
 --- !u!58 &5348079716934436503
 CircleCollider2D:
   m_ObjectHideFlags: 0
