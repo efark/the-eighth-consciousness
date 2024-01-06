@@ -20,8 +20,8 @@ MonoBehaviour:
   homingDelay: 1.5
   homingSpeed: 3
   homingDuration: 3
-  force: 150
-  initialForce: 60
+  force: 60
+  initialForce: 120
   amplitude: 0
   waveFrequency: 0
   waveSpeed: 0

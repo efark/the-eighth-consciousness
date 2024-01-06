@@ -19,9 +19,9 @@ MonoBehaviour:
   maxSpeed: 0
   homingDelay: 1.5
   homingSpeed: 3
-  homingDuration: 3
-  force: 170
-  initialForce: 100
+  homingDuration: 5
+  force: 50
+  initialForce: 120
   amplitude: 0
   waveFrequency: 0
   waveSpeed: 0
