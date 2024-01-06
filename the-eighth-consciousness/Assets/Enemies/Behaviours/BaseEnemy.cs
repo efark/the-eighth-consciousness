@@ -6,11 +6,11 @@ using TMPro;
 public class BaseEnemy : AbstractEnemyController
 {
     private TargetTypes targetType;
-    private GameObject[] players = new GameObject[2];
-    private GameObject targetPlayer;
+    // private GameObject[] players = new GameObject[2];
+    // private GameObject targetPlayer;
     private bool isAlive = true;
 
-    public TMP_Text statsText;
+    // public TMP_Text statsText;
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
     private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
@@ -115,33 +115,6 @@ public class BaseEnemy : AbstractEnemyController
             ap.UpdateIsRunning(false);
             constantAttackPatterns[index] = ap;
         }
-    }
-
-    private GameObject GetClosestPlayer()
-    {
-        if (players.Length == 1)
-        {
-            return players[0];
-        }
-        float min_distance = 0;
-        GameObject closest = null;
-        foreach (GameObject p in players)
-        {
-            float dist = Vector3.Distance(p.transform.position, gameObject.transform.position);
-            if (min_distance == 0)
-            {
-                min_distance = dist;
-                closest = p;
-                continue;
-            }
-            if (dist < min_distance)
-            {
-                min_distance = dist;
-                closest = p;
-                continue;
-            }
-        }
-        return closest;
     }
 
     void Start()

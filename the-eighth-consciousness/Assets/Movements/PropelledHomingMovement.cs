@@ -63,15 +63,14 @@ public class PropelledHomingMovement : AbstractMovement
             {
                 Vector3 targetDirection = target.transform.position - this.transform.position;
                 float singleStep = homingSpeed * Time.fixedDeltaTime;
-                newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+                newDirection = Vector3.RotateTowards(transform.up, targetDirection, singleStep, 0.0f);
                 lastDirection = newDirection;
             }
             // Debug.DrawRay(transform.position, newDirection, Color.red);
             transform.rotation = Quaternion.LookRotation(Vector3.forward, newDirection);
 
-            rb.AddForce(newDirection.normalized * force);
+            rb.AddForce(lastDirection.normalized * force);
         }
-
 
     }
 }

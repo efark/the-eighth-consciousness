@@ -5,9 +5,9 @@ using UnityEngine;
 public class AcceleratingMovement : AbstractMovement
 {
     /* Inherited from Abstract class:
-    public float speed;
-    public Vector2 direction;
-    public Rigidbody rb;
+        public float speed;
+        public Vector2 direction;
+        public Rigidbody rb;
      */
 
     [Header("Acceleration parameters")]

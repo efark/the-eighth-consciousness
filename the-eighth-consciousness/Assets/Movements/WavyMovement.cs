@@ -41,7 +41,6 @@ if number < 1 but > 0,  wave will stretch out (meaning it will take longer to re
         direction = direction.normalized;
         crossDirection = new Vector2(direction.y, -direction.x); // A quick right angle for 2D
         startPosition = transform.position;
-
     }
 
     void FixedUpdate()

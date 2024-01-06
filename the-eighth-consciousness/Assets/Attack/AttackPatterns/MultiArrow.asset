@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
   m_Name: MultiArrow
   m_EditorClassIdentifier: 
-  spreadSettings: {fileID: 11400000, guid: 11d16dde998f8f949ae8ffd17e6d9482, type: 2}
-  bulletSettings: {fileID: 11400000, guid: 17eea5f40dda6084f9ed335a8914a792, type: 2}
+  spreadSettings: {fileID: 11400000, guid: d8f4dcb5bafc5dd45abf77aa5deaa16e, type: 2}
+  bulletSettings: {fileID: 11400000, guid: 870e24498baa21744adaec4077e145c1, type: 2}
   burstOffset: 0
   burstSize: 1
   burstSpacing: 0

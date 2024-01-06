@@ -27,34 +27,6 @@ public class BulletFactory : ObjectFactory
         this.factor = newFactor;
     }
 
-    private GameObject FindTarget(Vector3 position)
-    {
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(targetType.ToString());
-        if (targets.Length == 1)
-        {
-            return targets[0];
-        }
-        float min_distance = 0;
-        GameObject closest = null;
-        foreach (GameObject p in targets)
-        {
-            float dist = Vector3.Distance(position, p.transform.position);
-            if (min_distance == 0)
-            {
-                min_distance = dist;
-                closest = p;
-                continue;
-            }
-            if (dist < min_distance)
-            {
-                min_distance = dist;
-                closest = p;
-                continue;
-            }
-        }
-        return closest;
-    }
-
     public GameObject Create(Vector3 position, Quaternion rotation, Vector2 direction)
     {
         Vector2 center = new Vector2(direction.x, direction.y);
@@ -69,12 +41,6 @@ public class BulletFactory : ObjectFactory
 
         switch (settings.mvSettings.type)
         {
-            case MovementTypes.StraightMovement:
-                StraightMovement sm = bullet.GetComponent<StraightMovement>();
-                sm.isEnabled = true;
-                sm.speed = settings.mvSettings.speed;
-                sm.direction = direction;
-                return bullet;
             case MovementTypes.AcceleratingMovement:
                 AcceleratingMovement am = bullet.GetComponent<AcceleratingMovement>();
                 am.isEnabled = true;
@@ -89,7 +55,7 @@ public class BulletFactory : ObjectFactory
                 hm.isEnabled = true;
                 hm.speed = settings.mvSettings.speed;
                 hm.direction = direction;
-                hm.target = FindTarget(position);
+                hm.target = AuxiliaryMethods.FindTarget(targetType.ToString(), position);
                 hm.acceleration = settings.mvSettings.acceleration;
                 hm.minSpeed = settings.mvSettings.minSpeed;
                 hm.maxSpeed = settings.mvSettings.maxSpeed;
@@ -102,7 +68,7 @@ public class BulletFactory : ObjectFactory
                 phm.isEnabled = true;
                 phm.speed = settings.mvSettings.speed;
                 phm.direction = direction;
-                phm.target = FindTarget(position);
+                phm.target = AuxiliaryMethods.FindTarget(targetType.ToString(), position);
                 phm.homingDelay = settings.mvSettings.homingDelay;
                 phm.homingSpeed = settings.mvSettings.homingSpeed;
                 phm.homingDuration = settings.mvSettings.homingDuration;
@@ -141,7 +107,6 @@ public class BulletFactory : ObjectFactory
                 //cm.radius = settings.mvSettings.radius;
                 return bullet;
             default:
-                // code block
                 return null;
         }
     }

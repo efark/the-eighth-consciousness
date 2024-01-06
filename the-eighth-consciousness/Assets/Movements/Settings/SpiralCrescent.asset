@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpiralCrescent
   m_EditorClassIdentifier: 
   speed: 3
-  type: 5
+  type: 4
   acceleration: 0
   minSpeed: 0
   maxSpeed: 0

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     public float speed = 12;
-    public float ECDSpeed = 16;
+    public float ECDSpeed = 18;
 
     [Header("Fire")]
     public float fireRate = 4f;
@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     private float activeSpeed;
     private bool ECDenabled;
     private bool ECDready;
+    private Camera cam;
+    private Vector3 bottomLeft;
+    private Vector3 topRight;
+    private Rect cameraRect;
 
     private Rigidbody2D rigidBody;
     private GameObject[] players;
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour
         activeECDCooldown = ECDCooldown;
         activeSpeed = speed;
         ECDready = true;
+        stats.UpdateECDStatus("Ready");
         ECDenabled = false;
 
         PlayerStats.OnPlayerDeath += Death;
@@ -56,6 +61,16 @@ public class PlayerController : MonoBehaviour
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
 
+        // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
+        cam = Camera.main;
+        bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
+
+        cameraRect = new Rect(
+            bottomLeft.x,
+            bottomLeft.y,
+            topRight.x - bottomLeft.x,
+            topRight.y - bottomLeft.y);
     }
 
     public void UpdateFirePower(int i)
@@ -75,24 +90,20 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float leftLimit = -16.1f;
-        float rightLimit = 16.1f;
-        float upLimit = 7.6f;
-        float bottomLimit = -7.6f;
         // Character movement.
         float moveVertical = Input.GetAxis("Vertical");
         float moveHorizontal = Input.GetAxis("Horizontal");
-
+        
         // Reached Vertical limit of screen.
-        if ((moveVertical > 0 && transform.position.y >= upLimit) ||
-            (moveVertical < 0 && transform.position.y <= bottomLimit))
+        if ((moveVertical > 0 && transform.position.y >= cameraRect.yMax) ||
+            (moveVertical < 0 && transform.position.y <= cameraRect.yMin))
         {
             moveVertical = 0;
         }
 
         // Reached Horizontal limit of screen.
-        if ((moveHorizontal < 0 && transform.position.x <= leftLimit) ||
-            (moveHorizontal > 0 && transform.position.x >= rightLimit))
+        if ((moveHorizontal < 0 && transform.position.x <= cameraRect.xMin) ||
+            (moveHorizontal > 0 && transform.position.x >= cameraRect.xMax))
         {
             moveHorizontal = 0;
         }
@@ -123,7 +134,7 @@ public class PlayerController : MonoBehaviour
                 nextFire = 1 / activeFireRate;
                 for (int i = 0; i < firepoints.Count; i++)
                 {
-                    spread.Create(transform.position, transform.rotation, Vector2.up);
+                    spread.Create(firepoints[i].transform.position, firepoints[i].transform.rotation, Vector2.up);
                 }
             }
         }
@@ -150,8 +161,9 @@ public class PlayerController : MonoBehaviour
             activeECDCooldown = Mathf.Max(activeECDCooldown - Time.deltaTime, 0);
             if (activeECDCooldown == 0)
             {
-                Debug.Log("ECD Ready!");
+                //Debug.Log("ECD Ready!");
                 ECDready = true;
+                stats.UpdateECDStatus("Ready");
             }
         }
 
@@ -159,11 +171,12 @@ public class PlayerController : MonoBehaviour
 
     private void triggerSlowMo()
     {
-        Debug.Log("ECD start!");
+        //Debug.Log("ECD start!");
         ECDenabled = true;
         ECDready = false;
         activeSpeed = ECDSpeed;
         activeFireRate = ECDFireRate;
+        stats.UpdateECDStatus("Active");
         OnTriggerECD?.Invoke(true);
         StartCoroutine(endSlowMo(ECDDuration));
     }
@@ -172,8 +185,9 @@ public class PlayerController : MonoBehaviour
     {
         //Wait until timeout seconds pass.
         yield return new WaitForSecondsRealtime(timeout);
-        Debug.Log("ECD stop!");
+        //Debug.Log("ECD stop!");
         ECDenabled = false;
+        stats.UpdateECDStatus("Charging");
         activeSpeed = speed;
         activeFireRate = fireRate;
         activeECDCooldown = ECDCooldown;

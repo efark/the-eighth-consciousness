@@ -15,8 +15,8 @@ public class VFlyer : AbstractEnemyController
     private int simultaneousOneShots = 0;
 
     private TargetTypes targetType;
-    private GameObject[] players = new GameObject[2];
-    private GameObject targetPlayer;
+    // private GameObject[] players = new GameObject[2];
+    // private GameObject targetPlayer;
     private AbstractMovement mvController;
     private bool hasTurned = false;
     public override int HP
@@ -58,6 +58,7 @@ public class VFlyer : AbstractEnemyController
                 maxOrder = ap.order;
             }
         }
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         //Debug.Log($"attackPatterns: {attackPatterns[0]}");
     }
 
@@ -69,6 +70,7 @@ public class VFlyer : AbstractEnemyController
             mvController.direction.y *= -1;
             hasTurned = true;
             loopOneShotAttacks();
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         }
             
     }
@@ -183,32 +185,5 @@ public class VFlyer : AbstractEnemyController
             ap.UpdateIsRunning(false);
             constantAttackPatterns[index] = ap;
         }
-    }
-
-    private GameObject GetClosestPlayer()
-    {
-        if (players.Length == 1)
-        {
-            return players[0];
-        }
-        float min_distance = 0;
-        GameObject closest = null;
-        foreach (GameObject p in players)
-        {
-            float dist = Vector3.Distance(p.transform.position, gameObject.transform.position);
-            if (min_distance == 0)
-            {
-                min_distance = dist;
-                closest = p;
-                continue;
-            }
-            if (dist < min_distance)
-            {
-                min_distance = dist;
-                closest = p;
-                continue;
-            }
-        }
-        return closest;
     }
 }

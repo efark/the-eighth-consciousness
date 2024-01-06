@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53bfd9438ea52444f8d77fec7bf6a8bf, type: 3}
+  m_Name: VFlyersEndless
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1456057149979271541, guid: cfa3c37cdacef354f80134081e272582, type: 3}
+  spreadSettings: {fileID: 11400000, guid: db77433feba54c145accd09849cefebf, type: 2}
+  waves: 90
+  startDelay: 0
+  cooldown: 2
+  isAimingPlayer: 1
+  hasFixedDirection: 0
+  fixedDirection: {x: 0, y: 0}
+  fixedDirectionRange: {x: 0, y: 0}
+  hasTargetPoint: 0
+  targetPoint: {x: 0, y: 0}
+  targetPointRange: {x: 0, y: 0}
