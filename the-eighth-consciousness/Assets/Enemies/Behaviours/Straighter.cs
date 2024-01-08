@@ -11,6 +11,9 @@ public class Straighter : AbstractEnemyController
     private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private Vector2 lastDirection;
     private bool isAlive = true;
+    private Camera cam;
+    private Rect screenLimit;
+    private bool canFire;
 
     // public TMP_Text statsText;
     private float time;
@@ -31,6 +34,10 @@ public class Straighter : AbstractEnemyController
     {
         AttackPattern ap = attackPatterns[index];
         ap.UpdateNextFire(-Time.deltaTime);
+        if (!canFire)
+        {
+            
+        }
         if (ap.NextFire <= 0)
         {
             ap.UpdateNextFire(ap.cooldown);
@@ -78,9 +85,22 @@ public class Straighter : AbstractEnemyController
     void Start()
     {
         time = 0f;
-        hp = 500;
+        hp = 100;
         UpdateGUI();
         targetType = TargetTypes.Player;
+
+        // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
+        cam = Camera.main;
+        Vector3 bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        Vector3 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
+        canFire = false;
+
+        screenLimit = new Rect(
+            bottomLeft.x,
+            bottomLeft.y,
+            topRight.x - bottomLeft.x,
+            topRight.y - bottomLeft.y);
+
 
         for (int i = 0; i < attackPatternsValues.Count; i++)
         {
@@ -94,11 +114,25 @@ public class Straighter : AbstractEnemyController
 
     void Update()
     {
-        if (isAlive)
+        if (HP < 0)
+        {
+            Destroy(gameObject);
+        }
+        // Reached Vertical limit of screen.
+        if (screenLimit.Contains(transform.position))
+        {
+            canFire = true;
+        }
+        else
+        {
+            canFire = false;
+        }
+
+        if (isAlive && canFire)
         {
             loopConstantAttacks();
+            time += Time.fixedDeltaTime;
         }
-        time += Time.fixedDeltaTime;
     }
 
 }

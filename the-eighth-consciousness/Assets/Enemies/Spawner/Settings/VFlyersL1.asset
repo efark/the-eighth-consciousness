@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1456057149979271541, guid: cfa3c37cdacef354f80134081e272582, type: 3}
   spreadSettings: {fileID: 11400000, guid: 66969cc92bc94f44389e1df50e789dca, type: 2}
-  waves: 99
+  waves: 5
   startDelay: 2
   cooldown: 2
-  autoTarget: 0
+  isAimingPlayer: 0
   hasFixedDirection: 1
   fixedDirection: {x: 0, y: -1}
   fixedDirectionRange: {x: 3, y: 2}
+  hasTargetPoint: 0
+  targetPoint: {x: 0, y: 0}
+  targetPointRange: {x: 0, y: 0}

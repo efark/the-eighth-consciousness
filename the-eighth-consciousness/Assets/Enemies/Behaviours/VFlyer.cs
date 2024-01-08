@@ -28,14 +28,13 @@ public class VFlyer : AbstractEnemyController
         set
         {
             hp += value;
-            //UpdateGUI();
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        hp = 500;
+        hp = 100;
         targetType = TargetTypes.Player;
         mvController = this.GetComponent<AbstractMovement>();
         thresholdY += Random.Range(-thresholdRange, thresholdRange);
@@ -64,6 +63,11 @@ public class VFlyer : AbstractEnemyController
 
     void Update()
     {
+        if (HP < 0)
+        {
+            Destroy(gameObject);
+        }
+
         loopConstantAttacks();
         if (this.transform.position.y <= thresholdY && !hasTurned)
         {
