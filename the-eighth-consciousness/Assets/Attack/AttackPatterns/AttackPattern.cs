@@ -9,6 +9,7 @@ public class AttackPattern : ScriptableObject
     public SpreadSettings spreadSettings;
     public AbstractSpread spread;
     public BulletSettings bulletSettings;
+    public FirepointTypes firepointType;
 
     [Header("Burst Parameters")]
     public float burstOffset;

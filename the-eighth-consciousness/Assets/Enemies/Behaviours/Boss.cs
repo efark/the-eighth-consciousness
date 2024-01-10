@@ -5,11 +5,11 @@ using UnityEngine;
 public class Boss : AbstractEnemyController
 {
     private TargetTypes targetType;
-    // private GameObject[] players = new GameObject[2];
-    // private GameObject targetPlayer;
     private bool isAlive = true;
 
     // public TMP_Text statsText;
+    private Vector3 centralFirepoint;
+    private List<Vector3> lateralFirepoints = new List<Vector3>();
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
     private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
@@ -31,9 +31,37 @@ public class Boss : AbstractEnemyController
         }
     }
 
+    private List<Vector3> GetFirepoints(FirepointTypes ft)
+    {
+        List<Vector3> temp = new List<Vector3>();
+        if (ft == FirepointTypes.All || ft == FirepointTypes.Lateral)
+        {
+            foreach (Vector3 fp in lateralFirepoints)
+            {
+                temp.Add(fp);
+            }
+        }
+        if (ft == FirepointTypes.All || ft == FirepointTypes.Central)
+        {
+            temp.Add(centralFirepoint);
+        }
+        return temp;
+    }
+
     void Start()
     {
-        
+        Transform firepoints = this.transform.Find("Firepoints");
+        foreach (GameObject child in firepoints)
+        {
+            if (child.name.ToLower() == "central")
+            {
+                centralFirepoint = child.transform.position;
+            }
+            else
+            {
+                lateralFirepoints.Add(child.transform.position);
+            }
+        }
     }
 
     // Update is called once per frame

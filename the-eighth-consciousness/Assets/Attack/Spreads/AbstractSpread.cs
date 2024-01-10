@@ -8,6 +8,13 @@ public enum SpreadTypes
     MultiSpread
 }
 
+public enum FirepointTypes
+{ 
+    All,
+    Central,
+    Lateral
+}
+
 public abstract class AbstractSpread
 {
     public abstract void Create(Vector3 startPosition, Quaternion rotation, Vector2 direction);
