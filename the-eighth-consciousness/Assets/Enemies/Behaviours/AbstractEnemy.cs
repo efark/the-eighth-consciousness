@@ -8,12 +8,50 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected int hp;
     protected GameObject[] players = new GameObject[2];
     protected GameObject targetPlayer;
+    protected bool hasCentralFirepoint = false;
+    protected Vector3 centralFirepoint;
+    protected List<Vector3> lateralFirepoints = new List<Vector3>();
     public TMP_Text statsText;
     public abstract int HP
     {
         get;
         set;
     }
+
+    protected void initFirepoints()
+    {
+        Transform firepoints = this.transform.Find("Firepoints");
+        foreach (GameObject child in firepoints)
+        {
+            if (child.name.ToLower() == "central")
+            {
+                centralFirepoint = child.transform.position;
+                hasCentralFirepoint = true;
+            }
+            else
+            {
+                lateralFirepoints.Add(child.transform.position);
+            }
+        }
+    }
+
+    protected List<Vector3> GetFirepoints(FirepointTypes ft)
+    {
+        List<Vector3> temp = new List<Vector3>();
+        if (ft == FirepointTypes.All || ft == FirepointTypes.Lateral)
+        {
+            foreach (Vector3 fp in lateralFirepoints)
+            {
+                temp.Add(fp);
+            }
+        }
+        if (ft == FirepointTypes.All || ft == FirepointTypes.Central)
+        {
+            temp.Add(centralFirepoint);
+        }
+        return temp;
+    }
+
 
     protected GameObject GetClosestPlayer()
     {
