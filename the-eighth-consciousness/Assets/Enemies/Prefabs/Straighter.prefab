@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1793027701392995826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6177302005208209037}
+  m_Layer: 0
+  m_Name: Firepoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6177302005208209037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793027701392995826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7965419854681707452}
+  m_Father: {fileID: 2723425226927078686}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2723425226927078684
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,7 +62,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.05, y: -4.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6177302005208209037}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -151,14 +183,14 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0, y: 0.5}
-      - {x: -0.25642875, y: -0.02811794}
-      - {x: -0.51299274, y: -0.14883155}
-      - {x: -0.24135995, y: -0.24012509}
-      - {x: -0.2362144, y: -0.515512}
-      - {x: 0.006005287, y: -0.2439432}
-      - {x: 0.25061297, y: -0.5313317}
-      - {x: 0.2713411, y: -0.241283}
-      - {x: 0.47647578, y: -0.10940339}
+      - {x: -0.24158517, y: 0.008999541}
+      - {x: -0.47959495, y: -0.14140815}
+      - {x: -0.25620353, y: -0.24012557}
+      - {x: -0.25476873, y: -0.5080886}
+      - {x: -0.00512743, y: -0.2439432}
+      - {x: 0.25432396, y: -0.50906104}
+      - {x: 0.24165416, y: -0.2487064}
+      - {x: 0.48018652, y: -0.13538529}
       - {x: 0.23817086, y: 0.008407429}
 --- !u!114 &2723425226927078658
 MonoBehaviour:
@@ -175,3 +207,33 @@ MonoBehaviour:
   statsText: {fileID: 0}
   attackPatternsValues:
   - {fileID: 11400000, guid: 0402cb4d105aa7944a2e5f416844bec5, type: 2}
+--- !u!1 &7900017998064077305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7965419854681707452}
+  m_Layer: 0
+  m_Name: Central
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7965419854681707452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7900017998064077305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6177302005208209037}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

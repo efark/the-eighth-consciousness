@@ -7,16 +7,6 @@ public class VFlyer : AbstractEnemyController
     public float thresholdY = 0f;
     public float thresholdRange = 1.5f;
 
-    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
-    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
-    private List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
-    private int currentOrder = 0;
-    private int maxOrder = 0;
-    private int simultaneousOneShots = 0;
-
-    private TargetTypes targetType;
-    // private GameObject[] players = new GameObject[2];
-    // private GameObject targetPlayer;
     private AbstractMovement mvController;
     private bool hasTurned = false;
     public override int HP

@@ -510,10 +510,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statsText: {fileID: 0}
-  centralFirepointGO: {fileID: 351594409}
-  lateralFirepointLocationGOs:
-  - {fileID: 2075552240}
-  - {fileID: 1786381371}
   attackPatternsValues:
   - {fileID: 11400000, guid: 376852079b585f64f92be1a52dacceed, type: 2}
 --- !u!1 &351594409

@@ -11,6 +11,18 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected bool hasCentralFirepoint = false;
     protected Vector3 centralFirepoint;
     protected List<Vector3> lateralFirepoints = new List<Vector3>();
+
+    protected TargetTypes targetType;
+    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
+    protected List<AttackPattern> attackPatterns = new List<AttackPattern>();
+    protected List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
+    protected int currentOrder = 0;
+    protected int maxOrder = 0;
+    protected int simultaneousOneShots = 0;
+    protected float time = 0;
+
+    protected Rect screenLimit;
+
     public TMP_Text statsText;
     public abstract int HP
     {
@@ -18,14 +30,31 @@ public abstract class AbstractEnemyController : MonoBehaviour
         set;
     }
 
+    protected void initScreenLimit()
+    {
+        Camera cam = Camera.main;
+        Vector3 bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        Vector3 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
+
+        screenLimit = new Rect(
+            bottomLeft.x,
+            bottomLeft.y,
+            topRight.x - bottomLeft.x,
+            topRight.y - bottomLeft.y);
+    }
+
     protected void initFirepoints()
     {
         Transform firepoints = this.transform.Find("Firepoints");
-        foreach (GameObject child in firepoints)
+        if (firepoints == null)
+        {
+            return;
+        }
+        foreach (Transform child in firepoints)
         {
             if (child.name.ToLower() == "central")
             {
-                centralFirepoint = child.transform.position;
+                centralFirepoint = child.position;
                 hasCentralFirepoint = true;
             }
             else
@@ -50,6 +79,29 @@ public abstract class AbstractEnemyController : MonoBehaviour
             temp.Add(centralFirepoint);
         }
         return temp;
+    }
+
+    protected void initAttackPatterns()
+    {
+        for (int i = 0; i < attackPatternsValues.Count; i++)
+        {
+            AttackPattern ap = attackPatternsValues[i];
+            AttackPattern clone = Instantiate(ap);
+            clone.Init(targetType);
+            if (ap.isConstantAttack)
+            {
+                constantAttackPatterns.Add(clone);
+            }
+            if (!ap.isConstantAttack)
+            {
+                attackPatterns.Add(clone);
+            }
+
+            if (ap.order > maxOrder)
+            {
+                maxOrder = ap.order;
+            }
+        }
     }
 
 

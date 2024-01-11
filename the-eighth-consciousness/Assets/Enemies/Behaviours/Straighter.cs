@@ -5,18 +5,11 @@ using TMPro;
 
 public class Straighter : AbstractEnemyController
 {
-
-    private TargetTypes targetType;
-    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
-    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private Vector2 lastDirection;
     private bool isAlive = true;
-    private Camera cam;
-    private Rect screenLimit;
     private bool canFire;
 
     // public TMP_Text statsText;
-    private float time;
     public override int HP
     {
         get
@@ -90,26 +83,10 @@ public class Straighter : AbstractEnemyController
         targetType = TargetTypes.Player;
 
         // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
-        cam = Camera.main;
-        Vector3 bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
-        Vector3 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
         canFire = false;
 
-        screenLimit = new Rect(
-            bottomLeft.x,
-            bottomLeft.y,
-            topRight.x - bottomLeft.x,
-            topRight.y - bottomLeft.y);
-
-
-        for (int i = 0; i < attackPatternsValues.Count; i++)
-        {
-            AttackPattern ap = attackPatternsValues[i];
-            AttackPattern clone = Instantiate(ap);
-            clone.Init(targetType);
-            attackPatterns.Add(clone);
-        }
-
+        initScreenLimit();
+        initAttackPatterns();
     }
 
     void Update()
