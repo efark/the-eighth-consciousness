@@ -156,13 +156,4 @@ public class BaseEnemy : AbstractEnemyController
         time += Time.fixedDeltaTime;
     }
 
-    public void UpdateGUI()
-    {
-        if (hp <= 0)
-        {
-            statsText.text = "";
-            Destroy(gameObject);
-        }
-        statsText.text = $"Enemy HP: {hp}";
-    }
 }

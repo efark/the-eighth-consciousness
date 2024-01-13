@@ -8,9 +8,9 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected int hp;
     protected GameObject[] players = new GameObject[2];
     protected GameObject targetPlayer;
-    protected bool hasCentralFirepoint = false;
-    protected Vector3 centralFirepoint;
+    protected List<Vector3> centralFirepoints = new List<Vector3>();
     protected List<Vector3> lateralFirepoints = new List<Vector3>();
+    protected List<Vector3> allFirepoints = new List<Vector3>();
 
     protected TargetTypes targetType;
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
@@ -43,44 +43,6 @@ public abstract class AbstractEnemyController : MonoBehaviour
             topRight.y - bottomLeft.y);
     }
 
-    protected void initFirepoints()
-    {
-        Transform firepoints = this.transform.Find("Firepoints");
-        if (firepoints == null)
-        {
-            return;
-        }
-        foreach (Transform child in firepoints)
-        {
-            if (child.name.ToLower() == "central")
-            {
-                centralFirepoint = child.position;
-                hasCentralFirepoint = true;
-            }
-            else
-            {
-                lateralFirepoints.Add(child.transform.position);
-            }
-        }
-    }
-
-    protected List<Vector3> GetFirepoints(FirepointTypes ft)
-    {
-        List<Vector3> temp = new List<Vector3>();
-        if (ft == FirepointTypes.All || ft == FirepointTypes.Lateral)
-        {
-            foreach (Vector3 fp in lateralFirepoints)
-            {
-                temp.Add(fp);
-            }
-        }
-        if (ft == FirepointTypes.All || ft == FirepointTypes.Central)
-        {
-            temp.Add(centralFirepoint);
-        }
-        return temp;
-    }
-
     protected void initAttackPatterns()
     {
         for (int i = 0; i < attackPatternsValues.Count; i++)
@@ -104,6 +66,39 @@ public abstract class AbstractEnemyController : MonoBehaviour
         }
     }
 
+    protected void initFirepoints()
+    {
+        Transform firepoints = this.transform.Find("Firepoints");
+        if (firepoints == null)
+        {
+            return;
+        }
+        foreach (Transform child in firepoints)
+        {
+            if (child.name.ToLower() == "central")
+            {
+                centralFirepoints.Add(child.localPosition);
+            }
+            else
+            {
+                lateralFirepoints.Add(child.localPosition);
+            }
+            allFirepoints.Add(child.localPosition);
+        }
+    }
+
+    protected List<Vector3> GetFirepoints(FirepointTypes ft)
+    {
+        if (ft == FirepointTypes.All)
+        {
+            return allFirepoints;
+        }
+        if (ft == FirepointTypes.Central)
+        {
+            return centralFirepoints;
+        }
+        return lateralFirepoints;
+    }
 
     protected GameObject GetClosestPlayer()
     {
@@ -130,6 +125,36 @@ public abstract class AbstractEnemyController : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    protected void FireAll()
+    {
+        Debug.Log("FireAll!");
+        Debug.Log($"attackPatterns: {attackPatterns.Count}");
+        foreach (AttackPattern ap in attackPatterns)
+        {
+            players = GameObject.FindGameObjectsWithTag(targetType.ToString());
+            targetPlayer = GetClosestPlayer();
+            List<Vector3>  fPoints = GetFirepoints(ap.firepointType);
+            Debug.Log($"fPoints: {fPoints.Count}");
+            Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+            Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
+            if (targetPlayer == null)
+            {
+                targetDirection.x = 0;
+                targetDirection.y = -1;
+            }
+            if (ap.isOpposite)
+            {
+                targetDirection *= -1;
+            }
+            foreach (Vector3 fp in fPoints)
+            {
+                Debug.Log($"fp: {fp}");
+                ap.spread.Create(transform.position + fp, transform.rotation, targetDirection);
+            }
+            
+        }
     }
 
     public void UpdateGUI()

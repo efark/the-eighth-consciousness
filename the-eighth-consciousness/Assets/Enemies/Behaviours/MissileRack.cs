@@ -27,26 +27,6 @@ public class MissileRack : AbstractEnemyController
         }
     }
 
-    void fire()
-    {
-        foreach(AttackPattern ap in attackPatterns)
-        {
-            players = GameObject.FindGameObjectsWithTag(targetType.ToString());
-            targetPlayer = GetClosestPlayer();
-            if (targetPlayer == null)
-            {
-                continue;
-            }
-            Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
-            Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
-            if (ap.isOpposite)
-            {
-                targetDirection *= -1;
-            }
-            ap.spread.Create(transform.position, transform.rotation, targetDirection);
-        }
-    }
-
     void Start()
     {
         time = 0f;
@@ -65,6 +45,8 @@ public class MissileRack : AbstractEnemyController
             clone.Init(targetType);
             attackPatterns.Add(clone);
         }
+
+        initFirepoints();
     }
 
     // Update is called once per frame
@@ -75,7 +57,8 @@ public class MissileRack : AbstractEnemyController
         {
             if (time > explosionDelay)
             {
-                fire();
+                Debug.Log("Firing by time.");
+                FireAll();
                 Destroy(gameObject);
             }
             return;
@@ -84,7 +67,8 @@ public class MissileRack : AbstractEnemyController
         {
             if (Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.y), targetPoint) < distanceToTarget)
             {
-                fire();
+                Debug.Log("Firing by distance.");
+                FireAll();
                 Destroy(gameObject);
             }
             return;

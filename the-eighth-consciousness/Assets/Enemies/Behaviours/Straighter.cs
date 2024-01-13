@@ -27,10 +27,6 @@ public class Straighter : AbstractEnemyController
     {
         AttackPattern ap = attackPatterns[index];
         ap.UpdateNextFire(-Time.deltaTime);
-        if (!canFire)
-        {
-            
-        }
         if (ap.NextFire <= 0)
         {
             ap.UpdateNextFire(ap.cooldown);
