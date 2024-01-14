@@ -81,6 +81,10 @@ public class PlayerController : MonoBehaviour
 
     public void Death(int playerId)
     {
+        if (ECDenabled)
+        {
+            endSlowMo();
+        } 
         PlayerStats.OnPlayerDeath -= Death;
         // Trigger some sound.
         // Trigger visual effect.
@@ -161,7 +165,6 @@ public class PlayerController : MonoBehaviour
             activeECDCooldown = Mathf.Max(activeECDCooldown - Time.deltaTime, 0);
             if (activeECDCooldown == 0)
             {
-                //Debug.Log("ECD Ready!");
                 ECDready = true;
                 stats.UpdateECDStatus("Ready");
             }
@@ -171,21 +174,27 @@ public class PlayerController : MonoBehaviour
 
     private void triggerSlowMo()
     {
-        //Debug.Log("ECD start!");
         ECDenabled = true;
         ECDready = false;
         activeSpeed = ECDSpeed;
         activeFireRate = ECDFireRate;
         stats.UpdateECDStatus("Active");
         OnTriggerECD?.Invoke(true);
-        StartCoroutine(endSlowMo(ECDDuration));
+        StartCoroutine(waitAndEndSlowMo(ECDDuration));
     }
 
-    IEnumerator endSlowMo(float timeout)
+    IEnumerator waitAndEndSlowMo(float timeout)
     {
         //Wait until timeout seconds pass.
         yield return new WaitForSecondsRealtime(timeout);
-        //Debug.Log("ECD stop!");
+        if (ECDenabled)
+        {
+            endSlowMo();
+        }
+    }
+
+    private void endSlowMo()
+    {
         ECDenabled = false;
         stats.UpdateECDStatus("Charging");
         activeSpeed = speed;
