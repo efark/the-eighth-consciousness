@@ -29,12 +29,12 @@ public class AttackPattern : ScriptableObject
     private bool isRunning = false;
     public bool IsRunning => isRunning;
     public float NextFire => nextFire;
+    public bool isOpposite = false;
 
     public void UpdateIsRunning(bool value)
     {
         isRunning = value;
     }
-    public bool isOpposite = false;
 
     public void UpdateNextFire(float value)
     {

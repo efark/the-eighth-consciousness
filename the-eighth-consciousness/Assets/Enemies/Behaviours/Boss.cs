@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Boss : AbstractEnemyController
 {
-    private bool isAlive = true;
-
     // public TMP_Text statsText;
     public override int HP
     {
@@ -23,11 +21,16 @@ public class Boss : AbstractEnemyController
     void Start()
     {
         initFirepoints();
+        initAttackPatterns();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (HP < 0)
+        {
+            isAlive = false;
+            Destroy(gameObject);
+        }
     }
 }

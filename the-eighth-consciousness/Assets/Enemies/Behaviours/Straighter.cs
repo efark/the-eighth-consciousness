@@ -6,7 +6,6 @@ using TMPro;
 public class Straighter : AbstractEnemyController
 {
     private Vector2 lastDirection;
-    private bool isAlive = true;
     private bool canFire;
 
     // public TMP_Text statsText;
@@ -89,17 +88,11 @@ public class Straighter : AbstractEnemyController
     {
         if (HP < 0)
         {
+            isAlive = false;
             Destroy(gameObject);
         }
         // Reached Vertical limit of screen.
-        if (screenLimit.Contains(transform.position))
-        {
-            canFire = true;
-        }
-        else
-        {
-            canFire = false;
-        }
+        canFire = screenLimit.Contains(transform.position);
 
         if (isAlive && canFire)
         {

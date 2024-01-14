@@ -5,8 +5,6 @@ using TMPro;
 
 public class MissileRack : AbstractEnemyController
 {
-    private bool isAlive = true;
-
     // public TMP_Text statsText;
     public bool isAimedAtPoint;
     public Vector2 targetPoint;
@@ -27,6 +25,23 @@ public class MissileRack : AbstractEnemyController
         }
     }
 
+    private void checkAttackPatterns()
+    {
+        List<string> invalidAPs = new List<string>();
+        foreach (AttackPattern ap in attackPatternsValues)
+        {
+            if (ap.isConstantAttack)
+            { 
+                invalidAPs.Add(ap.name);
+            }
+        }
+        if (invalidAPs.Count > 0)
+        {
+            Debug.LogError($"Invalid Attack Patterns - can not be constant: {invalidAPs.ToString()}");
+        }
+        
+    }
+
     void Start()
     {
         time = 0f;
@@ -38,14 +53,8 @@ public class MissileRack : AbstractEnemyController
         GameObject target = AuxiliaryMethods.FindTarget(targetType.ToString(), this.transform.position);
         mvController.target = target;
 
-        for (int i = 0; i < attackPatternsValues.Count; i++)
-        {
-            AttackPattern ap = attackPatternsValues[i];
-            AttackPattern clone = Instantiate(ap);
-            clone.Init(targetType);
-            attackPatterns.Add(clone);
-        }
-
+        initAttackPatterns();
+        checkAttackPatterns();
         initFirepoints();
     }
 
@@ -53,11 +62,15 @@ public class MissileRack : AbstractEnemyController
     void Update()
     {
         time += Time.deltaTime;
+        if (HP < 0)
+        {
+            isAlive = false;
+            Destroy(gameObject);
+        }
         if (isTimeBased)
         {
             if (time > explosionDelay)
             {
-                Debug.Log("Firing by time.");
                 FireAll();
                 Destroy(gameObject);
             }
@@ -67,7 +80,6 @@ public class MissileRack : AbstractEnemyController
         {
             if (Vector2.Distance(new Vector2(this.transform.position.x, this.transform.position.y), targetPoint) < distanceToTarget)
             {
-                Debug.Log("Firing by distance.");
                 FireAll();
                 Destroy(gameObject);
             }

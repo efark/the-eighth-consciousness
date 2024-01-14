@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
-  m_Name: MissileRackL1
+  m_Name: SlowCrescent
   m_EditorClassIdentifier: 
-  spreadSettings: {fileID: 11400000, guid: d8f4dcb5bafc5dd45abf77aa5deaa16e, type: 2}
-  bulletSettings: {fileID: 11400000, guid: 0f6f3748b7442d14a893cb390db372f9, type: 2}
-  firepointType: 0
+  spreadSettings: {fileID: 11400000, guid: 8c9bbf91e1c87d8438b349909f1c1e74, type: 2}
+  bulletSettings: {fileID: 11400000, guid: 3f98494a37900a545ab540cac4aa1799, type: 2}
+  firepointType: 1
   burstOffset: 0
-  burstSize: 1
-  burstSpacing: 0
+  burstSize: 10
+  burstSpacing: 0.7
   offset: 0
-  cooldown: 2
-  numberOfBursts: 1
+  cooldown: 0
+  numberOfBursts: 0
   order: 0
-  keepsAiming: 0
+  keepsAiming: 1
   isStaticAttack: 0
   isConstantAttack: 0
   isActive: 0

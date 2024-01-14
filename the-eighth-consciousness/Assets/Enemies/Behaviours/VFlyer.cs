@@ -55,6 +55,7 @@ public class VFlyer : AbstractEnemyController
     {
         if (HP < 0)
         {
+            isAlive = false;
             Destroy(gameObject);
         }
 

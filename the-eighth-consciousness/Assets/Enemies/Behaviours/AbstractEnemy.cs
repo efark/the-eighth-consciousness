@@ -20,6 +20,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected int maxOrder = 0;
     protected int simultaneousOneShots = 0;
     protected float time = 0;
+    protected bool isAlive = true;
 
     protected Rect screenLimit;
 
@@ -129,14 +130,11 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected void FireAll()
     {
-        Debug.Log("FireAll!");
-        Debug.Log($"attackPatterns: {attackPatterns.Count}");
         foreach (AttackPattern ap in attackPatterns)
         {
             players = GameObject.FindGameObjectsWithTag(targetType.ToString());
             targetPlayer = GetClosestPlayer();
             List<Vector3>  fPoints = GetFirepoints(ap.firepointType);
-            Debug.Log($"fPoints: {fPoints.Count}");
             Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
             Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
             if (targetPlayer == null)
@@ -150,10 +148,8 @@ public abstract class AbstractEnemyController : MonoBehaviour
             }
             foreach (Vector3 fp in fPoints)
             {
-                Debug.Log($"fp: {fp}");
                 ap.spread.Create(transform.position + fp, transform.rotation, targetDirection);
-            }
-            
+            }   
         }
     }
 

@@ -511,6 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPatternsValues:
   - {fileID: 11400000, guid: 376852079b585f64f92be1a52dacceed, type: 2}
+  - {fileID: 11400000, guid: 68650a6e3bf3fdc4a866ab3ea5ca7230, type: 2}
   statsText: {fileID: 0}
 --- !u!1 &351594409
 GameObject:
