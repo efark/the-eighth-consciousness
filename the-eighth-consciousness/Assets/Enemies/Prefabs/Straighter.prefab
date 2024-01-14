@@ -204,9 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de06979f53a77874fb764f6093f0dc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statsText: {fileID: 0}
   attackPatternsValues:
-  - {fileID: 11400000, guid: 0402cb4d105aa7944a2e5f416844bec5, type: 2}
+  - {fileID: 11400000, guid: 68650a6e3bf3fdc4a866ab3ea5ca7230, type: 2}
+  statsText: {fileID: 0}
 --- !u!1 &7900017998064077305
 GameObject:
   m_ObjectHideFlags: 0

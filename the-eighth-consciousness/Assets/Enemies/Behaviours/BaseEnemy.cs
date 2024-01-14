@@ -4,12 +4,7 @@ using UnityEngine;
 using TMPro;
 
 public class BaseEnemy : AbstractEnemyController
-{
-    
-    // private GameObject[] players = new GameObject[2];
-    // private GameObject targetPlayer;
-    private bool isAlive = true;
-
+{    
     // public TMP_Text statsText;
 
     public override int HP
@@ -149,7 +144,6 @@ public class BaseEnemy : AbstractEnemyController
     {
         if (isAlive)
         {
-            //Debug.Log($"time: {time} x = {Mathf.Sin(time)} - y = {Mathf.Cos(time)}");
             loopOneShotAttacks();
             loopConstantAttacks();
         }

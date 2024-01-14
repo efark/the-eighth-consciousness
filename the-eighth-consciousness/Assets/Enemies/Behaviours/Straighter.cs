@@ -36,6 +36,7 @@ public class Straighter : AbstractEnemyController
             {
                 for (int j = 0; j < ap.burstSize; j++)
                 {
+
                     if (j > 0)
                     {
                         yield return new WaitForSeconds(ap.burstSpacing);
@@ -81,6 +82,7 @@ public class Straighter : AbstractEnemyController
         canFire = false;
 
         initScreenLimit();
+        initFirepoints();
         initAttackPatterns();
     }
 

@@ -2194,6 +2194,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2723425226927078658, guid: 7bad4a11f707a9547994ac9f82950917,
+        type: 3}
+      propertyPath: attackPatternsValues.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 68650a6e3bf3fdc4a866ab3ea5ca7230,
+        type: 2}
     - target: {fileID: 2723425226927078684, guid: 7bad4a11f707a9547994ac9f82950917,
         type: 3}
       propertyPath: m_Name
