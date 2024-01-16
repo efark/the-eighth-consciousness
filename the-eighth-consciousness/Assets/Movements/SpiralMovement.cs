@@ -31,13 +31,14 @@ public class SpiralMovement : AbstractMovement
         {
             return;
         }
-        angle += speed * Time.fixedDeltaTime;
-        radius += spiralSpeed * Time.fixedDeltaTime;
+        angle += spiralSpeed * Time.fixedDeltaTime;
+        radius += speed * Time.fixedDeltaTime;
 
         Vector2 offset = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * radius;
         transform.position = center + offset;
 
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, offset);
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0).normalized);
+        //transform.eulerAngles = Vector3.forward * (angle);
     }
 
     private static float GetAngleAmplitude(Vector2 v)

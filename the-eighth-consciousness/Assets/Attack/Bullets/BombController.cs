@@ -6,11 +6,13 @@ public class BombController : MonoBehaviour
 {
     public float ttl;
     public int damage;
+    public float scaleFactor = 0f;
+    private Vector3 scaleChange;
 
-    private Vector3 scaleChange = new Vector3(4f, 4f, 4f);
     void Start()
     {
         Destroy(gameObject, ttl);
+        scaleChange = new Vector3(scaleFactor, scaleFactor, scaleFactor);
     }
 
     void FixedUpdate()

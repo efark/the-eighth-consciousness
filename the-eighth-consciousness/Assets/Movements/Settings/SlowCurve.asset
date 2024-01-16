@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737216b3c3250a3499167057835eb39f, type: 3}
   m_Name: SlowCurve
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 4
   type: 4
   acceleration: 0
   minSpeed: 0
@@ -28,5 +28,5 @@ MonoBehaviour:
   isAlternating: 0
   isRightSided: 0
   radius: 0
-  spiralSpeed: 6
+  spiralSpeed: 0.5
   rotationSpeed: 0
