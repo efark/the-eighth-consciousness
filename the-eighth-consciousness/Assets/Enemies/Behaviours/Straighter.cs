@@ -6,7 +6,6 @@ using TMPro;
 public class Straighter : AbstractEnemyController
 {
     private Vector2 lastDirection;
-    private bool canFire;
 
     // public TMP_Text statsText;
     public override int HP

@@ -21,6 +21,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected int simultaneousOneShots = 0;
     protected float time = 0;
     protected bool isAlive = true;
+    protected bool canFire = false;
 
     protected Rect screenLimit;
 
@@ -130,6 +131,11 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected void FireAll()
     {
+        StartCoroutine(fireAll());
+    }
+
+    protected IEnumerator fireAll()
+    {
         foreach (AttackPattern ap in attackPatterns)
         {
             players = GameObject.FindGameObjectsWithTag(targetType.ToString());
@@ -148,7 +154,18 @@ public abstract class AbstractEnemyController : MonoBehaviour
             }
             foreach (Vector3 fp in fPoints)
             {
-                ap.spread.Create(transform.position + fp, transform.rotation, targetDirection);
+                for (int i = 0; i < ap.numberOfBursts; i++)
+                {
+                    for (int j = 0; j < ap.burstSize; j++)
+                    {
+                        if (j > 0)
+                        {
+                            yield return new WaitForSeconds(ap.burstSpacing);
+                        }
+                        ap.spread.Create(transform.position + fp, transform.rotation, targetDirection);
+                    }
+                }
+
             }   
         }
     }

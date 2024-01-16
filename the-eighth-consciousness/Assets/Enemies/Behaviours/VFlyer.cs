@@ -8,6 +8,7 @@ public class VFlyer : AbstractEnemyController
     public float thresholdRange = 1.5f;
 
     private AbstractMovement mvController;
+    private bool hasFired = false;
     private bool hasTurned = false;
     public override int HP
     {
@@ -29,24 +30,9 @@ public class VFlyer : AbstractEnemyController
         mvController = this.GetComponent<AbstractMovement>();
         thresholdY += Random.Range(-thresholdRange, thresholdRange);
 
-        for (int i = 0; i < attackPatternsValues.Count; i++)
-        {
-            AttackPattern ap = attackPatternsValues[i];
-            AttackPattern clone = Instantiate(ap);
-            clone.Init(targetType);
-            if (ap.isConstantAttack)
-            {
-                constantAttackPatterns.Add(clone);
-            }
-            if (!ap.isConstantAttack)
-            {
-                attackPatterns.Add(clone);
-            }
-            if (ap.order > maxOrder)
-            {
-                maxOrder = ap.order;
-            }
-        }
+        initAttackPatterns();
+        initFirepoints();
+        initScreenLimit();
         transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         //Debug.Log($"attackPatterns: {attackPatterns[0]}");
     }
@@ -58,13 +44,18 @@ public class VFlyer : AbstractEnemyController
             isAlive = false;
             Destroy(gameObject);
         }
+        canFire = screenLimit.Contains(transform.position);
 
-        loopConstantAttacks();
+        //loopConstantAttacks();
+        if (canFire && Mathf.Abs(this.transform.position.y - thresholdY) < 1 && !hasFired)
+        {
+            hasFired = true;
+            FireAll();
+        }
         if (this.transform.position.y <= thresholdY && !hasTurned)
         {
             mvController.direction.y *= -1;
             hasTurned = true;
-            loopOneShotAttacks();
             transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         }
             
