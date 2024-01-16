@@ -39,7 +39,6 @@ public class TimeController : MonoBehaviour
 
     public void SlowMotionEffect(bool newStatus)
     {
-        //Debug.Log("SlowMo new value:" + newStatus.ToString());
         Time.timeScale = newStatus ? slowMoScale : 1;
         for (int i = 0; i < audioSources.Length; i++)
         {

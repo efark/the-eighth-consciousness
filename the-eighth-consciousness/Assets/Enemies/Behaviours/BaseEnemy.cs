@@ -4,21 +4,9 @@ using UnityEngine;
 using TMPro;
 
 public class BaseEnemy : AbstractEnemyController
-{
-    private TargetTypes targetType;
-    // private GameObject[] players = new GameObject[2];
-    // private GameObject targetPlayer;
-    private bool isAlive = true;
-
+{    
     // public TMP_Text statsText;
-    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
-    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
-    private List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
-    private int currentOrder = 0;
-    private int maxOrder = 0;
-    private int simultaneousOneShots = 0;
 
-    private float time;
     public override int HP
     {
         get
@@ -124,25 +112,7 @@ public class BaseEnemy : AbstractEnemyController
         UpdateGUI();
         targetType = TargetTypes.Player;
 
-        for (int i = 0; i < attackPatternsValues.Count; i++)
-        {
-            AttackPattern ap = attackPatternsValues[i];
-            AttackPattern clone = Instantiate(ap);
-            clone.Init(targetType);
-            if (ap.isConstantAttack)
-            {
-                constantAttackPatterns.Add(clone);
-            }
-            if (!ap.isConstantAttack)
-            {
-                attackPatterns.Add(clone);
-            }
-
-            if (ap.order > maxOrder)
-            {
-                maxOrder = ap.order;
-            }
-        }
+        initAttackPatterns();
     }
 
     private void loopOneShotAttacks()
@@ -174,20 +144,10 @@ public class BaseEnemy : AbstractEnemyController
     {
         if (isAlive)
         {
-            //Debug.Log($"time: {time} x = {Mathf.Sin(time)} - y = {Mathf.Cos(time)}");
             loopOneShotAttacks();
             loopConstantAttacks();
         }
         time += Time.fixedDeltaTime;
     }
 
-    public void UpdateGUI()
-    {
-        if (hp <= 0)
-        {
-            statsText.text = "";
-            Destroy(gameObject);
-        }
-        statsText.text = $"Enemy HP: {hp}";
-    }
 }

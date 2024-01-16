@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
+  m_Name: SlowSpiral
+  m_EditorClassIdentifier: 
+  spreadSettings: {fileID: 11400000, guid: 8c9bbf91e1c87d8438b349909f1c1e74, type: 2}
+  bulletSettings: {fileID: 11400000, guid: 3f98494a37900a545ab540cac4aa1799, type: 2}
+  firepointType: 1
+  burstOffset: 0
+  burstSize: 1
+  burstSpacing: 0
+  offset: 0
+  cooldown: 0.75
+  numberOfBursts: 1
+  order: 0
+  keepsAiming: 0
+  isStaticAttack: 0
+  isConstantAttack: 0
+  isActive: 0
+  isOpposite: 0

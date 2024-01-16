@@ -6,10 +6,10 @@ public class BackgroundController : MonoBehaviour
 {
     public float speed;
     [SerializeField]
-    private Renderer renderer;
+    private Renderer rndr;
 
     void Update()
     {
-        renderer.material.mainTextureOffset += new Vector2(0, speed * Time.deltaTime);
+        rndr.material.mainTextureOffset += new Vector2(0, speed * Time.deltaTime);
     }
 }

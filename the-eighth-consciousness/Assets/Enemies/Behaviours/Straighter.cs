@@ -5,15 +5,9 @@ using TMPro;
 
 public class Straighter : AbstractEnemyController
 {
-
-    private TargetTypes targetType;
-    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
-    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
     private Vector2 lastDirection;
-    private bool isAlive = true;
 
     // public TMP_Text statsText;
-    private float time;
     public override int HP
     {
         get
@@ -41,6 +35,7 @@ public class Straighter : AbstractEnemyController
             {
                 for (int j = 0; j < ap.burstSize; j++)
                 {
+
                     if (j > 0)
                     {
                         yield return new WaitForSeconds(ap.burstSpacing);
@@ -78,27 +73,33 @@ public class Straighter : AbstractEnemyController
     void Start()
     {
         time = 0f;
-        hp = 500;
+        hp = 100;
         UpdateGUI();
         targetType = TargetTypes.Player;
 
-        for (int i = 0; i < attackPatternsValues.Count; i++)
-        {
-            AttackPattern ap = attackPatternsValues[i];
-            AttackPattern clone = Instantiate(ap);
-            clone.Init(targetType);
-            attackPatterns.Add(clone);
-        }
+        // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
+        canFire = false;
 
+        initScreenLimit();
+        initFirepoints();
+        initAttackPatterns();
     }
 
     void Update()
     {
-        if (isAlive)
+        if (HP < 0)
+        {
+            isAlive = false;
+            Destroy(gameObject);
+        }
+        // Reached Vertical limit of screen.
+        canFire = screenLimit.Contains(transform.position);
+
+        if (isAlive && canFire)
         {
             loopConstantAttacks();
+            time += Time.fixedDeltaTime;
         }
-        time += Time.fixedDeltaTime;
     }
 
 }

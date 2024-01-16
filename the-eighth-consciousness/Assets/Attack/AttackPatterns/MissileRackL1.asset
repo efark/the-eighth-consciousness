@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spreadSettings: {fileID: 11400000, guid: d8f4dcb5bafc5dd45abf77aa5deaa16e, type: 2}
   bulletSettings: {fileID: 11400000, guid: 0f6f3748b7442d14a893cb390db372f9, type: 2}
+  firepointType: 0
   burstOffset: 0
   burstSize: 1
   burstSpacing: 0
@@ -23,6 +24,6 @@ MonoBehaviour:
   order: 0
   keepsAiming: 0
   isStaticAttack: 0
-  isConstantAttack: 1
+  isConstantAttack: 0
   isActive: 0
   isOpposite: 0

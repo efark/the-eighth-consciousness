@@ -7,17 +7,8 @@ public class VFlyer : AbstractEnemyController
     public float thresholdY = 0f;
     public float thresholdRange = 1.5f;
 
-    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
-    private List<AttackPattern> attackPatterns = new List<AttackPattern>();
-    private List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
-    private int currentOrder = 0;
-    private int maxOrder = 0;
-    private int simultaneousOneShots = 0;
-
-    private TargetTypes targetType;
-    // private GameObject[] players = new GameObject[2];
-    // private GameObject targetPlayer;
     private AbstractMovement mvController;
+    private bool hasFired = false;
     private bool hasTurned = false;
     public override int HP
     {
@@ -28,48 +19,43 @@ public class VFlyer : AbstractEnemyController
         set
         {
             hp += value;
-            //UpdateGUI();
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        hp = 500;
+        hp = 100;
         targetType = TargetTypes.Player;
         mvController = this.GetComponent<AbstractMovement>();
         thresholdY += Random.Range(-thresholdRange, thresholdRange);
 
-        for (int i = 0; i < attackPatternsValues.Count; i++)
-        {
-            AttackPattern ap = attackPatternsValues[i];
-            AttackPattern clone = Instantiate(ap);
-            clone.Init(targetType);
-            if (ap.isConstantAttack)
-            {
-                constantAttackPatterns.Add(clone);
-            }
-            if (!ap.isConstantAttack)
-            {
-                attackPatterns.Add(clone);
-            }
-            if (ap.order > maxOrder)
-            {
-                maxOrder = ap.order;
-            }
-        }
+        initAttackPatterns();
+        initFirepoints();
+        initScreenLimit();
         transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         //Debug.Log($"attackPatterns: {attackPatterns[0]}");
     }
 
     void Update()
     {
-        loopConstantAttacks();
+        if (HP < 0)
+        {
+            isAlive = false;
+            Destroy(gameObject);
+        }
+        canFire = screenLimit.Contains(transform.position);
+
+        //loopConstantAttacks();
+        if (canFire && Mathf.Abs(this.transform.position.y - thresholdY) < 1 && !hasFired)
+        {
+            hasFired = true;
+            FireAll();
+        }
         if (this.transform.position.y <= thresholdY && !hasTurned)
         {
             mvController.direction.y *= -1;
             hasTurned = true;
-            loopOneShotAttacks();
             transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         }
             

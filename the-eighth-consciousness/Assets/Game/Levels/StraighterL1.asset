@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860c1aeeeac237142b7279dd6ee86950, type: 3}
   m_Name: StraighterL1
   m_EditorClassIdentifier: 
-  startingTime: 20
+  startingTime: 3
   enemySpawner: {fileID: 6889087317598876301, guid: a39a30b6f4c191647adacb08ce838016,
     type: 3}
   startingPosition: {x: 0, y: 7, z: 0}

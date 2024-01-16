@@ -8,11 +8,98 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected int hp;
     protected GameObject[] players = new GameObject[2];
     protected GameObject targetPlayer;
+    protected List<Vector3> centralFirepoints = new List<Vector3>();
+    protected List<Vector3> lateralFirepoints = new List<Vector3>();
+    protected List<Vector3> allFirepoints = new List<Vector3>();
+
+    protected TargetTypes targetType;
+    public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
+    protected List<AttackPattern> attackPatterns = new List<AttackPattern>();
+    protected List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
+    protected int currentOrder = 0;
+    protected int maxOrder = 0;
+    protected int simultaneousOneShots = 0;
+    protected float time = 0;
+    protected bool isAlive = true;
+    protected bool canFire = false;
+
+    protected Rect screenLimit;
+
     public TMP_Text statsText;
     public abstract int HP
     {
         get;
         set;
+    }
+
+    protected void initScreenLimit()
+    {
+        Camera cam = Camera.main;
+        Vector3 bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        Vector3 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
+
+        screenLimit = new Rect(
+            bottomLeft.x,
+            bottomLeft.y,
+            topRight.x - bottomLeft.x,
+            topRight.y - bottomLeft.y);
+    }
+
+    protected void initAttackPatterns()
+    {
+        for (int i = 0; i < attackPatternsValues.Count; i++)
+        {
+            AttackPattern ap = attackPatternsValues[i];
+            AttackPattern clone = Instantiate(ap);
+            clone.Init(targetType);
+            if (ap.isConstantAttack)
+            {
+                constantAttackPatterns.Add(clone);
+            }
+            if (!ap.isConstantAttack)
+            {
+                attackPatterns.Add(clone);
+            }
+
+            if (ap.order > maxOrder)
+            {
+                maxOrder = ap.order;
+            }
+        }
+    }
+
+    protected void initFirepoints()
+    {
+        Transform firepoints = this.transform.Find("Firepoints");
+        if (firepoints == null)
+        {
+            return;
+        }
+        foreach (Transform child in firepoints)
+        {
+            if (child.name.ToLower() == "central")
+            {
+                centralFirepoints.Add(child.localPosition);
+            }
+            else
+            {
+                lateralFirepoints.Add(child.localPosition);
+            }
+            allFirepoints.Add(child.localPosition);
+        }
+    }
+
+    protected List<Vector3> GetFirepoints(FirepointTypes ft)
+    {
+        if (ft == FirepointTypes.All)
+        {
+            return allFirepoints;
+        }
+        if (ft == FirepointTypes.Central)
+        {
+            return centralFirepoints;
+        }
+        return lateralFirepoints;
     }
 
     protected GameObject GetClosestPlayer()
@@ -40,6 +127,47 @@ public abstract class AbstractEnemyController : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    protected void FireAll()
+    {
+        StartCoroutine(fireAll());
+    }
+
+    protected IEnumerator fireAll()
+    {
+        foreach (AttackPattern ap in attackPatterns)
+        {
+            players = GameObject.FindGameObjectsWithTag(targetType.ToString());
+            targetPlayer = GetClosestPlayer();
+            List<Vector3>  fPoints = GetFirepoints(ap.firepointType);
+            Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+            Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
+            if (targetPlayer == null)
+            {
+                targetDirection.x = 0;
+                targetDirection.y = -1;
+            }
+            if (ap.isOpposite)
+            {
+                targetDirection *= -1;
+            }
+            foreach (Vector3 fp in fPoints)
+            {
+                for (int i = 0; i < ap.numberOfBursts; i++)
+                {
+                    for (int j = 0; j < ap.burstSize; j++)
+                    {
+                        if (j > 0)
+                        {
+                            yield return new WaitForSeconds(ap.burstSpacing);
+                        }
+                        ap.spread.Create(transform.position + fp, transform.rotation, targetDirection);
+                    }
+                }
+
+            }   
+        }
     }
 
     public void UpdateGUI()

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737216b3c3250a3499167057835eb39f, type: 3}
+  m_Name: SlowCurve
+  m_EditorClassIdentifier: 
+  speed: 4
+  type: 4
+  acceleration: 0
+  minSpeed: 0
+  maxSpeed: 0
+  homingDelay: 0
+  homingSpeed: 0
+  homingDuration: 0
+  force: 0
+  initialForce: 0
+  amplitude: 0
+  waveFrequency: 0
+  waveSpeed: 0
+  isAlternating: 0
+  isRightSided: 0
+  radius: 0
+  spiralSpeed: 0.5
+  rotationSpeed: 0

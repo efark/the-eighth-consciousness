@@ -21,7 +21,7 @@ public class LevelController : MonoBehaviour
     {
         foreach (WavesSettings ws in settings)
         {
-            if (ws.startingTime > time && !ws.Activated)
+            if (ws.startingTime < time && !ws.Activated)
             {
                 ws.SetActivated(true);
                 Instantiate(ws.enemySpawner, ws.startingPosition, Quaternion.identity);
