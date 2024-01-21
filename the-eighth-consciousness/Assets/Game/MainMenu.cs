@@ -19,8 +19,8 @@ public class MainMenu : MonoBehaviour
     float vSbarValue;
     Vector2 scrollPosition = Vector2.zero;
 
-    public Button startGameButton;
-    public Button optionsButton;
+    //public Button startGameButton;
+    //public Button optionsButton;
 
     void Start()
     {
@@ -33,12 +33,12 @@ public class MainMenu : MonoBehaviour
     void OnGUI()
     {
         GUI.skin = guiSkin;
-        startGameButton.onClick.AddListener(startGame);
-        optionsButton.onClick.AddListener(showOptions);
+        //startGameButton.onClick.AddListener(startGame);
+        //optionsButton.onClick.AddListener(showOptions);
         //windowRect = GUI.Window(0, windowRect, DoMyWindow, "Start Game");
     }
 
-    void startGame()
+    public void startGame()
     {
         Debug.Log("Start new Game");
         // Add Animation.
@@ -47,11 +47,11 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator loadScene()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(2.5f);
         SceneManager.LoadScene("Proto1");
     }
 
-    void showOptions()
+    public void showOptionsMenu()
     {
         Debug.Log("Open Options menu");
         // source.Play();
