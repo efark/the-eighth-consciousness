@@ -7,9 +7,24 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GUISkin guiSkin;
-    // private AudioSource source;
 
-    Rect windowRect = new Rect(0, 0, 200, 190);
+    public Canvas canvas;
+
+    public bool showStartMenu = false;
+    public bool ShowStartMenu
+    { 
+        get { return showStartMenu; }
+        set { showStartMenu = value; }
+    }
+
+    public bool showOptionsMenu = false;
+    public bool ShowOptionsMenu
+    { 
+        get { return showOptionsMenu; }
+        set { showOptionsMenu = value; }
+    }
+
+    Rect windowRect = new Rect(0, 0, 500, 360);
     bool toggleTxt = false;
     string stringToEdit = "Text Label";
     string textToEdit = "TextBox:\nHello World\nI've got few lines...";
@@ -19,23 +34,26 @@ public class MainMenu : MonoBehaviour
     float vSbarValue;
     Vector2 scrollPosition = Vector2.zero;
 
-    //public Button startGameButton;
-    //public Button optionsButton;
-
     void Start()
     {
         windowRect.x = (Screen.width - windowRect.width) / 2;
         windowRect.y = (Screen.height - windowRect.height) / 2;
-        // source = GetComponent<AudioSource>();
     }
 
 
     void OnGUI()
     {
         GUI.skin = guiSkin;
-        //startGameButton.onClick.AddListener(startGame);
-        //optionsButton.onClick.AddListener(showOptions);
-        //windowRect = GUI.Window(0, windowRect, DoMyWindow, "Start Game");
+        if (showOptionsMenu)
+        {
+            canvas.enabled = false;
+            windowRect = GUI.Window(0, windowRect, optionsMenu, "Options");
+        }
+        if (showStartMenu)
+        {
+            canvas.enabled = false;
+            windowRect = GUI.Window(0, windowRect, startGameMenu, "Start Game");
+        }
     }
 
     public void startGame()
@@ -51,17 +69,16 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Proto1");
     }
 
-    public void showOptionsMenu()
-    {
-        Debug.Log("Open Options menu");
-        // source.Play();
-        // windowRect = GUI.Window(0, windowRect, DoMyWindow, "Start Game");
+    public void startGameMenu(int windowID)
+    { 
+    
     }
 
-    void DoMyWindow(int windowID)
+    public void optionsMenu(int windowID)
     {
-        /*---------------------------------------------------------------------------------------------
-        GUI.Box(new Rect(10, 50, 120, 250), "Box title");
+        GUI.color = new Color(1.0f, 1.0f, 1.0f, 0.8f);
+
+        GUI.Box(new Rect(10, 50, 120, 250), "Options");
         GUI.Button(new Rect(20, 80, 100, 20), "BUTTON");
         GUI.Label(new Rect(20, 115, 100, 20), "LABEL: Hello!");
         stringToEdit = GUI.TextField(new Rect(15, 140, 110, 20), stringToEdit, 25);
@@ -87,6 +104,7 @@ public class MainMenu : MonoBehaviour
 
 
         GUI.DragWindow(new Rect(0, 0, 10000, 10000));
-        ---------------------------------------------------------------------------------------------*/
+        
     }
+
 }
