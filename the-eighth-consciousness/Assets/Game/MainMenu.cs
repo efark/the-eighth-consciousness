@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GUISkin guiSkin;
+    // private AudioSource source;
 
     Rect windowRect = new Rect(0, 0, 200, 190);
     bool toggleTxt = false;
@@ -25,7 +26,7 @@ public class MainMenu : MonoBehaviour
     {
         windowRect.x = (Screen.width - windowRect.width) / 2;
         windowRect.y = (Screen.height - windowRect.height) / 2;
-
+        // source = GetComponent<AudioSource>();
     }
 
 
@@ -53,6 +54,7 @@ public class MainMenu : MonoBehaviour
     void showOptions()
     {
         Debug.Log("Open Options menu");
+        // source.Play();
         // windowRect = GUI.Window(0, windowRect, DoMyWindow, "Start Game");
     }
 
