@@ -10,6 +10,9 @@ public class MainMenu : MonoBehaviour
 
     public Canvas canvas;
 
+    public AudioSource startFX;
+    public AudioSource navigateMenuFX;
+
     public bool showStartMenu = false;
     public bool ShowStartMenu
     { 
@@ -46,11 +49,13 @@ public class MainMenu : MonoBehaviour
         GUI.skin = guiSkin;
         if (showOptionsMenu)
         {
+            navigateMenuFX.Play();
             canvas.enabled = false;
             windowRect = GUI.Window(0, windowRect, optionsMenu, "Options");
         }
         if (showStartMenu)
         {
+            navigateMenuFX.Play();
             canvas.enabled = false;
             windowRect = GUI.Window(0, windowRect, startGameMenu, "Start Game");
         }
@@ -59,6 +64,7 @@ public class MainMenu : MonoBehaviour
     public void startGame()
     {
         Debug.Log("Start new Game");
+        startFX.Play();
         // Add Animation.
         StartCoroutine(loadScene());
     }
@@ -70,14 +76,20 @@ public class MainMenu : MonoBehaviour
     }
 
     public void startGameMenu(int windowID)
-    { 
-    
+    {
+        GUI.Box(new Rect(10, 40, 480, 380), "New Game");
+        if (GUI.Button(new Rect(40, 160, 100, 25), "1 Player"))
+        {
+            startGame();
+        }
+        if (GUI.Button(new Rect(360, 160, 100, 25), "2 Players"))
+        {
+            navigateMenuFX.Play();
+        }
     }
 
     public void optionsMenu(int windowID)
     {
-        GUI.color = new Color(1.0f, 1.0f, 1.0f, 0.8f);
-
         GUI.Box(new Rect(10, 50, 120, 250), "Options");
         GUI.Button(new Rect(20, 80, 100, 20), "BUTTON");
         GUI.Label(new Rect(20, 115, 100, 20), "LABEL: Hello!");
