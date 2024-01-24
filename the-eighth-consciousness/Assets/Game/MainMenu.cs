@@ -16,9 +16,9 @@ public class MainMenu : MonoBehaviour
     public AudioSource navigateMenuFX;
     public AudioSource BGMusic;
 
-    private float initialFXVolume;
+    private float initialSFXVolume;
     private float initialMusicVolume;
-    private float currentFXVolume;
+    private float currentSFXVolume;
     private float currentMusicVolume;
 
     public bool showStartMenu = false;
@@ -41,12 +41,22 @@ public class MainMenu : MonoBehaviour
 
     public void LoadPlayerPrefs()
     {
-        initialFXVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 1.0f;
+        initialSFXVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 1.0f;
         initialMusicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 1.0f;
-        currentFXVolume = initialFXVolume;
+        currentSFXVolume = initialSFXVolume;
         currentMusicVolume = initialMusicVolume;
-        sfxSliderValue = initialFXVolume;
+        sfxSliderValue = initialSFXVolume;
         musicSliderValue = initialMusicVolume;
+    }
+
+    private void setFXVolume(float volume)
+    {
+        audioMixer.SetFloat("sfxVolume", Mathf.Log(volume) * 20);
+    }
+
+    private void setMusicVolume(float volume)
+    {
+        audioMixer.SetFloat("musicVolume", Mathf.Log(volume) * 20);
     }
 
     void Start()
@@ -55,8 +65,8 @@ public class MainMenu : MonoBehaviour
         windowRect.y = (Screen.height - windowRect.height) / 2;
 
         LoadPlayerPrefs();
-        audioMixer.SetFloat("sfxVolume", Mathf.Log(currentFXVolume) * 20);
-        audioMixer.SetFloat("musicVolume", Mathf.Log(currentMusicVolume) * 20);
+        setFXVolume(currentSFXVolume);
+        setMusicVolume(currentMusicVolume);
     }
 
     void Update()
@@ -64,8 +74,8 @@ public class MainMenu : MonoBehaviour
         /* The formula to scale the volume was taken from Unity Forum:
            https://forum.unity.com/threads/changing-audio-mixer-group-volume-with-ui-slider.297884/#post-3494983
         */
-        audioMixer.SetFloat("sfxVolume", Mathf.Log(currentFXVolume) * 20);
-        audioMixer.SetFloat("musicVolume", Mathf.Log(currentMusicVolume) * 20);
+        setFXVolume(currentSFXVolume);
+        setMusicVolume(currentMusicVolume);
     }
 
     void OnGUI()
@@ -115,24 +125,24 @@ public class MainMenu : MonoBehaviour
 
     private void saveSettings()
     {
-        PlayerPrefs.SetFloat("sfxVolume", currentFXVolume);
+        PlayerPrefs.SetFloat("sfxVolume", currentSFXVolume);
         PlayerPrefs.SetFloat("musicVolume", currentMusicVolume);
     }
 
     private void cancelChanges()
     {
-        currentFXVolume = initialFXVolume;
+        currentSFXVolume = initialSFXVolume;
         currentMusicVolume = initialMusicVolume;
         if (!PlayerPrefs.HasKey("sfxVolume"))
         {
-            PlayerPrefs.SetFloat("sfxVolume", initialFXVolume);
+            PlayerPrefs.SetFloat("sfxVolume", initialSFXVolume);
         }
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
             PlayerPrefs.SetFloat("musicVolume", initialMusicVolume);
         }
-        audioMixer.SetFloat("sfxVolume", Mathf.Log(initialFXVolume) * 20);
-        audioMixer.SetFloat("musicVolume", Mathf.Log(initialMusicVolume) * 20);
+        setFXVolume(initialSFXVolume);
+        setMusicVolume(initialMusicVolume);
     }
 
     public void optionsMenu(int windowID)
@@ -140,9 +150,10 @@ public class MainMenu : MonoBehaviour
 
         GUI.Box(new Rect(10, 40, 480, 380), "Options");
         // SFX Volume.
-        currentFXVolume = GUI.HorizontalSlider(new Rect(150, 70, 50, 30), currentFXVolume, 0.0001F, 1.0F);
+        currentSFXVolume = GUI.HorizontalSlider(new Rect(150, 70, 50, 30), currentSFXVolume, 0.0001F, 1.0F);
         if (GUI.Button(new Rect(230, 70, 100, 25), "SFX Test"))
         {
+            Debug.Log("Pressed test button!");
             navigateMenuFX.Play();
         }
         // Music Volume.

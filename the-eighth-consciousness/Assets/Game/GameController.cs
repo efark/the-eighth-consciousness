@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using TMPro;
 
 // Font 'Futura' downloaded from https://ttfonts.net/.
 public class GameController : MonoBehaviour
 {
+    public AudioMixer audioMixer;
+
     public TMP_Text statsText1;
     public TMP_Text statsText2;
     public TMP_Text gameOverText;
@@ -15,6 +18,21 @@ public class GameController : MonoBehaviour
     public GameObject playerPrefab2;
     public Vector3 InitialPosition1;
     public Vector3 InitialPosition2;
+
+    private float sfxVolume;
+    private float musicVolume;
+
+    private void LoadPreferences()
+    {
+        sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 1.0f;
+        musicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 1.0f;
+    }
+
+    private void SetAudioVolume()
+    {
+        audioMixer.SetFloat("sfxVolume", Mathf.Log(sfxVolume) * 20);
+        audioMixer.SetFloat("musicVolume", Mathf.Log(musicVolume) * 20);
+    }
 
     // Start is called before the first frame update
     void Start()
