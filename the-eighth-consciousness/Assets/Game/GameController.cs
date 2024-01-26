@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour
     public AudioMixer audioMixer;
 
     public AudioSource deathSFX;
+    public AudioSource musicTrack;
+    public AudioSource gameOverTrack;
 
     public TMP_Text statsText1;
     public TMP_Text statsText2;
@@ -47,6 +49,11 @@ public class GameController : MonoBehaviour
 
         UpdatePlayerStats(1);
         UpdatePlayerStats(2);
+
+        LoadPreferences();
+        SetAudioVolume();
+
+        musicTrack.Play();
     }
 
     public void Respawn(int playerId)
@@ -90,6 +97,8 @@ public class GameController : MonoBehaviour
 
     public void FinishGame()
     {
+        musicTrack.Stop();
+        gameOverTrack.Play();
         if (!statsPlayer1.IsActive && !statsPlayer2.IsActive)
         {
             gameOverText.text = "Game Over!";
