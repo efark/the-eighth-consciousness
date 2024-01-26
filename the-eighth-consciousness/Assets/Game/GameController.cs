@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
 {
     public AudioMixer audioMixer;
 
+    public AudioSource deathSFX;
+
     public TMP_Text statsText1;
     public TMP_Text statsText2;
     public TMP_Text gameOverText;
@@ -49,6 +51,13 @@ public class GameController : MonoBehaviour
 
     public void Respawn(int playerId)
     {
+        StartCoroutine(playerDeath(playerId));
+    }
+
+    private IEnumerator playerDeath(int playerId)
+    {
+        deathSFX.Play();
+        yield return new WaitForSecondsRealtime(1.0f);
         if (playerId == 1)
         {
             if (statsPlayer1.IsActive)

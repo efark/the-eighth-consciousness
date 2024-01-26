@@ -36,6 +36,7 @@ public class PlayerStats : ScriptableObject
     public static event Action<int> OnPlayerDeath;
     public static event Action<int> OnGameOver;
     public static event Action<int> OnPlayerGUIChange;
+    public static event Action OnPlayerHit;
 
     public void Init()
     {
@@ -50,6 +51,10 @@ public class PlayerStats : ScriptableObject
     {
         currentHP = Mathf.Clamp(currentHP + summand, _minHP, _maxHP);
         OnPlayerGUIChange?.Invoke(playerId);
+        if (summand < 0)
+        {
+            OnPlayerHit?.Invoke();
+        }
         if (currentHP == _minHP)
         {
             if (currentLives == 0)

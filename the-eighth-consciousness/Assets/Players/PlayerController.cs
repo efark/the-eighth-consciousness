@@ -20,6 +20,13 @@ public class PlayerController : MonoBehaviour
     public float ECDDuration = 4;
     public List<Transform> firepoints = new List<Transform>();
 
+    [Header("Sound FX")]
+    public AudioSource shootSFX;
+    public AudioSource deathSFX;
+    public AudioSource bombSFX;
+    public AudioSource ecdStartSFX;
+    public AudioSource hitSFX;
+
     public PlayerStats stats;
     private float nextFire;
     private float activeECDCooldown;
@@ -57,6 +64,7 @@ public class PlayerController : MonoBehaviour
         ECDenabled = false;
 
         PlayerStats.OnPlayerDeath += Death;
+        PlayerStats.OnPlayerHit += HitSound;
 
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
@@ -79,6 +87,11 @@ public class PlayerController : MonoBehaviour
         bFactory.UpdateFactor(1f + stats.CurrentFirePower * 0.2f);
     }
 
+    public void HitSound()
+    { 
+        hitSFX.Play();
+    }
+
     public void Death(int playerId)
     {
         if (ECDenabled)
@@ -86,7 +99,9 @@ public class PlayerController : MonoBehaviour
             endSlowMo();
         } 
         PlayerStats.OnPlayerDeath -= Death;
+        PlayerStats.OnPlayerHit -= HitSound;
         // Trigger some sound.
+        //deathSFX.Play();
         // Trigger visual effect.
         // Update some values in state.
         Destroy(gameObject);
@@ -136,6 +151,7 @@ public class PlayerController : MonoBehaviour
             if (nextFire <= 0)
             {
                 nextFire = 1 / activeFireRate;
+                shootSFX.Play();
                 for (int i = 0; i < firepoints.Count; i++)
                 {
                     spread.Create(firepoints[i].transform.position, firepoints[i].transform.rotation, Vector2.up);
@@ -146,6 +162,7 @@ public class PlayerController : MonoBehaviour
         {
             if (stats.CurrentBombs > 0 && !bombIsActive)
             {
+                bombSFX.Play();
                 bombIsActive = true;
                 stats.UpdateBombs(-1);
                 Instantiate(bomb, transform.position, Quaternion.identity);
@@ -179,6 +196,7 @@ public class PlayerController : MonoBehaviour
         activeSpeed = ECDSpeed;
         activeFireRate = ECDFireRate;
         stats.UpdateECDStatus("Active");
+        ecdStartSFX.Play();
         OnTriggerECD?.Invoke(true);
         StartCoroutine(waitAndEndSlowMo(ECDDuration));
     }
