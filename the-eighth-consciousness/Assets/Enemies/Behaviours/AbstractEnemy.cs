@@ -141,13 +141,12 @@ public abstract class AbstractEnemyController : MonoBehaviour
             players = GameObject.FindGameObjectsWithTag(targetType.ToString());
             targetPlayer = GetClosestPlayer();
             List<Vector3>  fPoints = GetFirepoints(ap.firepointType);
-            Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
-            Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
-            if (targetPlayer == null)
+            Vector3 targetDir = new Vector3(0, -1, 0);
+            if (targetPlayer != null)
             {
-                targetDirection.x = 0;
-                targetDirection.y = -1;
+                targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
             }
+            Vector2 targetDirection = new Vector2(targetDir.x, targetDir.y);
             if (ap.isOpposite)
             {
                 targetDirection *= -1;

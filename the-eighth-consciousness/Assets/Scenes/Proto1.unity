@@ -703,6 +703,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.4
   rndr: {fileID: 1384143442}
+  baseBG: {fileID: 2100000, guid: e9e1f2787b127e246813f7d863e0dabc, type: 2}
+  ecdBG: {fileID: 2100000, guid: 40cd4f48398d57642ac5997d30fb0caf, type: 2}
 --- !u!23 &1384143442
 MeshRenderer:
   m_ObjectHideFlags: 0
