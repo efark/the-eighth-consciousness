@@ -22,6 +22,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected float time = 0;
     protected bool isAlive = true;
     protected bool canFire = false;
+    public AudioSource shotFX;
 
     protected Rect screenLimit;
 
@@ -161,6 +162,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
                         {
                             yield return new WaitForSeconds(ap.burstSpacing);
                         }
+                        shotFX.Play();
                         ap.spread.Create(transform.position + fp, transform.rotation, targetDirection);
                     }
                 }

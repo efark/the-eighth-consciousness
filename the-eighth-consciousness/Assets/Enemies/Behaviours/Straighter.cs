@@ -52,7 +52,7 @@ public class Straighter : AbstractEnemyController
                         }
                         lastDirection = targetDirection;
                     }
-
+                    shotFX.Play();
                     ap.spread.Create(transform.position, transform.rotation, lastDirection);
                 }
             }
