@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
@@ -1421,7 +1422,7 @@ MonoBehaviour:
     m_StretchHeight: 0
   m_Settings:
     m_DoubleClickSelectsWord: 1
-    m_TripleClickSelectsLine: 1
+    m_TripleClickSelectsLine: 0
     m_CursorColor: {r: 1, g: 1, b: 1, a: 1}
     m_CursorFlashSpeed: -1
     m_SelectionColor: {r: 0.08499137, g: 0.7789883, b: 0.9632353, a: 0.69803923}
