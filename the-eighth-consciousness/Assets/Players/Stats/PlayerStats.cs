@@ -77,7 +77,7 @@ public class PlayerStats : ScriptableObject
 
     public void UpdateIsActive(bool value)
     {
-        isActive = false;
+        isActive = value;
     }
 
     public void SetFullHP()

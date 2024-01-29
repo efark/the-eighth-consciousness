@@ -46,10 +46,11 @@ public class GameController : MonoBehaviour
         PlayerStats.OnGameOver += GameOver;
 
         statsPlayer1.Init();
+        statsPlayer2.Init();
 
         UpdatePlayerStats(1);
         UpdatePlayerStats(2);
-
+        
         LoadPreferences();
         SetAudioVolume();
 
@@ -75,6 +76,19 @@ public class GameController : MonoBehaviour
                 PlayerController pc = pgo.GetComponent<PlayerController>();
                 // Assign playerStats.
                 statsPlayer1.SetFullHP();
+            }
+
+        }
+        if (playerId == 2)
+        {
+            if (statsPlayer2.IsActive)
+            {
+                // Instantiate prefab.
+                GameObject pgo = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
+                // Get PlayerController component.
+                PlayerController pc = pgo.GetComponent<PlayerController>();
+                // Assign playerStats.
+                statsPlayer2.SetFullHP();
             }
 
         }
@@ -109,27 +123,23 @@ public class GameController : MonoBehaviour
     {
         if (playerId == 1)
         {
-            if (statsPlayer1.IsActive)
-            {
-                statsText1.text = $"HP: {statsPlayer1.CurrentHP}\n";
-                statsText1.text += $"Lives: {statsPlayer1.CurrentLives}\n";
-                statsText1.text += $"Bombs: {statsPlayer1.CurrentBombs}\n";
-                statsText1.text += $"ECD: {statsPlayer1.CurrentECDstatus}";
-                return;
-            }
-            statsText1.text = "Game Over";
+            _updatePlayerStats(statsText1, statsPlayer1.IsActive);
         }
         if (playerId == 2)
         {
-            if (statsPlayer2.IsActive)
-            {
-                statsText2.text = $"HP: {statsPlayer2.CurrentHP}\n";
-                statsText2.text += $"Lives: {statsPlayer2.CurrentLives}";
-                statsText2.text += $"Bombs: {statsPlayer2.CurrentBombs}\n";
-                statsText2.text += $"ECD: {statsPlayer2.CurrentECDstatus}";
-                return;
-            }
-            statsText2.text = "Game Over";
+            _updatePlayerStats(statsText2, statsPlayer2.IsActive);
         }
+    }
+    private void _updatePlayerStats(TMP_Text statsText, bool isActive)
+    {
+        if (isActive)
+        {
+            statsText.text = $"HP: {statsPlayer1.CurrentHP}\n";
+            statsText.text += $"Lives: {statsPlayer1.CurrentLives}\n";
+            statsText.text += $"Bombs: {statsPlayer1.CurrentBombs}\n";
+            statsText.text += $"ECD: {statsPlayer1.CurrentECDstatus}";
+            return;
+        }
+        statsText.text = "Game Over";
     }
 }

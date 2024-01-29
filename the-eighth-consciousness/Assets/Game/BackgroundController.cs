@@ -8,13 +8,11 @@ public class BackgroundController : MonoBehaviour
     public float speed;
     public Material baseBG;
     public Material ecdBG;
-    // private bool isGrayscale;
     private Image background;
     private Renderer rdr;
 
     void Start()
     {
-        // isGrayscale = false;
         PlayerController.OnTriggerECD += ChangeColor;
         background = GetComponent<Image>();
         rdr = GetComponent<Renderer>();

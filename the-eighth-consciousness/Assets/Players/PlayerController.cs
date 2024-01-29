@@ -112,17 +112,20 @@ public class PlayerController : MonoBehaviour
 
     public void Death(int playerId)
     {
-        if (ECDenabled)
+        if (playerId == _playerId)
         {
-            endSlowMo();
-        } 
-        PlayerStats.OnPlayerDeath -= Death;
-        PlayerStats.OnPlayerHit -= HitSound;
-        // Trigger some sound.
-        //deathSFX.Play();
-        // Trigger visual effect.
-        // Update some values in state.
-        Destroy(gameObject);
+            if (ECDenabled)
+            {
+                endSlowMo();
+            }
+            PlayerStats.OnPlayerDeath -= Death;
+            PlayerStats.OnPlayerHit -= HitSound;
+            // Trigger some sound.
+            //deathSFX.Play();
+            // Trigger visual effect.
+            // Update some values in state.
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
