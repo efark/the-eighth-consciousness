@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject bomb;
+    public int _playerId;
 
     [Header("Movement")]
     public float speed = 12;
@@ -49,7 +50,22 @@ public class PlayerController : MonoBehaviour
     private float bombCooldown;
     private bool bombIsActive;
 
+    private string xAxisName;
+    private string yAxisName;
+    private string fire1Name;
+    private string fire2Name;
+    private string fire3Name;
+
     public static event Action<bool> OnTriggerECD;
+
+    private void mapButtons()
+    {
+        xAxisName = $"Horizontal{_playerId}";
+        yAxisName = $"Vertical{_playerId}";
+        fire1Name = $"Fire{_playerId}1";
+        fire2Name = $"Fire{_playerId}2";
+        fire3Name = $"Fire{_playerId}3";
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +84,8 @@ public class PlayerController : MonoBehaviour
 
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
+
+        mapButtons();
 
         // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
         cam = Camera.main;
@@ -110,8 +128,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // Character movement.
-        float moveVertical = Input.GetAxis("Vertical");
-        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveHorizontal = Input.GetAxis(xAxisName);
+        float moveVertical = Input.GetAxis(yAxisName);
         
         // Reached Vertical limit of screen.
         if ((moveVertical > 0 && transform.position.y >= cameraRect.yMax) ||
@@ -135,9 +153,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         nextFire = Mathf.Max(nextFire - Time.deltaTime, 0);
-        bool fireButton = Input.GetButton("Fire1");
-        bool bombButton = Input.GetButtonDown("Fire2");
-        bool slowMoButton = Input.GetButtonDown("Fire3");
+        bool fireButton = Input.GetButton(fire1Name);
+        bool bombButton = Input.GetButtonDown(fire2Name);
+        bool slowMoButton = Input.GetButtonDown(fire3Name);
 
         // This should be modified later.
         players = GameObject.FindGameObjectsWithTag("Player");

@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bomb: {fileID: 137817258388388087, guid: df351a712de24614186608ecc5af6158, type: 3}
+  _playerId: 1
   speed: 12
   ECDSpeed: 16
   fireRate: 4
