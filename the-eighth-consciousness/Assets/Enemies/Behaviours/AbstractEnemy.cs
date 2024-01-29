@@ -162,7 +162,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
                         {
                             yield return new WaitForSeconds(ap.burstSpacing);
                         }
-                        shotFX.Play();
+                        shotFX.PlayOneShot(shotFX.clip);
                         ap.spread.Create(transform.position + fp, transform.rotation, targetDirection);
                     }
                 }

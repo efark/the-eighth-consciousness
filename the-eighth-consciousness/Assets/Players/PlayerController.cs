@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
             if (nextFire <= 0)
             {
                 nextFire = 1 / activeFireRate;
-                shootSFX.Play();
+                shootSFX.PlayOneShot(shootSFX.clip);
                 for (int i = 0; i < firepoints.Count; i++)
                 {
                     spread.Create(firepoints[i].transform.position, firepoints[i].transform.rotation, Vector2.up);
