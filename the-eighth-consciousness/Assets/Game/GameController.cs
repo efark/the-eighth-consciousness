@@ -123,21 +123,21 @@ public class GameController : MonoBehaviour
     {
         if (playerId == 1)
         {
-            _updatePlayerStats(statsText1, statsPlayer1.IsActive);
+            _updatePlayerStats(statsText1, statsPlayer1);
         }
         if (playerId == 2)
         {
-            _updatePlayerStats(statsText2, statsPlayer2.IsActive);
+            _updatePlayerStats(statsText2, statsPlayer2);
         }
     }
-    private void _updatePlayerStats(TMP_Text statsText, bool isActive)
+    private void _updatePlayerStats(TMP_Text statsText, PlayerStats pStats)
     {
-        if (isActive)
+        if (pStats.IsActive)
         {
-            statsText.text = $"HP: {statsPlayer1.CurrentHP}\n";
-            statsText.text += $"Lives: {statsPlayer1.CurrentLives}\n";
-            statsText.text += $"Bombs: {statsPlayer1.CurrentBombs}\n";
-            statsText.text += $"ECD: {statsPlayer1.CurrentECDstatus}";
+            statsText.text = $"HP: {pStats.CurrentHP}\n";
+            statsText.text += $"Lives: {pStats.CurrentLives}\n";
+            statsText.text += $"Bombs: {pStats.CurrentBombs}\n";
+            statsText.text += $"ECD: {pStats.CurrentECDstatus}";
             return;
         }
         statsText.text = "Game Over";

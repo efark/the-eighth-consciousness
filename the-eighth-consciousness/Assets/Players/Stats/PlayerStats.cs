@@ -36,7 +36,7 @@ public class PlayerStats : ScriptableObject
     public static event Action<int> OnPlayerDeath;
     public static event Action<int> OnGameOver;
     public static event Action<int> OnPlayerGUIChange;
-    public static event Action OnPlayerHit;
+    public static event Action<int> OnPlayerHit;
 
     public void Init()
     {
@@ -53,7 +53,7 @@ public class PlayerStats : ScriptableObject
         OnPlayerGUIChange?.Invoke(playerId);
         if (summand < 0)
         {
-            OnPlayerHit?.Invoke();
+            OnPlayerHit?.Invoke(playerId);
         }
         if (currentHP == _minHP)
         {

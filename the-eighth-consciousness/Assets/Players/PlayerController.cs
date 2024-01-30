@@ -79,8 +79,8 @@ public class PlayerController : MonoBehaviour
         stats.UpdateECDStatus("Ready");
         ECDenabled = false;
 
-        PlayerStats.OnPlayerDeath += Death;
-        PlayerStats.OnPlayerHit += HitSound;
+        // PlayerStats.OnPlayerDeath += Death;
+        PlayerStats.OnPlayerHit += PlayerHit;
 
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
@@ -105,9 +105,16 @@ public class PlayerController : MonoBehaviour
         bFactory.UpdateFactor(1f + stats.CurrentFirePower * 0.2f);
     }
 
-    public void HitSound()
-    { 
-        hitSFX.Play();
+    public void PlayerHit(int playerId)
+    {
+        if (playerId == _playerId)
+        {
+            hitSFX.PlayOneShot(hitSFX.clip);
+            if (stats.CurrentHP <= 0)
+            {
+                Death(playerId);
+            }
+        }
     }
 
     public void Death(int playerId)
@@ -118,8 +125,8 @@ public class PlayerController : MonoBehaviour
             {
                 endSlowMo();
             }
-            PlayerStats.OnPlayerDeath -= Death;
-            PlayerStats.OnPlayerHit -= HitSound;
+            // PlayerStats.OnPlayerDeath -= Death;
+            PlayerStats.OnPlayerHit -= PlayerHit;
             // Trigger some sound.
             //deathSFX.Play();
             // Trigger visual effect.
