@@ -33,6 +33,15 @@ public class PlayerStats : ScriptableObject
     public int CurrentScore => score;
     public string CurrentECDstatus => currentECDstatus;
 
+    private float iFrameDuration;
+    public float IFrameDuration => iFrameDuration;
+    private bool iFrameActive;
+    public bool IFrameActive => iFrameActive;
+    public void UpdateIFrameActive(bool value)
+    {
+        iFrameActive = value;
+    }
+
     public static event Action<int> OnPlayerDeath;
     public static event Action<int> OnGameOver;
     public static event Action<int> OnPlayerGUIChange;
@@ -40,6 +49,8 @@ public class PlayerStats : ScriptableObject
 
     public void Init()
     {
+        iFrameDuration = 0.5f;
+        iFrameActive = false;
         isActive = true;
         currentHP = _maxHP;
         currentLives = _lives;
@@ -49,14 +60,25 @@ public class PlayerStats : ScriptableObject
 
     public void UpdateHP(int summand)
     {
-        currentHP = Mathf.Clamp(currentHP + summand, _minHP, _maxHP);
-        OnPlayerGUIChange?.Invoke(playerId);
+        if (currentHP < _minHP)
+        {
+            return;
+        }
         if (summand < 0)
         {
             OnPlayerHit?.Invoke(playerId);
+            if (iFrameActive)
+            {
+                return;
+            }
+            ActivateIFrame();
         }
-        if (currentHP == _minHP)
+        currentHP = Mathf.Clamp(currentHP + summand, _minHP -1, _maxHP);
+        OnPlayerGUIChange?.Invoke(playerId);
+
+        if (currentHP <= _minHP)
         {
+            Debug.Log($"Lives: {currentLives}");
             if (currentLives == 0)
             {
                 isActive = false;
@@ -67,6 +89,11 @@ public class PlayerStats : ScriptableObject
             --currentLives;
             OnPlayerDeath?.Invoke(playerId);
         }
+    }
+
+    public void ActivateIFrame()
+    {
+        iFrameActive = true;
     }
 
     public void UpdateECDStatus(string value)

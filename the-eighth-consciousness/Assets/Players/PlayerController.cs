@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerId == _playerId)
         {
+            StartCoroutine(deactivateIFrame(stats.IFrameDuration));
             hitSFX.PlayOneShot(hitSFX.clip);
             if (stats.CurrentHP <= 0)
             {
@@ -117,10 +118,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private IEnumerator deactivateIFrame(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        stats.UpdateIFrameActive(false);
+    }
+
     public void Death(int playerId)
     {
         if (playerId == _playerId)
         {
+            if (stats.IFrameActive)
+            {
+                StartCoroutine(deactivateIFrame(0f));
+            }
             if (ECDenabled)
             {
                 endSlowMo();
