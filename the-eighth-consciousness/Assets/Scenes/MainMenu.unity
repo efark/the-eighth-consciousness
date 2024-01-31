@@ -523,8 +523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
+  m_HorizontalAxis: Horizontal1
+  m_VerticalAxis: Vertical1
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
@@ -1143,6 +1143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae544b63252e9247a5dc3a16744cba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statsPlayer1: {fileID: 11400000, guid: 3ce5cb6028dff9d408560cc987803692, type: 2}
+  statsPlayer2: {fileID: 11400000, guid: 0f67b08058f11c7419f4d3bd31c7f829, type: 2}
   guiSkin: {fileID: 11400000, guid: 9705c0e7595e14d42bcd9e476468d8d7, type: 2}
   canvas: {fileID: 1794545287}
   audioMixer: {fileID: 24100000, guid: 6ee537fc11b2b4849aa122de75721999, type: 2}

@@ -2,59 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using TMPro;
 
 // Font 'Futura' downloaded from https://ttfonts.net/.
 public class GameController : MonoBehaviour
 {
-    public AudioMixer audioMixer;
-
-    public AudioSource deathSFX;
-    public AudioSource musicTrack;
-    public AudioSource gameOverTrack;
-
-    public TMP_Text statsText1;
-    public TMP_Text statsText2;
-    public TMP_Text gameOverText;
     public PlayerStats statsPlayer1;
     public PlayerStats statsPlayer2;
     public GameObject playerPrefab1;
     public GameObject playerPrefab2;
     public Vector3 InitialPosition1;
     public Vector3 InitialPosition2;
-
-    private float sfxVolume;
-    private float musicVolume;
-
-    private void LoadPreferences()
+    public AudioSource deathSFX;
+    /*
+    public void Init(bool hasPlayer2)
     {
-        sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 1.0f;
-        musicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 1.0f;
-    }
-
-    private void SetAudioVolume()
-    {
-        audioMixer.SetFloat("sfxVolume", Mathf.Log(sfxVolume) * 20);
-        audioMixer.SetFloat("musicVolume", Mathf.Log(musicVolume) * 20);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        PlayerStats.OnPlayerGUIChange += UpdatePlayerStats;
-        PlayerStats.OnPlayerDeath += Respawn;
-        PlayerStats.OnGameOver += GameOver;
-
         statsPlayer1.Init();
-        statsPlayer2.Init();
+        if (hasPlayer2)
+        {
+            statsPlayer2.Init();
+        }
 
-        UpdatePlayerStats(1);
-        UpdatePlayerStats(2);
-        
-        LoadPreferences();
-        SetAudioVolume();
+    }
+    */
+    public void Start()
+    {
+        PlayerStats.OnPlayerDeath += Respawn;
+        if (statsPlayer1.IsActive)
+        {
+            Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity);
+        }
+        if (statsPlayer2.IsActive)
+        {
+            Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity);
+        }
+    }
 
-        musicTrack.Play();
+    public void OnDestroy()
+    {
+        PlayerStats.OnPlayerDeath -= Respawn;
     }
 
     public void Respawn(int playerId)
@@ -68,78 +53,25 @@ public class GameController : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.0f);
         if (playerId == 1)
         {
-            if (statsPlayer1.IsActive)
-            {
-                // Instantiate prefab.
-                GameObject pgo = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
-                // Get PlayerController component.
-                PlayerController pc = pgo.GetComponent<PlayerController>();
-                // Assign playerStats.
-                statsPlayer1.SetFullHP();
-            }
-
+            _playerSpawn(playerPrefab1, InitialPosition1, statsPlayer1);
         }
         if (playerId == 2)
         {
-            if (statsPlayer2.IsActive)
-            {
-                // Instantiate prefab.
-                GameObject pgo = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
-                // Get PlayerController component.
-                PlayerController pc = pgo.GetComponent<PlayerController>();
-                // Assign playerStats.
-                statsPlayer2.SetFullHP();
-            }
-
+            _playerSpawn(playerPrefab2, InitialPosition2, statsPlayer2);
         }
     }
 
-    public void GameOver(int playerId)
+    private void _playerSpawn(GameObject prefab, Vector3 initialPosition, PlayerStats stats)
     {
-        if (playerId == 1)
+        if (stats.IsActive)
         {
-            statsPlayer1.UpdateIsActive(false);
-            UpdatePlayerStats(1);
-        }
-        if (playerId == 2)
-        {
-            statsPlayer2.UpdateIsActive(false);
-            UpdatePlayerStats(2);
-        }
-        FinishGame();
-    }
-
-    public void FinishGame()
-    {
-        musicTrack.Stop();
-        gameOverTrack.Play();
-        if (!statsPlayer1.IsActive && !statsPlayer2.IsActive)
-        {
-            gameOverText.text = "Game Over!";
+            // Instantiate prefab.
+            GameObject pgo = Instantiate(prefab, initialPosition, Quaternion.identity) as GameObject;
+            // Get PlayerController component.
+            // PlayerController pc = pgo.GetComponent<PlayerController>();
+            // Assign playerStats.
+            stats.SetFullHP();
         }
     }
 
-    public void UpdatePlayerStats(int playerId)
-    {
-        if (playerId == 1)
-        {
-            _updatePlayerStats(statsText1, statsPlayer1);
-        }
-        if (playerId == 2)
-        {
-            _updatePlayerStats(statsText2, statsPlayer2);
-        }
-    }
-    private void _updatePlayerStats(TMP_Text statsText, PlayerStats pStats)
-    {
-        if (pStats.IsActive)
-        {
-            statsText.text = $"HP: {pStats.CurrentHP}\n";
-            statsText.text += $"Lives: {pStats.CurrentLives}\n";
-            statsText.text += $"Bombs: {pStats.CurrentBombs}\n";
-            statsText.text += $"ECD: {pStats.CurrentECDstatus}";
-            return;
-        }
-        statsText.text = "Game Over";
-    }
 }

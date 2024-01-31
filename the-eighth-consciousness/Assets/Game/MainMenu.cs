@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public PlayerStats statsPlayer1;
+    public PlayerStats statsPlayer2;
+
     public GUISkin guiSkin;
 
     public Canvas canvas;
@@ -65,6 +68,9 @@ public class MainMenu : MonoBehaviour
         windowRect.x = (Screen.width - windowRect.width) / 2;
         windowRect.y = (Screen.height - windowRect.height) / 2;
 
+        statsPlayer1.UpdateIsActive(false);
+        statsPlayer2.UpdateIsActive(false);
+
         LoadPlayerPrefs();
         setFXVolume(currentSFXVolume);
         setMusicVolume(currentMusicVolume);
@@ -99,12 +105,17 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public void startGame()
+    public void startGame(bool hasPlayer2)
     {
         Debug.Log("Start new Game");
         BGMusic.Stop();
         startFX.Play();
         // Add Animation.
+        statsPlayer1.Init();
+        if(hasPlayer2)
+        { 
+            statsPlayer2.Init();
+        }
         StartCoroutine(loadScene());
     }
 
@@ -119,11 +130,11 @@ public class MainMenu : MonoBehaviour
         //GUI.Box(new Rect(10, 40, 480, 380), "New Game");
         if (GUI.Button(new Rect(40, 160, 100, 25), "1 Player"))
         {
-            startGame();
+            startGame(false);
         }
         if (GUI.Button(new Rect(360, 160, 100, 25), "2 Players"))
         {
-            navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
+            startGame(true);
         }
 
         if (GUI.Button(new Rect(190, 300, 100, 20), "Back"))
