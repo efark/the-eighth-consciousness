@@ -35,7 +35,7 @@ public class GUIController : MonoBehaviour
             UpdatePlayerStats(2);
         }
         else {
-            GameOver(2);
+            disableText(statsText2);
         }
 
         LoadPreferences();
@@ -104,12 +104,17 @@ public class GUIController : MonoBehaviour
         statsText.text = "Game Over";
     }
 
+    private void disableText(TMP_Text statsText)
+    {
+        statsText.text = "";
+    }
+
     public void FinishGame()
     {
         musicTrack.Stop();
         gameOverTrack.Play();
-        statsText1.text = "";
-        statsText2.text = "";
+        disableText(statsText1);
+        disableText(statsText2);
         gameOverText.text = "Game Over!";
         StartCoroutine(loadScene());
     }

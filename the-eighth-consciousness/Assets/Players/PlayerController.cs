@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
     private float bombCooldown;
     private bool bombIsActive;
 
+    private float iFrameCooldown;
+
     private string xAxisName;
     private string yAxisName;
     private string fire1Name;
@@ -78,8 +80,10 @@ public class PlayerController : MonoBehaviour
         ECDready = true;
         stats.UpdateECDStatus("Ready");
         ECDenabled = false;
+        iFrameCooldown = 0;
 
-        // PlayerStats.OnPlayerDeath += Death;
+        PlayerStats.OnPlayerDeath += Death;
+        PlayerStats.OnGameOver += Death;
         PlayerStats.OnPlayerHit += PlayerHit;
 
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
@@ -109,37 +113,30 @@ public class PlayerController : MonoBehaviour
     {
         if (playerId == _playerId)
         {
-            StartCoroutine(deactivateIFrame(stats.IFrameDuration));
+            iFrameCooldown = stats.IFrameDuration;
             hitSFX.PlayOneShot(hitSFX.clip);
-            if (stats.CurrentHP <= 0)
-            {
-                Death(playerId);
-            }
         }
     }
-
+    /*
     private IEnumerator deactivateIFrame(float duration)
     {
         yield return new WaitForSecondsRealtime(duration);
         stats.UpdateIFrameActive(false);
     }
-
+    */
     public void Death(int playerId)
     {
         if (playerId == _playerId)
         {
-            if (stats.IFrameActive)
-            {
-                StartCoroutine(deactivateIFrame(0f));
-            }
             if (ECDenabled)
             {
                 endSlowMo();
             }
-            // PlayerStats.OnPlayerDeath -= Death;
+            PlayerStats.OnPlayerDeath -= Death;
+            PlayerStats.OnGameOver -= Death;
             PlayerStats.OnPlayerHit -= PlayerHit;
             // Trigger some sound.
-            //deathSFX.Play();
+            deathSFX.Play();
             // Trigger visual effect.
             // Update some values in state.
             Destroy(gameObject);
@@ -177,6 +174,12 @@ public class PlayerController : MonoBehaviour
         bool fireButton = Input.GetButton(fire1Name);
         bool bombButton = Input.GetButtonDown(fire2Name);
         bool slowMoButton = Input.GetButtonDown(fire3Name);
+
+        iFrameCooldown = Mathf.Max(iFrameCooldown - Time.deltaTime, 0);
+        if (iFrameCooldown == 0)
+        {
+            stats.UpdateIFrameActive(false);
+        }
 
         // This should be modified later.
         players = GameObject.FindGameObjectsWithTag("Player");

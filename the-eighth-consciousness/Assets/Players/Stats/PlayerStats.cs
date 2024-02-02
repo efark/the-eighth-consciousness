@@ -19,6 +19,7 @@ public class PlayerStats : ScriptableObject
 
     private int score;
     private bool isActive = false;
+    private bool isAlive;
     private int currentHP;
     private int currentLives;
     private int currentBombs;
@@ -26,6 +27,7 @@ public class PlayerStats : ScriptableObject
     private string currentECDstatus;
     // 
     public bool IsActive => isActive;
+    public bool IsAlive => isAlive;
     public int CurrentHP => currentHP;
     public int CurrentLives => currentLives;
     public int CurrentBombs => currentBombs;
@@ -41,11 +43,16 @@ public class PlayerStats : ScriptableObject
     {
         iFrameActive = value;
     }
+    public void UpdateIsAlive(bool value)
+    { 
+        isAlive = value;
+    }
 
     public static event Action<int> OnPlayerDeath;
     public static event Action<int> OnGameOver;
     public static event Action<int> OnPlayerGUIChange;
     public static event Action<int> OnPlayerHit;
+    public static event Action<int> OnPlayerHealed;
 
     public void Init()
     {
@@ -60,35 +67,48 @@ public class PlayerStats : ScriptableObject
 
     public void UpdateHP(int summand)
     {
-        if (currentHP < _minHP)
+        summand = iFrameActive ? 0 : summand;
+        if (!isAlive || summand == 0)
         {
             return;
         }
-        if (summand < 0)
-        {
-            OnPlayerHit?.Invoke(playerId);
-            if (iFrameActive)
-            {
-                return;
-            }
-            ActivateIFrame();
-        }
-        currentHP = Mathf.Clamp(currentHP + summand, _minHP -1, _maxHP);
+
+        // Calculate new HP value.
+        currentHP = Mathf.Clamp(currentHP + summand, _minHP, _maxHP);
         OnPlayerGUIChange?.Invoke(playerId);
 
-        if (currentHP <= _minHP)
+        // Player gets killed.
+        if (currentHP == _minHP)
         {
-            Debug.Log($"Lives: {currentLives}");
+            isAlive = false;
             if (currentLives == 0)
             {
                 isActive = false;
-                OnPlayerDeath?.Invoke(playerId);
                 OnGameOver?.Invoke(playerId);
                 return;
             }
-            --currentLives;
             OnPlayerDeath?.Invoke(playerId);
+            OnPlayerGUIChange?.Invoke(playerId);
+            return;
         }
+
+        // Player gets healed.
+        if (summand > 0)
+        {
+            // Call OnPlayerHealed.
+            OnPlayerHealed?.Invoke(playerId);
+            OnPlayerGUIChange?.Invoke(playerId);
+            return;
+        }
+        // Player gets hit.
+        if (summand < 0)
+        {
+            OnPlayerHit?.Invoke(playerId);
+            OnPlayerGUIChange?.Invoke(playerId);
+            ActivateIFrame();
+            return;
+        }
+
     }
 
     public void ActivateIFrame()
@@ -116,6 +136,7 @@ public class PlayerStats : ScriptableObject
     public void UpdateLives(int summand)
     {
         currentLives += summand;
+        OnPlayerGUIChange?.Invoke(playerId);
     }
 
     public void UpdateBombs(int summand)

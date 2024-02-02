@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 
 // Font 'Futura' downloaded from https://ttfonts.net/.
 public class GameController : MonoBehaviour
@@ -12,7 +11,8 @@ public class GameController : MonoBehaviour
     public GameObject playerPrefab2;
     public Vector3 InitialPosition1;
     public Vector3 InitialPosition2;
-    public AudioSource deathSFX;
+    private bool mustRespawn1;
+    private bool mustRespawn2;
     /*
     public void Init(bool hasPlayer2)
     {
@@ -26,52 +26,74 @@ public class GameController : MonoBehaviour
     */
     public void Start()
     {
-        PlayerStats.OnPlayerDeath += Respawn;
+        mustRespawn1 = false;
+        mustRespawn2 = false;
+        PlayerStats.OnPlayerDeath += FlagPlayerRespawn;
+        // PlayerStats.OnGameOver += PlayerGameOver;
         if (statsPlayer1.IsActive)
         {
             Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity);
+            statsPlayer1.UpdateIsAlive(true);
         }
         if (statsPlayer2.IsActive)
         {
             Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity);
+            statsPlayer2.UpdateIsAlive(true);
         }
     }
 
-    public void OnDestroy()
+    void Update()
     {
-        PlayerStats.OnPlayerDeath -= Respawn;
+        if (mustRespawn1)
+        {
+            mustRespawn1 = false;
+            StartCoroutine(playerRespawn(1));
+        }
+        if (mustRespawn2)
+        {
+            mustRespawn2 = false;
+            StartCoroutine(playerRespawn(2));
+        }
     }
 
-    public void Respawn(int playerId)
+    public void FlagPlayerRespawn(int playerId)
     {
-        StartCoroutine(playerDeath(playerId));
+        if (playerId == 1)
+        { 
+            mustRespawn1 = true;
+        }
+        if (playerId == 2)
+        {
+            mustRespawn2 = true;
+        }
     }
 
-    private IEnumerator playerDeath(int playerId)
+    private IEnumerator playerRespawn(int playerId)
     {
-        deathSFX.Play();
         yield return new WaitForSecondsRealtime(1.0f);
         if (playerId == 1)
         {
             _playerSpawn(playerPrefab1, InitialPosition1, statsPlayer1);
+            // triggeredRespawn1 = false;
         }
         if (playerId == 2)
         {
             _playerSpawn(playerPrefab2, InitialPosition2, statsPlayer2);
+            // triggeredRespawn2 = false;
         }
     }
 
     private void _playerSpawn(GameObject prefab, Vector3 initialPosition, PlayerStats stats)
     {
-        if (stats.IsActive)
-        {
-            // Instantiate prefab.
-            GameObject pgo = Instantiate(prefab, initialPosition, Quaternion.identity) as GameObject;
-            // Get PlayerController component.
-            // PlayerController pc = pgo.GetComponent<PlayerController>();
-            // Assign playerStats.
-            stats.SetFullHP();
-        }
+        // Assign playerStats.
+        stats.UpdateIsAlive(true);
+        stats.UpdateIFrameActive(false);
+        stats.UpdateLives(-1);
+        stats.SetFullHP();
+        // Instantiate prefab.
+        // GameObject pgo = 
+        Instantiate(prefab, initialPosition, Quaternion.identity);
+
     }
 
 }
