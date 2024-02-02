@@ -112,6 +112,7 @@ public class VFlyer : AbstractEnemyController
                         targetDirection *= -1;
                     }
                 }
+                shotFX.PlayOneShot(shotFX.clip);
                 ap.spread.Create(transform.position, transform.rotation, targetDirection);
             }
         }

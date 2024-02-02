@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public PlayerStats statsPlayer1;
+    public PlayerStats statsPlayer2;
+
     public GUISkin guiSkin;
 
     public Canvas canvas;
@@ -14,6 +17,7 @@ public class MainMenu : MonoBehaviour
 
     public AudioSource startFX;
     public AudioSource navigateMenuFX;
+    public AudioSource testFX;
     public AudioSource BGMusic;
 
     private float initialSFXVolume;
@@ -64,6 +68,9 @@ public class MainMenu : MonoBehaviour
         windowRect.x = (Screen.width - windowRect.width) / 2;
         windowRect.y = (Screen.height - windowRect.height) / 2;
 
+        statsPlayer1.UpdateIsActive(false);
+        statsPlayer2.UpdateIsActive(false);
+
         LoadPlayerPrefs();
         setFXVolume(currentSFXVolume);
         setMusicVolume(currentMusicVolume);
@@ -78,29 +85,37 @@ public class MainMenu : MonoBehaviour
         setMusicVolume(currentMusicVolume);
     }
 
+    public void PlayNavigationSound()
+    {
+        navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
+    }
+
     void OnGUI()
     {
         GUI.skin = guiSkin;
         if (showOptionsMenu)
         {
-            navigateMenuFX.Play();
             canvas.enabled = false;
             windowRect = GUI.Window(0, windowRect, optionsMenu, "Options");
         }
         if (showStartMenu)
         {
-            navigateMenuFX.Play();
             canvas.enabled = false;
             windowRect = GUI.Window(0, windowRect, startGameMenu, "Start Game");
         }
     }
 
-    public void startGame()
+    public void startGame(bool hasPlayer2)
     {
         Debug.Log("Start new Game");
         BGMusic.Stop();
         startFX.Play();
         // Add Animation.
+        statsPlayer1.Init();
+        if(hasPlayer2)
+        { 
+            statsPlayer2.Init();
+        }
         StartCoroutine(loadScene());
     }
 
@@ -112,14 +127,22 @@ public class MainMenu : MonoBehaviour
 
     public void startGameMenu(int windowID)
     {
-        GUI.Box(new Rect(10, 40, 480, 380), "New Game");
+        //GUI.Box(new Rect(10, 40, 480, 380), "New Game");
         if (GUI.Button(new Rect(40, 160, 100, 25), "1 Player"))
         {
-            startGame();
+            startGame(false);
         }
         if (GUI.Button(new Rect(360, 160, 100, 25), "2 Players"))
         {
-            navigateMenuFX.Play();
+            startGame(true);
+        }
+
+        if (GUI.Button(new Rect(190, 300, 100, 20), "Back"))
+        {
+            Debug.Log("Save and back");
+            navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
+            showStartMenu = false;
+            canvas.enabled = true;
         }
     }
 
@@ -147,22 +170,21 @@ public class MainMenu : MonoBehaviour
 
     public void optionsMenu(int windowID)
     {
-
-        GUI.Box(new Rect(10, 40, 480, 380), "Options");
         // SFX Volume.
-        currentSFXVolume = GUI.HorizontalSlider(new Rect(150, 70, 50, 30), currentSFXVolume, 0.0001F, 1.0F);
-        if (GUI.Button(new Rect(230, 70, 100, 25), "SFX Test"))
+        GUI.Label(new Rect(70, 90, 120, 30), "SFX Volume");
+        currentSFXVolume = GUI.HorizontalSlider(new Rect(220, 90, 50, 30), currentSFXVolume, 0.0001F, 1.0F);
+        if (GUI.Button(new Rect(280, 80, 100, 20), "SFX Test"))
         {
-            Debug.Log("Pressed test button!");
-            navigateMenuFX.Play();
+            testFX.PlayOneShot(testFX.clip);
         }
         // Music Volume.
-        currentMusicVolume = GUI.HorizontalSlider(new Rect(150, 100, 50, 30), currentMusicVolume, 0.0001F, 1.0F);
+        GUI.Label(new Rect(70, 130, 120, 30), "Music Volume");
+        currentMusicVolume = GUI.HorizontalSlider(new Rect(220, 130, 50, 30), currentMusicVolume, 0.0001F, 1.0F);
 
         if (GUI.Button(new Rect(40, 300, 100, 25), "Cancel"))
         {
             Debug.Log("Back");
-            navigateMenuFX.Play();
+            navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
             showOptionsMenu = false;
             canvas.enabled = true;
             cancelChanges();
@@ -170,7 +192,7 @@ public class MainMenu : MonoBehaviour
         if (GUI.Button(new Rect(360, 300, 100, 25), "Done"))
         {
             Debug.Log("Save and back");
-            navigateMenuFX.Play();
+            navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
             showOptionsMenu = false;
             canvas.enabled = true;
             saveSettings();

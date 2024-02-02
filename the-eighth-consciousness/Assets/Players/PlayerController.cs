@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject bomb;
+    public int _playerId;
 
     [Header("Movement")]
     public float speed = 12;
@@ -49,7 +50,24 @@ public class PlayerController : MonoBehaviour
     private float bombCooldown;
     private bool bombIsActive;
 
+    private float iFrameCooldown;
+
+    private string xAxisName;
+    private string yAxisName;
+    private string fire1Name;
+    private string fire2Name;
+    private string fire3Name;
+
     public static event Action<bool> OnTriggerECD;
+
+    private void mapButtons()
+    {
+        xAxisName = $"Horizontal{_playerId}";
+        yAxisName = $"Vertical{_playerId}";
+        fire1Name = $"Fire{_playerId}1";
+        fire2Name = $"Fire{_playerId}2";
+        fire3Name = $"Fire{_playerId}3";
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -62,12 +80,16 @@ public class PlayerController : MonoBehaviour
         ECDready = true;
         stats.UpdateECDStatus("Ready");
         ECDenabled = false;
+        iFrameCooldown = 0;
 
         PlayerStats.OnPlayerDeath += Death;
-        PlayerStats.OnPlayerHit += HitSound;
+        PlayerStats.OnGameOver += Death;
+        PlayerStats.OnPlayerHit += PlayerHit;
 
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
+
+        mapButtons();
 
         // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
         cam = Camera.main;
@@ -87,31 +109,45 @@ public class PlayerController : MonoBehaviour
         bFactory.UpdateFactor(1f + stats.CurrentFirePower * 0.2f);
     }
 
-    public void HitSound()
-    { 
-        hitSFX.Play();
+    public void PlayerHit(int playerId)
+    {
+        if (playerId == _playerId)
+        {
+            iFrameCooldown = stats.IFrameDuration;
+            hitSFX.PlayOneShot(hitSFX.clip);
+        }
     }
-
+    /*
+    private IEnumerator deactivateIFrame(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        stats.UpdateIFrameActive(false);
+    }
+    */
     public void Death(int playerId)
     {
-        if (ECDenabled)
+        if (playerId == _playerId)
         {
-            endSlowMo();
-        } 
-        PlayerStats.OnPlayerDeath -= Death;
-        PlayerStats.OnPlayerHit -= HitSound;
-        // Trigger some sound.
-        //deathSFX.Play();
-        // Trigger visual effect.
-        // Update some values in state.
-        Destroy(gameObject);
+            if (ECDenabled)
+            {
+                endSlowMo();
+            }
+            PlayerStats.OnPlayerDeath -= Death;
+            PlayerStats.OnGameOver -= Death;
+            PlayerStats.OnPlayerHit -= PlayerHit;
+            // Trigger some sound.
+            deathSFX.Play();
+            // Trigger visual effect.
+            // Update some values in state.
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
     {
         // Character movement.
-        float moveVertical = Input.GetAxis("Vertical");
-        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveHorizontal = Input.GetAxis(xAxisName);
+        float moveVertical = Input.GetAxis(yAxisName);
         
         // Reached Vertical limit of screen.
         if ((moveVertical > 0 && transform.position.y >= cameraRect.yMax) ||
@@ -135,9 +171,15 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         nextFire = Mathf.Max(nextFire - Time.deltaTime, 0);
-        bool fireButton = Input.GetButton("Fire1");
-        bool bombButton = Input.GetButtonDown("Fire2");
-        bool slowMoButton = Input.GetButtonDown("Fire3");
+        bool fireButton = Input.GetButton(fire1Name);
+        bool bombButton = Input.GetButtonDown(fire2Name);
+        bool slowMoButton = Input.GetButtonDown(fire3Name);
+
+        iFrameCooldown = Mathf.Max(iFrameCooldown - Time.deltaTime, 0);
+        if (iFrameCooldown == 0)
+        {
+            stats.UpdateIFrameActive(false);
+        }
 
         // This should be modified later.
         players = GameObject.FindGameObjectsWithTag("Player");
@@ -151,7 +193,7 @@ public class PlayerController : MonoBehaviour
             if (nextFire <= 0)
             {
                 nextFire = 1 / activeFireRate;
-                shootSFX.Play();
+                shootSFX.PlayOneShot(shootSFX.clip);
                 for (int i = 0; i < firepoints.Count; i++)
                 {
                     spread.Create(firepoints[i].transform.position, firepoints[i].transform.rotation, Vector2.up);

@@ -1,135 +1,99 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
-using TMPro;
 
 // Font 'Futura' downloaded from https://ttfonts.net/.
 public class GameController : MonoBehaviour
 {
-    public AudioMixer audioMixer;
-
-    public AudioSource deathSFX;
-    public AudioSource musicTrack;
-    public AudioSource gameOverTrack;
-
-    public TMP_Text statsText1;
-    public TMP_Text statsText2;
-    public TMP_Text gameOverText;
     public PlayerStats statsPlayer1;
     public PlayerStats statsPlayer2;
     public GameObject playerPrefab1;
     public GameObject playerPrefab2;
     public Vector3 InitialPosition1;
     public Vector3 InitialPosition2;
-
-    private float sfxVolume;
-    private float musicVolume;
-
-    private void LoadPreferences()
+    private bool mustRespawn1;
+    private bool mustRespawn2;
+    /*
+    public void Init(bool hasPlayer2)
     {
-        sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 1.0f;
-        musicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 1.0f;
-    }
-
-    private void SetAudioVolume()
-    {
-        audioMixer.SetFloat("sfxVolume", Mathf.Log(sfxVolume) * 20);
-        audioMixer.SetFloat("musicVolume", Mathf.Log(musicVolume) * 20);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        PlayerStats.OnPlayerGUIChange += UpdatePlayerStats;
-        PlayerStats.OnPlayerDeath += Respawn;
-        PlayerStats.OnGameOver += GameOver;
-
         statsPlayer1.Init();
+        if (hasPlayer2)
+        {
+            statsPlayer2.Init();
+        }
 
-        UpdatePlayerStats(1);
-        UpdatePlayerStats(2);
-
-        LoadPreferences();
-        SetAudioVolume();
-
-        musicTrack.Play();
+    }
+    */
+    public void Start()
+    {
+        mustRespawn1 = false;
+        mustRespawn2 = false;
+        PlayerStats.OnPlayerDeath += FlagPlayerRespawn;
+        // PlayerStats.OnGameOver += PlayerGameOver;
+        if (statsPlayer1.IsActive)
+        {
+            Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity);
+            statsPlayer1.UpdateIsAlive(true);
+        }
+        if (statsPlayer2.IsActive)
+        {
+            Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity);
+            statsPlayer2.UpdateIsAlive(true);
+        }
     }
 
-    public void Respawn(int playerId)
+    void Update()
     {
-        StartCoroutine(playerDeath(playerId));
+        if (mustRespawn1)
+        {
+            mustRespawn1 = false;
+            StartCoroutine(playerRespawn(1));
+        }
+        if (mustRespawn2)
+        {
+            mustRespawn2 = false;
+            StartCoroutine(playerRespawn(2));
+        }
     }
 
-    private IEnumerator playerDeath(int playerId)
+    public void FlagPlayerRespawn(int playerId)
     {
-        deathSFX.Play();
+        if (playerId == 1)
+        { 
+            mustRespawn1 = true;
+        }
+        if (playerId == 2)
+        {
+            mustRespawn2 = true;
+        }
+    }
+
+    private IEnumerator playerRespawn(int playerId)
+    {
         yield return new WaitForSecondsRealtime(1.0f);
         if (playerId == 1)
         {
-            if (statsPlayer1.IsActive)
-            {
-                // Instantiate prefab.
-                GameObject pgo = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
-                // Get PlayerController component.
-                PlayerController pc = pgo.GetComponent<PlayerController>();
-                // Assign playerStats.
-                statsPlayer1.SetFullHP();
-            }
-
-        }
-    }
-
-    public void GameOver(int playerId)
-    {
-        if (playerId == 1)
-        {
-            statsPlayer1.UpdateIsActive(false);
-            UpdatePlayerStats(1);
+            _playerSpawn(playerPrefab1, InitialPosition1, statsPlayer1);
+            // triggeredRespawn1 = false;
         }
         if (playerId == 2)
         {
-            statsPlayer2.UpdateIsActive(false);
-            UpdatePlayerStats(2);
-        }
-        FinishGame();
-    }
-
-    public void FinishGame()
-    {
-        musicTrack.Stop();
-        gameOverTrack.Play();
-        if (!statsPlayer1.IsActive && !statsPlayer2.IsActive)
-        {
-            gameOverText.text = "Game Over!";
+            _playerSpawn(playerPrefab2, InitialPosition2, statsPlayer2);
+            // triggeredRespawn2 = false;
         }
     }
 
-    public void UpdatePlayerStats(int playerId)
+    private void _playerSpawn(GameObject prefab, Vector3 initialPosition, PlayerStats stats)
     {
-        if (playerId == 1)
-        {
-            if (statsPlayer1.IsActive)
-            {
-                statsText1.text = $"HP: {statsPlayer1.CurrentHP}\n";
-                statsText1.text += $"Lives: {statsPlayer1.CurrentLives}\n";
-                statsText1.text += $"Bombs: {statsPlayer1.CurrentBombs}\n";
-                statsText1.text += $"ECD: {statsPlayer1.CurrentECDstatus}";
-                return;
-            }
-            statsText1.text = "Game Over";
-        }
-        if (playerId == 2)
-        {
-            if (statsPlayer2.IsActive)
-            {
-                statsText2.text = $"HP: {statsPlayer2.CurrentHP}\n";
-                statsText2.text += $"Lives: {statsPlayer2.CurrentLives}";
-                statsText2.text += $"Bombs: {statsPlayer2.CurrentBombs}\n";
-                statsText2.text += $"ECD: {statsPlayer2.CurrentECDstatus}";
-                return;
-            }
-            statsText2.text = "Game Over";
-        }
+        // Assign playerStats.
+        stats.UpdateIsAlive(true);
+        stats.UpdateIFrameActive(false);
+        stats.UpdateLives(-1);
+        stats.SetFullHP();
+        // Instantiate prefab.
+        // GameObject pgo = 
+        Instantiate(prefab, initialPosition, Quaternion.identity);
+
     }
+
 }
