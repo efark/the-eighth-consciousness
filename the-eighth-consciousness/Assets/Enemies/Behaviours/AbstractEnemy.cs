@@ -193,6 +193,10 @@ public abstract class AbstractEnemyController : MonoBehaviour
             OnDeath?.Invoke(this.GetInstanceID(), playerId, points);
         }
         hp += damage;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void UpdateGUI()
@@ -204,7 +208,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
         if (hp <= 0)
         {
             statsText.text = "";
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         statsText.text = $"Enemy HP: {hp}";
     }

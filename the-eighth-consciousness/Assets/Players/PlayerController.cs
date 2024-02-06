@@ -207,7 +207,9 @@ public class PlayerController : MonoBehaviour
                 bombSFX.Play();
                 bombIsActive = true;
                 stats.UpdateBombs(-1);
-                Instantiate(bomb, transform.position, Quaternion.identity);
+                // To do: Replace this instantiation.
+                GameObject b = Instantiate(bomb, transform.position, Quaternion.identity) as GameObject;
+                b.transform.GetComponent<BombController>().playerId = _playerId;
                 StartCoroutine(waitBombCooldown(bombCooldown));
             }
         }

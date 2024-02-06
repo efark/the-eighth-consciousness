@@ -5,6 +5,7 @@ using UnityEngine;
 public class BombController : MonoBehaviour
 {
     public float ttl;
+    public int playerId;
     public int damage;
     public float scaleFactor = 0f;
     private Vector3 scaleChange;
@@ -22,13 +23,13 @@ public class BombController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag.ToLower() == "enemybullet" || other.tag.ToLower() == "enemy")
+        if (other.tag.ToLower() == "enemybullet")
         {
             Destroy(other.gameObject);
         }
-        if (other.tag.ToLower() == "boss")
+        if (other.tag.ToLower() == "enemy" || other.tag.ToLower() == "boss")
         {
-            other.transform.GetComponent<AbstractEnemyController>().HP = -damage;
+            other.transform.GetComponent<AbstractEnemyController>().Hit(this.playerId, -damage);
         }
     }
 }
