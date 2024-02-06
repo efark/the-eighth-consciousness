@@ -13,17 +13,9 @@ public class GameController : MonoBehaviour
     public Vector3 InitialPosition2;
     private bool mustRespawn1;
     private bool mustRespawn2;
-    /*
-    public void Init(bool hasPlayer2)
-    {
-        statsPlayer1.Init();
-        if (hasPlayer2)
-        {
-            statsPlayer2.Init();
-        }
 
-    }
-    */
+    private Dictionary<int, GameObject> enemies = new Dictionary<int, GameObject>();
+
     public void Start()
     {
         mustRespawn1 = false;
@@ -53,6 +45,74 @@ public class GameController : MonoBehaviour
         {
             mustRespawn2 = false;
             StartCoroutine(playerRespawn(2));
+        }
+
+        UpdateEnemyIds();
+    }
+
+    private Dictionary<int, GameObject> getEnemies()
+    {
+        GameObject[] currentEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        Dictionary<int, GameObject> mapEnemies = new Dictionary<int, GameObject>();
+        foreach (GameObject i in currentEnemies)
+        {
+            mapEnemies.Add(i.transform.GetComponent<AbstractEnemyController>().GetInstanceID(), i);
+        }
+        return mapEnemies;
+    }
+
+    private void UpdateEnemyIds()
+    {
+        Dictionary<int, GameObject> currentEnemies = getEnemies();
+        // Add new enemies.
+        foreach (KeyValuePair<int, GameObject> cekv in currentEnemies)
+        {
+            bool found = false;
+            foreach (KeyValuePair<int, GameObject> kv in enemies)
+            {
+                if (cekv.Key == kv.Key)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                Debug.Log($"Adding new enemy: {cekv.Key}");
+                enemies.Add(cekv.Key, cekv.Value);
+                cekv.Value.transform.GetComponent<AbstractEnemyController>().OnDeath.AddListener(EnemyDeath);
+            }
+        }
+        // Delete old enemies.
+        /*
+        foreach (KeyValuePair<int, GameObject> kv in enemies)
+        {
+            bool found = false;
+            foreach (KeyValuePair<int, GameObject> cekv in currentEnemies)
+            {
+                found = (cekv.Key == kv.Key);
+            }
+            if (!found)
+            {
+                Debug.Log($"Removing old enemy: {kv.Key}");
+                kv.Value.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
+                enemies.Remove(kv.Key);
+            }
+        }*/
+    }
+
+    private void EnemyDeath(int enemyId, int playerId, int points)
+    {
+        Debug.Log($"Running EnemyDeath for enemy: {enemyId}");
+        enemies[enemyId].transform.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
+        enemies.Remove(enemyId);
+        if (playerId == 1)
+        {
+            statsPlayer1.UpdateScore(points);
+        }
+        if (playerId == 2)
+        {
+            statsPlayer2.UpdateScore(points);
         }
     }
 

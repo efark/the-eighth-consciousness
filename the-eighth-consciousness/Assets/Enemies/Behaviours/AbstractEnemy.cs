@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
+
+public class EnemyDeathEvent : UnityEvent<int, int, int> { }
 
 public abstract class AbstractEnemyController : MonoBehaviour
 {
@@ -23,14 +26,26 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected bool isAlive = true;
     protected bool canFire = false;
     public AudioSource shotFX;
+    public int points;
 
     protected Rect screenLimit;
+
+    //public static event Action<int, int, int> OnDeath;
+    public EnemyDeathEvent OnDeath;
 
     public TMP_Text statsText;
     public abstract int HP
     {
         get;
         set;
+    }
+
+    protected void initOnDeathEvent()
+    {
+        if (OnDeath == null)
+        {
+            OnDeath = new EnemyDeathEvent();
+        }
     }
 
     protected void initScreenLimit()
@@ -171,6 +186,15 @@ public abstract class AbstractEnemyController : MonoBehaviour
         }
     }
 
+    public void Hit(int playerId, int damage)
+    {
+        if (hp > 0 && hp + damage < 0)
+        {
+            OnDeath?.Invoke(this.GetInstanceID(), playerId, points);
+        }
+        hp += damage;
+    }
+
     public void UpdateGUI()
     {
         if (statsText == null)
@@ -195,5 +219,10 @@ public abstract class AbstractEnemyController : MonoBehaviour
     void Update()
     {
 
+    }
+
+    void OnDestroy()
+    {
+        OnDeath?.Invoke(this.GetInstanceID(), 0, 0);
     }
 }

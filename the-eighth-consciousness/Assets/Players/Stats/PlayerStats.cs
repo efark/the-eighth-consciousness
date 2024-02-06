@@ -159,5 +159,6 @@ public class PlayerStats : ScriptableObject
     public void UpdateScore(int summand)
     {
         score += summand;
+        OnPlayerGUIChange?.Invoke(playerId);
     }
 }

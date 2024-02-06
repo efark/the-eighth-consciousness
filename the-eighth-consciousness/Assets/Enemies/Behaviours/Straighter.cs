@@ -83,6 +83,7 @@ public class Straighter : AbstractEnemyController
         initScreenLimit();
         initFirepoints();
         initAttackPatterns();
+        initOnDeathEvent();
     }
 
     void Update()

@@ -33,8 +33,10 @@ public class VFlyer : AbstractEnemyController
         initAttackPatterns();
         initFirepoints();
         initScreenLimit();
+        initOnDeathEvent();
         transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
         //Debug.Log($"attackPatterns: {attackPatterns[0]}");
+
     }
 
     void Update()
