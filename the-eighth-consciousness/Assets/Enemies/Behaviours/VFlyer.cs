@@ -35,8 +35,6 @@ public class VFlyer : AbstractEnemyController
         initScreenLimit();
         initOnDeathEvent();
         transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
-        //Debug.Log($"attackPatterns: {attackPatterns[0]}");
-
     }
 
     void Update()
@@ -48,7 +46,6 @@ public class VFlyer : AbstractEnemyController
         }
         canFire = screenLimit.Contains(transform.position);
 
-        //loopConstantAttacks();
         if (canFire && Mathf.Abs(this.transform.position.y - thresholdY) < 1 && !hasFired)
         {
             hasFired = true;
@@ -62,8 +59,6 @@ public class VFlyer : AbstractEnemyController
         }
             
     }
-
-
 
     private void loopOneShotAttacks()
     {
@@ -170,7 +165,6 @@ public class VFlyer : AbstractEnemyController
                     ap.spread.Create(transform.position, transform.rotation, targetDirection);
                 }
             }
-            // yield return new WaitForSeconds(ap.cooldown);
             ap.UpdateIsRunning(false);
             constantAttackPatterns[index] = ap;
         }

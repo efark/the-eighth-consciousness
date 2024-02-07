@@ -91,7 +91,10 @@ public class PlayerController : MonoBehaviour
 
         mapButtons();
 
-        // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
+        /*-------------------------------------------------------------------------------------
+        The logic to calculate the screen borders was taken from Unity's documentation:
+        https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
+        -------------------------------------------------------------------------------------*/
         cam = Camera.main;
         bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
@@ -117,13 +120,7 @@ public class PlayerController : MonoBehaviour
             hitSFX.PlayOneShot(hitSFX.clip);
         }
     }
-    /*
-    private IEnumerator deactivateIFrame(float duration)
-    {
-        yield return new WaitForSecondsRealtime(duration);
-        stats.UpdateIFrameActive(false);
-    }
-    */
+
     public void Death(int playerId)
     {
         if (playerId == _playerId)
@@ -207,7 +204,6 @@ public class PlayerController : MonoBehaviour
                 bombSFX.Play();
                 bombIsActive = true;
                 stats.UpdateBombs(-1);
-                // To do: Replace this instantiation.
                 GameObject b = Instantiate(bomb, transform.position, Quaternion.identity) as GameObject;
                 b.transform.GetComponent<BombController>().playerId = _playerId;
                 StartCoroutine(waitBombCooldown(bombCooldown));

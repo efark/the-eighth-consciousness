@@ -5,8 +5,6 @@ using TMPro;
 
 public class BaseEnemy : AbstractEnemyController
 {    
-    // public TMP_Text statsText;
-
     public override int HP
     {
         get

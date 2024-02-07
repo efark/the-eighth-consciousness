@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
+// Custom Event that will take three parameters (enemy instance Id, player id and points).
 public class EnemyDeathEvent : UnityEvent<int, int, int> { }
 
 public abstract class AbstractEnemyController : MonoBehaviour
@@ -30,7 +31,6 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected Rect screenLimit;
 
-    //public static event Action<int, int, int> OnDeath;
     public EnemyDeathEvent OnDeath;
 
     public TMP_Text statsText;
@@ -208,7 +208,6 @@ public abstract class AbstractEnemyController : MonoBehaviour
         if (hp <= 0)
         {
             statsText.text = "";
-            //Destroy(gameObject);
         }
         statsText.text = $"Enemy HP: {hp}";
     }

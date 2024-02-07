@@ -21,7 +21,6 @@ public class GameController : MonoBehaviour
         mustRespawn1 = false;
         mustRespawn2 = false;
         PlayerStats.OnPlayerDeath += FlagPlayerRespawn;
-        // PlayerStats.OnGameOver += PlayerGameOver;
         if (statsPlayer1.IsActive)
         {
             Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity);
@@ -78,7 +77,6 @@ public class GameController : MonoBehaviour
             }
             if (!found)
             {
-                // Debug.Log($"Adding new enemy: {cekv.Key}");
                 enemies.Add(cekv.Key, cekv.Value);
                 cekv.Value.transform.GetComponent<AbstractEnemyController>().OnDeath.AddListener(EnemyDeath);
             }
@@ -87,7 +85,6 @@ public class GameController : MonoBehaviour
 
     private void EnemyDeath(int enemyId, int playerId, int points)
     {
-        // Debug.Log($"Running EnemyDeath for enemy: {enemyId}");
         enemies[enemyId].transform.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
         enemies.Remove(enemyId);
         if (playerId == 1)
@@ -118,12 +115,10 @@ public class GameController : MonoBehaviour
         if (playerId == 1)
         {
             _playerSpawn(playerPrefab1, InitialPosition1, statsPlayer1);
-            // triggeredRespawn1 = false;
         }
         if (playerId == 2)
         {
             _playerSpawn(playerPrefab2, InitialPosition2, statsPlayer2);
-            // triggeredRespawn2 = false;
         }
     }
 
@@ -135,7 +130,6 @@ public class GameController : MonoBehaviour
         stats.UpdateLives(-1);
         stats.SetFullHP();
         // Instantiate prefab.
-        // GameObject pgo = 
         Instantiate(prefab, initialPosition, Quaternion.identity);
 
     }
