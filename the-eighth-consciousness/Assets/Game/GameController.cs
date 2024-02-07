@@ -78,32 +78,16 @@ public class GameController : MonoBehaviour
             }
             if (!found)
             {
-                Debug.Log($"Adding new enemy: {cekv.Key}");
+                // Debug.Log($"Adding new enemy: {cekv.Key}");
                 enemies.Add(cekv.Key, cekv.Value);
                 cekv.Value.transform.GetComponent<AbstractEnemyController>().OnDeath.AddListener(EnemyDeath);
             }
         }
-        // Delete old enemies.
-        /*
-        foreach (KeyValuePair<int, GameObject> kv in enemies)
-        {
-            bool found = false;
-            foreach (KeyValuePair<int, GameObject> cekv in currentEnemies)
-            {
-                found = (cekv.Key == kv.Key);
-            }
-            if (!found)
-            {
-                Debug.Log($"Removing old enemy: {kv.Key}");
-                kv.Value.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
-                enemies.Remove(kv.Key);
-            }
-        }*/
     }
 
     private void EnemyDeath(int enemyId, int playerId, int points)
     {
-        Debug.Log($"Running EnemyDeath for enemy: {enemyId}");
+        // Debug.Log($"Running EnemyDeath for enemy: {enemyId}");
         enemies[enemyId].transform.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
         enemies.Remove(enemyId);
         if (playerId == 1)

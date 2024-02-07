@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         PlayerStats.OnGameOver += Death;
         PlayerStats.OnPlayerHit += PlayerHit;
 
-        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
+        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, _playerId, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
 
         mapButtons();
