@@ -39,6 +39,13 @@ public class MainMenu : MonoBehaviour
         set { showOptionsMenu = value; }
     }
 
+    public bool showControlsMenu = false;
+    public bool ShowControlsMenu
+    {
+        get { return showControlsMenu; }
+        set { showControlsMenu = value; }
+    }
+
     Rect windowRect = new Rect(0, 0, 500, 360);
     float sfxSliderValue;
     float musicSliderValue;
@@ -93,6 +100,12 @@ public class MainMenu : MonoBehaviour
     void OnGUI()
     {
         GUI.skin = guiSkin;
+        if (showControlsMenu)
+        {
+            canvas.enabled = false;
+            windowRect = GUI.Window(0, windowRect, controlsMenu, "Controls");
+        }
+
         if (showOptionsMenu)
         {
             canvas.enabled = false;
@@ -139,7 +152,6 @@ public class MainMenu : MonoBehaviour
 
         if (GUI.Button(new Rect(190, 300, 100, 20), "Back"))
         {
-            Debug.Log("Save and back");
             navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
             showStartMenu = false;
             canvas.enabled = true;
@@ -180,6 +192,13 @@ public class MainMenu : MonoBehaviour
         // Music Volume.
         GUI.Label(new Rect(70, 130, 120, 30), "Music Volume");
         currentMusicVolume = GUI.HorizontalSlider(new Rect(220, 130, 50, 30), currentMusicVolume, 0.0001F, 1.0F);
+
+        if (GUI.Button(new Rect(200, 200, 100, 20), "Controls"))
+        {
+            navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
+            showControlsMenu = true;
+            showOptionsMenu = false;
+        }
 
         if (GUI.Button(new Rect(40, 300, 100, 25), "Cancel"))
         {
@@ -227,4 +246,46 @@ public class MainMenu : MonoBehaviour
            */
     }
 
+    public void controlsMenu(int windowID)
+    {
+        GUI.Box(new Rect(10, 40, 240, 370), "Player 1");
+        GUI.enabled = false;
+        GUI.Label(new Rect(40, 80, 60, 20), "Move");
+        GUI.Button(new Rect(100, 90, 40, 20), "W");
+        GUI.Button(new Rect(50, 130, 40, 20), "A");
+        GUI.Button(new Rect(100, 130, 40, 20), "S");
+        GUI.Button(new Rect(150, 130, 40, 20), "D");
+    
+        GUI.Label(new Rect(30, 180, 60, 20), "Shoot");
+        GUI.Button(new Rect(100, 180, 40, 20), "Y");
+        GUI.Label(new Rect(30, 220, 60, 20), "Bomb");
+        GUI.Button(new Rect(100, 220, 40, 20), "U");
+        GUI.Label(new Rect(30, 260, 60, 20), "ECD");
+        GUI.Button(new Rect(100, 260, 40, 20), "I");
+
+        GUI.enabled = true;
+        GUI.Box(new Rect(250, 40, 240, 370), "Player 2");
+        GUI.enabled = false;
+        GUI.Label(new Rect(290, 80, 60, 20), "Move");
+        GUI.Button(new Rect(340, 90, 40, 20), "\u21E7");
+        GUI.Button(new Rect(290, 130, 40, 20), "\u21E6");
+        GUI.Button(new Rect(340, 130, 40, 20), "\u21E9");
+        GUI.Button(new Rect(390, 130, 40, 20), "\u21E8");
+
+        GUI.Label(new Rect(270, 180, 60, 20), "Shoot");
+        GUI.Button(new Rect(340, 180, 40, 20), "1");
+        GUI.Label(new Rect(270, 220, 60, 20), "Bomb");
+        GUI.Button(new Rect(340, 220, 40, 20), "2");
+        GUI.Label(new Rect(270, 260, 60, 20), "ECD");
+        GUI.Button(new Rect(340, 260, 40, 20), "3");
+        GUI.enabled = true;
+
+        if (GUI.Button(new Rect(200, 330, 100, 20), "Back"))
+        {
+            navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
+            showControlsMenu = false;
+            showOptionsMenu = true;
+            canvas.enabled = true;
+        }
+    }
 }
