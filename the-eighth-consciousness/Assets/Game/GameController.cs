@@ -13,23 +13,14 @@ public class GameController : MonoBehaviour
     public Vector3 InitialPosition2;
     private bool mustRespawn1;
     private bool mustRespawn2;
-    /*
-    public void Init(bool hasPlayer2)
-    {
-        statsPlayer1.Init();
-        if (hasPlayer2)
-        {
-            statsPlayer2.Init();
-        }
 
-    }
-    */
+    private Dictionary<int, GameObject> enemies = new Dictionary<int, GameObject>();
+
     public void Start()
     {
         mustRespawn1 = false;
         mustRespawn2 = false;
         PlayerStats.OnPlayerDeath += FlagPlayerRespawn;
-        // PlayerStats.OnGameOver += PlayerGameOver;
         if (statsPlayer1.IsActive)
         {
             Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity);
@@ -54,6 +45,56 @@ public class GameController : MonoBehaviour
             mustRespawn2 = false;
             StartCoroutine(playerRespawn(2));
         }
+
+        UpdateEnemyIds();
+    }
+
+    private Dictionary<int, GameObject> getEnemies()
+    {
+        GameObject[] currentEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        Dictionary<int, GameObject> mapEnemies = new Dictionary<int, GameObject>();
+        foreach (GameObject i in currentEnemies)
+        {
+            mapEnemies.Add(i.transform.GetComponent<AbstractEnemyController>().GetInstanceID(), i);
+        }
+        return mapEnemies;
+    }
+
+    private void UpdateEnemyIds()
+    {
+        Dictionary<int, GameObject> currentEnemies = getEnemies();
+        // Add new enemies.
+        foreach (KeyValuePair<int, GameObject> cekv in currentEnemies)
+        {
+            bool found = false;
+            foreach (KeyValuePair<int, GameObject> kv in enemies)
+            {
+                if (cekv.Key == kv.Key)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                enemies.Add(cekv.Key, cekv.Value);
+                cekv.Value.transform.GetComponent<AbstractEnemyController>().OnDeath.AddListener(EnemyDeath);
+            }
+        }
+    }
+
+    private void EnemyDeath(int enemyId, int playerId, int points)
+    {
+        enemies[enemyId].transform.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
+        enemies.Remove(enemyId);
+        if (playerId == 1)
+        {
+            statsPlayer1.UpdateScore(points);
+        }
+        if (playerId == 2)
+        {
+            statsPlayer2.UpdateScore(points);
+        }
     }
 
     public void FlagPlayerRespawn(int playerId)
@@ -74,12 +115,10 @@ public class GameController : MonoBehaviour
         if (playerId == 1)
         {
             _playerSpawn(playerPrefab1, InitialPosition1, statsPlayer1);
-            // triggeredRespawn1 = false;
         }
         if (playerId == 2)
         {
             _playerSpawn(playerPrefab2, InitialPosition2, statsPlayer2);
-            // triggeredRespawn2 = false;
         }
     }
 
@@ -91,7 +130,6 @@ public class GameController : MonoBehaviour
         stats.UpdateLives(-1);
         stats.SetFullHP();
         // Instantiate prefab.
-        // GameObject pgo = 
         Instantiate(prefab, initialPosition, Quaternion.identity);
 
     }

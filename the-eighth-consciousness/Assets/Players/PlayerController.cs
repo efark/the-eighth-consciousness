@@ -86,12 +86,15 @@ public class PlayerController : MonoBehaviour
         PlayerStats.OnGameOver += Death;
         PlayerStats.OnPlayerHit += PlayerHit;
 
-        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, 1, 0f, 1f + stats.CurrentFirePower * 0.2f);
+        bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, _playerId, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
 
         mapButtons();
 
-        // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
+        /*-------------------------------------------------------------------------------------
+        The logic to calculate the screen borders was taken from Unity's documentation:
+        https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
+        -------------------------------------------------------------------------------------*/
         cam = Camera.main;
         bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
@@ -117,13 +120,7 @@ public class PlayerController : MonoBehaviour
             hitSFX.PlayOneShot(hitSFX.clip);
         }
     }
-    /*
-    private IEnumerator deactivateIFrame(float duration)
-    {
-        yield return new WaitForSecondsRealtime(duration);
-        stats.UpdateIFrameActive(false);
-    }
-    */
+
     public void Death(int playerId)
     {
         if (playerId == _playerId)
@@ -207,7 +204,8 @@ public class PlayerController : MonoBehaviour
                 bombSFX.Play();
                 bombIsActive = true;
                 stats.UpdateBombs(-1);
-                Instantiate(bomb, transform.position, Quaternion.identity);
+                GameObject b = Instantiate(bomb, transform.position, Quaternion.identity) as GameObject;
+                b.transform.GetComponent<BombController>().playerId = _playerId;
                 StartCoroutine(waitBombCooldown(bombCooldown));
             }
         }

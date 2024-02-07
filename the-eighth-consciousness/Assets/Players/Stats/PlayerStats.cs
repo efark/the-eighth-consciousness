@@ -63,6 +63,7 @@ public class PlayerStats : ScriptableObject
         currentLives = _lives;
         currentBombs = _bombs;
         currentFirePower = _firePower;
+        score = 0;
     }
 
     public void UpdateHP(int summand)
@@ -158,5 +159,6 @@ public class PlayerStats : ScriptableObject
     public void UpdateScore(int summand)
     {
         score += summand;
+        OnPlayerGUIChange?.Invoke(playerId);
     }
 }

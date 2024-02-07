@@ -208,6 +208,7 @@ MonoBehaviour:
   attackPatternsValues:
   - {fileID: 11400000, guid: 68650a6e3bf3fdc4a866ab3ea5ca7230, type: 2}
   shotFX: {fileID: 3001141279568294224}
+  points: 20
   statsText: {fileID: 0}
 --- !u!82 &3001141279568294224
 AudioSource:

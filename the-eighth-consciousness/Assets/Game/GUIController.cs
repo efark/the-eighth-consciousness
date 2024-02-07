@@ -79,7 +79,8 @@ public class GUIController : MonoBehaviour
         statsText.text = $"HP: {pStats.CurrentHP}\n";
         statsText.text += $"Lives: {pStats.CurrentLives}\n";
         statsText.text += $"Bombs: {pStats.CurrentBombs}\n";
-        statsText.text += $"ECD: {pStats.CurrentECDstatus}";
+        statsText.text += $"ECD: {pStats.CurrentECDstatus}\n";
+        statsText.text += $"Score: {pStats.CurrentScore}";
         return;
     }
 
