@@ -135,7 +135,8 @@ public class MainMenu : MonoBehaviour
     IEnumerator loadScene()
     {
         yield return new WaitForSecondsRealtime(2.5f);
-        SceneManager.LoadScene("Proto1");
+        //SceneManager.LoadScene("Proto1");
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void startGameMenu(int windowID)

@@ -164,12 +164,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c88b301880afd4d8faf1851b060a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statsPlayer1: {fileID: 0}
-  statsPlayer2: {fileID: 0}
-  playerPrefab1: {fileID: 0}
-  playerPrefab2: {fileID: 0}
-  InitialPosition1: {x: 0, y: 0, z: 0}
-  InitialPosition2: {x: 0, y: 0, z: 0}
+  statsPlayer1: {fileID: 11400000, guid: 3ce5cb6028dff9d408560cc987803692, type: 2}
+  statsPlayer2: {fileID: 11400000, guid: 0f67b08058f11c7419f4d3bd31c7f829, type: 2}
+  playerPrefab1: {fileID: 4383251580355074025, guid: 29b7dff760015c144b7d2dfef9383de5,
+    type: 3}
+  playerPrefab2: {fileID: 4383251580355074025, guid: 65a5de9b176f77744a4ca9b90756751a,
+    type: 3}
+  InitialPosition1: {x: -5, y: -4, z: 0}
+  InitialPosition2: {x: 5, y: -4, z: 0}
 --- !u!1 &586108607
 GameObject:
   m_ObjectHideFlags: 0
