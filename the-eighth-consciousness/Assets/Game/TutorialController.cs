@@ -23,6 +23,7 @@ public class TutorialController : MonoBehaviour
     private GameObject player1;
     private GameObject player2;
     private bool hasPlayer2;
+    private bool hasEndSequenceStarted;
 
     private bool hasMoved1;
     private bool hasMoved2;
@@ -35,6 +36,7 @@ public class TutorialController : MonoBehaviour
 
     public void Start()
     {
+        hasEndSequenceStarted = false;
         hasPlayer2 = statsPlayer2.IsActive;
         hasMoved1 = !statsPlayer1.IsActive;
         hasFired1 = !statsPlayer1.IsActive;
@@ -62,11 +64,16 @@ public class TutorialController : MonoBehaviour
 
     void Update()
     {
-        bool skipTutorial = Input.GetButton("skipTutorial");
+        if (hasEndSequenceStarted)
+        {
+            return;
+        }
 
+        bool skipTutorial = Input.GetButton("skipTutorial");
         if (skipTutorial)
         {
             endTutorial();
+            return;
         }
         if ( // Either player is not active or has done all actions.
             (!statsPlayer1.IsActive || (hasMoved1 && hasFired1 && hasBombed1 && hasECDed1)) &&
@@ -74,6 +81,7 @@ public class TutorialController : MonoBehaviour
             )
         {
             endTutorial();
+            return;
         }
     }
 
@@ -85,6 +93,7 @@ public class TutorialController : MonoBehaviour
 
     private void endTutorial()
     {
+        hasEndSequenceStarted = true;
         StartCoroutine(loadScene());
     }
 
