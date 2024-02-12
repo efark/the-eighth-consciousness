@@ -9,6 +9,7 @@ public class TutorialController : MonoBehaviour
 {
     public GUISkin guiSkin;
     private Rect windowRect;
+    private Rect tabRect;
 
     public AudioSource startFX;
     public AudioSource okFX;
@@ -60,6 +61,8 @@ public class TutorialController : MonoBehaviour
         //bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         //topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.pixelHeight));
         centerX = cam.pixelWidth / 2;
+
+        tabRect = new Rect(cam.pixelWidth - 170, 20, 150, 50);
 
         if (statsPlayer1.IsActive)
         {
@@ -166,6 +169,12 @@ public class TutorialController : MonoBehaviour
     private void OnGUI()
     {
         GUI.skin = guiSkin;
+
+        if (GUI.Button(tabRect, "Skip tutorial"))
+        {
+            endTutorial();
+        }
+
         if (hasEndSequenceStarted)
         {
             windowRect = GUI.Window(0, windowRect, readyHelp, "Start");
