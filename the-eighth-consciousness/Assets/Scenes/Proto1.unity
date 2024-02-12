@@ -915,7 +915,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 3893442399821127558, guid: 6ee537fc11b2b4849aa122de75721999,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: d7168a351882f0645822fd14f90dbca3, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1414,7 +1414,6 @@ MonoBehaviour:
     type: 3}
   InitialPosition1: {x: -5, y: -4, z: 0}
   InitialPosition2: {x: 5, y: -4, z: 0}
-  deathSFX: {fileID: 2092443314}
 --- !u!4 &2092443313
 Transform:
   m_ObjectHideFlags: 0

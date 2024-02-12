@@ -59,6 +59,10 @@ public class PlayerController : MonoBehaviour
     private string fire3Name;
 
     public static event Action<bool> OnTriggerECD;
+    public static event Action<int> OnECD;
+    public static event Action<int> OnMovement;
+    public static event Action<int> OnShoot;
+    public static event Action<int> OnBombUse;
 
     private void mapButtons()
     {
@@ -160,9 +164,14 @@ public class PlayerController : MonoBehaviour
             moveHorizontal = 0;
         }
 
-        Vector3 movement = new Vector2(moveHorizontal, moveVertical);
-        rigidBody.velocity = movement * activeSpeed;
 
+
+        Vector3 movement = new Vector2(moveHorizontal, moveVertical);
+        if (movement.magnitude != 0)
+        {
+            OnMovement?.Invoke(_playerId);
+        }
+        rigidBody.velocity = movement * activeSpeed;
     }
 
     void Update()
@@ -193,6 +202,7 @@ public class PlayerController : MonoBehaviour
                 shootSFX.PlayOneShot(shootSFX.clip);
                 for (int i = 0; i < firepoints.Count; i++)
                 {
+                    OnShoot?.Invoke(_playerId);
                     spread.Create(firepoints[i].transform.position, firepoints[i].transform.rotation, Vector2.up);
                 }
             }
@@ -201,6 +211,7 @@ public class PlayerController : MonoBehaviour
         {
             if (stats.CurrentBombs > 0 && !bombIsActive)
             {
+                OnBombUse?.Invoke(_playerId);
                 bombSFX.Play();
                 bombIsActive = true;
                 stats.UpdateBombs(-1);
@@ -213,6 +224,7 @@ public class PlayerController : MonoBehaviour
         {
             if (ECDready && !ECDenabled)
             {
+                OnECD?.Invoke(_playerId);
                 triggerSlowMo();
             }
         }

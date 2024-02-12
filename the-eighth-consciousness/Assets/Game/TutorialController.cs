@@ -50,17 +50,81 @@ public class TutorialController : MonoBehaviour
         if (statsPlayer1.IsActive)
         {
             player1 = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
+            statsPlayer1.Init();
             statsPlayer1.UpdateIsAlive(true);
         }
         if (statsPlayer2.IsActive)
         {
             player2 = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
+            statsPlayer2.Init();
             statsPlayer2.UpdateIsAlive(true);
         }
+
+        PlayerController.OnMovement += markMovement;
+        PlayerController.OnBombUse += markBombUse;
+        PlayerController.OnShoot += markShoot;
+        PlayerController.OnECD += markECD;
 
         windowRect = new Rect(0, 0, 500, 360);
 
     }
+
+    private void markMovement(int playerId)
+    {
+        if (playerId == 1)
+        {
+            hasMoved1 = true;
+            return;
+        }
+        if (playerId == 2)
+        {
+            hasMoved2 = true;
+            return;
+        }
+    }
+
+    private void markShoot(int playerId)
+    {
+        if (playerId == 1)
+        {
+            hasFired1 = true;
+            return;
+        }
+        if (playerId == 2)
+        {
+            hasFired2 = true;
+            return;
+        }
+    }
+
+    private void markBombUse(int playerId)
+    {
+        if (playerId == 1)
+        {
+            hasBombed1 = true;
+            return;
+        }
+        if (playerId == 2)
+        {
+            hasBombed2 = true;
+            return;
+        }
+    }
+
+    private void markECD(int playerId)
+    {
+        if (playerId == 1)
+        {
+            hasECDed1 = true;
+            return;
+        }
+        if (playerId == 2)
+        {
+            hasECDed2 = true;
+            return;
+        }
+    }
+
 
     void Update()
     {
@@ -88,11 +152,39 @@ public class TutorialController : MonoBehaviour
     private void OnGUI()
     {
         GUI.skin = guiSkin;
-        windowRect = GUI.Window(0, windowRect, movementHelp, "Controls");
+        if (hasEndSequenceStarted)
+        {
+            windowRect = GUI.Window(0, windowRect, readyHelp, "Start");
+            return;
+        }
+        if (!hasMoved1 || !hasMoved2)
+        {
+            windowRect = GUI.Window(0, windowRect, movementHelp, "Help");
+            return;
+        }
+        else if (!hasFired1 || !hasFired2)
+        {
+            windowRect = GUI.Window(0, windowRect, fireHelp, "Help");
+            return;
+        }
+        else if (!hasBombed1 || !hasBombed2)
+        {
+            windowRect = GUI.Window(0, windowRect, bombHelp, "Help");
+            return;
+        }
+        else if (!hasECDed1 || !hasECDed2)
+        {
+            windowRect = GUI.Window(0, windowRect, ecdHelp, "Help");
+            return;
+        }
     }
 
     private void endTutorial()
     {
+        PlayerController.OnMovement -= markMovement;
+        PlayerController.OnBombUse -= markBombUse;
+        PlayerController.OnShoot -= markShoot;
+        PlayerController.OnECD -= markECD;
         hasEndSequenceStarted = true;
         StartCoroutine(loadScene());
     }
@@ -108,7 +200,7 @@ public class TutorialController : MonoBehaviour
     {
         if (hasPlayer2)
         {
-            GUI.Box(new Rect(10, 40, 240, 370), "Player 2");
+            GUI.Box(new Rect(170, 20, 150, 250), "Player 2");
             GUI.Label(new Rect(270, 220, 60, 20), "Move");
             GUI.enabled = false;
             GUI.Button(new Rect(340, 90, 40, 20), "\u21E7");
@@ -116,9 +208,8 @@ public class TutorialController : MonoBehaviour
             GUI.Button(new Rect(340, 130, 40, 20), "\u21E9");
             GUI.Button(new Rect(390, 130, 40, 20), "\u21E8");
             GUI.enabled = true;
-            return;
         }
-        GUI.Box(new Rect(10, 40, 240, 370), "Player 1");
+        GUI.Box(new Rect(10, 20, 150, 250), "Player 1");
         GUI.Label(new Rect(30, 220, 60, 20), "Move");
         GUI.enabled = false;
         GUI.Button(new Rect(100, 90, 40, 20), "W");
@@ -141,8 +232,7 @@ public class TutorialController : MonoBehaviour
             GUI.enabled = true;
             return;
         }
-
-        GUI.Box(new Rect(10, 40, 240, 370), "Player 1");
+        GUI.Box(new Rect(10, 20, 150, 250), "Player 1");
         GUI.Label(new Rect(30, 220, 60, 20), "Shoot");
         GUI.enabled = false;
         GUI.Button(new Rect(100, 220, 40, 20), "Y");
@@ -161,7 +251,7 @@ public class TutorialController : MonoBehaviour
             GUI.enabled = true;
             return;
         }
-        GUI.Box(new Rect(10, 40, 240, 370), "Player 1");
+        GUI.Box(new Rect(10, 20, 150, 250), "Player 1");
         GUI.Label(new Rect(30, 220, 60, 20), "Bomb");
         GUI.enabled = false;
         GUI.Button(new Rect(100, 220, 40, 20), "U");
@@ -180,11 +270,16 @@ public class TutorialController : MonoBehaviour
             GUI.enabled = true;
             return;
         }
-        GUI.Box(new Rect(10, 40, 240, 370), "Player 1");
-        GUI.Label(new Rect(30, 260, 60, 20), "ECD");
+        GUI.Box(new Rect(10, 20, 150, 250), "Player 1");
+        GUI.Label(new Rect(30, 220, 60, 20), "ECD");
         GUI.enabled = false;
-        GUI.Button(new Rect(100, 260, 40, 20), "I");
+        GUI.Button(new Rect(100, 220, 40, 20), "I");
         GUI.enabled = true;
         return;
+    }
+
+    private void readyHelp(int windowID)
+    {
+        GUI.Box(new Rect(10, 20, 150, 250), "Start");
     }
 }

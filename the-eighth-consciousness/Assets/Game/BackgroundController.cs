@@ -9,24 +9,24 @@ public class BackgroundController : MonoBehaviour
     public Material baseBG;
     public Material ecdBG;
     private Image background;
-    private Renderer rdr;
+    //private Renderer rdr;
 
     void Start()
     {
         PlayerController.OnTriggerECD += ChangeColor;
         background = GetComponent<Image>();
-        rdr = GetComponent<Renderer>();
+        //rdr = GetComponent<Renderer>();
     }
 
     void ChangeColor(bool ecdActive)
     {
-        Vector2 offset = rdr.material.mainTextureOffset;
-        rdr.material = ecdActive ? ecdBG : baseBG;
-        rdr.material.mainTextureOffset = offset;
+        Vector2 offset = GetComponent<Renderer>().material.mainTextureOffset;
+        GetComponent<Renderer>().material = ecdActive ? ecdBG : baseBG;
+        GetComponent<Renderer>().material.mainTextureOffset = offset;
     }
 
     void Update()
     {
-        rdr.material.mainTextureOffset += new Vector2(0, speed * Time.deltaTime);
+        GetComponent<Renderer>().material.mainTextureOffset += new Vector2(0, speed * Time.deltaTime);
     }
 }
