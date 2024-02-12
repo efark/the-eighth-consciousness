@@ -62,6 +62,9 @@ public class MainMenu : MonoBehaviour
 
     private void setFXVolume(float volume)
     {
+        /* The formula to scale the volume was taken from Unity Forum:
+           https://forum.unity.com/threads/changing-audio-mixer-group-volume-with-ui-slider.297884/#post-3494983
+        */
         audioMixer.SetFloat("sfxVolume", Mathf.Log(volume) * 20);
     }
 
@@ -85,9 +88,6 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        /* The formula to scale the volume was taken from Unity Forum:
-           https://forum.unity.com/threads/changing-audio-mixer-group-volume-with-ui-slider.297884/#post-3494983
-        */
         setFXVolume(currentSFXVolume);
         setMusicVolume(currentMusicVolume);
     }
@@ -140,11 +140,11 @@ public class MainMenu : MonoBehaviour
 
     public void startGameMenu(int windowID)
     {
-        if (GUI.Button(new Rect(40, 160, 100, 25), "1 Player"))
+        if (GUI.Button(new Rect(30, 160, 120, 25), "1 Player"))
         {
             startGame(false);
         }
-        if (GUI.Button(new Rect(360, 160, 100, 25), "2 Players"))
+        if (GUI.Button(new Rect(350, 160, 120, 25), "2 Players"))
         {
             startGame(true);
         }

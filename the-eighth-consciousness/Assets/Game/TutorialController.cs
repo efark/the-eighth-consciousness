@@ -62,7 +62,7 @@ public class TutorialController : MonoBehaviour
         //topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.pixelHeight));
         centerX = cam.pixelWidth / 2;
 
-        tabRect = new Rect(cam.pixelWidth - 170, 20, 150, 50);
+        tabRect = new Rect(cam.pixelWidth - 170, 30, 160, 50);
 
         if (statsPlayer1.IsActive)
         {
@@ -170,7 +170,8 @@ public class TutorialController : MonoBehaviour
     {
         GUI.skin = guiSkin;
 
-        if (GUI.Button(tabRect, "Skip tutorial"))
+        GUI.skin.button.wordWrap = true;
+        if (GUI.Button(tabRect, "Skip tutorial [Shift]"))
         {
             endTutorial();
         }
@@ -182,22 +183,22 @@ public class TutorialController : MonoBehaviour
         }
         if (!hasMoved1 || !hasMoved2)
         {
-            windowRect = GUI.Window(0, windowRect, movementHelp, "Help");
+            windowRect = GUI.Window(0, windowRect, movementHelp, "Tutorial");
             return;
         }
         else if (!hasFired1 || !hasFired2)
         {
-            windowRect = GUI.Window(0, windowRect, fireHelp, "Help");
+            windowRect = GUI.Window(0, windowRect, fireHelp, "Tutorial");
             return;
         }
         else if (!hasBombed1 || !hasBombed2)
         {
-            windowRect = GUI.Window(0, windowRect, bombHelp, "Help");
+            windowRect = GUI.Window(0, windowRect, bombHelp, "Tutorial");
             return;
         }
         else if (!hasECDed1 || !hasECDed2)
         {
-            windowRect = GUI.Window(0, windowRect, ecdHelp, "Help");
+            windowRect = GUI.Window(0, windowRect, ecdHelp, "Tutorial");
             return;
         }
     }
