@@ -34,6 +34,11 @@ public class TutorialController : MonoBehaviour
     private bool hasECDed1;
     private bool hasECDed2;
 
+    private Camera cam;
+    private Vector3 bottomLeft;
+    private Vector3 topRight;
+    private float centerX;
+
     public void Start()
     {
         hasEndSequenceStarted = false;
@@ -47,25 +52,34 @@ public class TutorialController : MonoBehaviour
         hasBombed2 = !statsPlayer2.IsActive;
         hasECDed2 = !statsPlayer2.IsActive;
 
+        /*-------------------------------------------------------------------------------------
+        The logic to calculate the screen borders was taken from Unity's documentation:
+        https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
+        -------------------------------------------------------------------------------------*/
+        cam = Camera.main;
+        //bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        //topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.pixelHeight));
+        centerX = cam.pixelWidth / 2;
+
         if (statsPlayer1.IsActive)
         {
             player1 = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
             statsPlayer1.Init();
             statsPlayer1.UpdateIsAlive(true);
+            windowRect = new Rect(centerX, 40, 250, 180);
         }
         if (statsPlayer2.IsActive)
         {
             player2 = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
             statsPlayer2.Init();
             statsPlayer2.UpdateIsAlive(true);
+            windowRect = new Rect(centerX - (400 / 2), 40, 400, 180);
         }
 
         PlayerController.OnMovement += markMovement;
         PlayerController.OnBombUse += markBombUse;
         PlayerController.OnShoot += markShoot;
         PlayerController.OnECD += markECD;
-
-        windowRect = new Rect(0, 0, 500, 360);
 
     }
 
@@ -200,22 +214,32 @@ public class TutorialController : MonoBehaviour
     {
         if (hasPlayer2)
         {
-            GUI.Box(new Rect(170, 20, 150, 250), "Player 2");
-            GUI.Label(new Rect(270, 220, 60, 20), "Move");
+            GUI.Box(new Rect(centerX - 180, 20, 160, 160), "Player 1");
+            GUI.Label(new Rect(centerX - 170, 40, 60, 20), "Move");
             GUI.enabled = false;
-            GUI.Button(new Rect(340, 90, 40, 20), "\u21E7");
-            GUI.Button(new Rect(290, 130, 40, 20), "\u21E6");
-            GUI.Button(new Rect(340, 130, 40, 20), "\u21E9");
-            GUI.Button(new Rect(390, 130, 40, 20), "\u21E8");
+            GUI.Button(new Rect(centerX - 130, 60, 40, 20), "W");
+            GUI.Button(new Rect(centerX - 170, 100, 40, 20), "A");
+            GUI.Button(new Rect(centerX - 130, 100, 40, 20), "S");
+            GUI.Button(new Rect(centerX - 90, 100, 40, 20), "D");
             GUI.enabled = true;
+
+            GUI.Box(new Rect(centerX + 10, 20, 160, 160), "Player 2");
+            GUI.Label(new Rect(centerX + 20, 40, 60, 20), "Move");
+            GUI.enabled = false;
+            GUI.Button(new Rect(centerX + 20, 60, 40, 20), "\u21E7");
+            GUI.Button(new Rect(centerX + 60, 100, 40, 20), "\u21E6");
+            GUI.Button(new Rect(centerX + 20, 100, 40, 20), "\u21E9");
+            GUI.Button(new Rect(centerX + 100, 100, 40, 20), "\u21E8");
+            GUI.enabled = true;
+            return;
         }
-        GUI.Box(new Rect(10, 20, 150, 250), "Player 1");
-        GUI.Label(new Rect(30, 220, 60, 20), "Move");
+        GUI.Box(new Rect(10, 30, 150, 160), "Player 1");
+        GUI.Label(new Rect(20, 50, 60, 20), "Move");
         GUI.enabled = false;
-        GUI.Button(new Rect(100, 90, 40, 20), "W");
-        GUI.Button(new Rect(50, 130, 40, 20), "A");
-        GUI.Button(new Rect(100, 130, 40, 20), "S");
-        GUI.Button(new Rect(150, 130, 40, 20), "D");
+        GUI.Button(new Rect(55, 60, 40, 20), "W");
+        GUI.Button(new Rect(15, 100, 40, 20), "A");
+        GUI.Button(new Rect(55, 100, 40, 20), "S");
+        GUI.Button(new Rect(95, 100, 40, 20), "D");
         GUI.enabled = true;
         return;
 
