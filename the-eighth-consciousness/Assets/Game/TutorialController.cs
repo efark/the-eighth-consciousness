@@ -66,14 +66,14 @@ public class TutorialController : MonoBehaviour
             player1 = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
             statsPlayer1.Init();
             statsPlayer1.UpdateIsAlive(true);
-            windowRect = new Rect(centerX, 40, 250, 180);
+            windowRect = new Rect(centerX-125, 40, 250, 180);
         }
         if (statsPlayer2.IsActive)
         {
             player2 = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
             statsPlayer2.Init();
             statsPlayer2.UpdateIsAlive(true);
-            windowRect = new Rect(centerX - (400 / 2), 40, 400, 180);
+            windowRect = new Rect(centerX-200, 40, 400, 180);
         }
 
         PlayerController.OnMovement += markMovement;
@@ -233,13 +233,13 @@ public class TutorialController : MonoBehaviour
             GUI.enabled = true;
             return;
         }
-        GUI.Box(new Rect(10, 30, 150, 160), "Player 1");
-        GUI.Label(new Rect(20, 50, 60, 20), "Move");
+        GUI.Box(new Rect(40, 30, 170, 240), "Player 1");
+        GUI.Label(new Rect(60, 50, 60, 20), "Move");
         GUI.enabled = false;
-        GUI.Button(new Rect(55, 60, 40, 20), "W");
-        GUI.Button(new Rect(15, 100, 40, 20), "A");
-        GUI.Button(new Rect(55, 100, 40, 20), "S");
-        GUI.Button(new Rect(95, 100, 40, 20), "D");
+        GUI.Button(new Rect(100, 80, 40, 20), "W");
+        GUI.Button(new Rect(50, 120, 40, 20), "A");
+        GUI.Button(new Rect(100, 120, 40, 20), "S");
+        GUI.Button(new Rect(150, 120, 40, 20), "D");
         GUI.enabled = true;
         return;
 
@@ -256,10 +256,10 @@ public class TutorialController : MonoBehaviour
             GUI.enabled = true;
             return;
         }
-        GUI.Box(new Rect(10, 20, 150, 250), "Player 1");
-        GUI.Label(new Rect(30, 220, 60, 20), "Shoot");
+        GUI.Box(new Rect(40, 30, 170, 240), "Player 1");
+        GUI.Label(new Rect(60, 50, 60, 20), "Shoot");
         GUI.enabled = false;
-        GUI.Button(new Rect(100, 220, 40, 20), "Y");
+        GUI.Button(new Rect(100, 80, 40, 20), "Y");
         GUI.enabled = true;
         return;
     }
@@ -275,10 +275,10 @@ public class TutorialController : MonoBehaviour
             GUI.enabled = true;
             return;
         }
-        GUI.Box(new Rect(10, 20, 150, 250), "Player 1");
-        GUI.Label(new Rect(30, 220, 60, 20), "Bomb");
+        GUI.Box(new Rect(40, 30, 170, 240), "Player 1");
+        GUI.Label(new Rect(60, 50, 60, 20), "Bomb");
         GUI.enabled = false;
-        GUI.Button(new Rect(100, 220, 40, 20), "U");
+        GUI.Button(new Rect(100, 80, 40, 20), "U");
         GUI.enabled = true;
         return;
     }
@@ -289,21 +289,21 @@ public class TutorialController : MonoBehaviour
         {
             GUI.Box(new Rect(10, 40, 240, 370), "Player 2");
             GUI.Label(new Rect(30, 260, 60, 20), "ECD");
-            GUI.enabled = false;;
+            GUI.enabled = false;
             GUI.Button(new Rect(340, 260, 40, 20), "3");
             GUI.enabled = true;
             return;
         }
-        GUI.Box(new Rect(10, 20, 150, 250), "Player 1");
-        GUI.Label(new Rect(30, 220, 60, 20), "ECD");
+        GUI.Box(new Rect(40, 30, 170, 240), "Player 1");
+        GUI.Label(new Rect(60, 50, 60, 20), "ECD");
         GUI.enabled = false;
-        GUI.Button(new Rect(100, 220, 40, 20), "I");
+        GUI.Button(new Rect(100, 80, 40, 20), "I");
         GUI.enabled = true;
         return;
     }
 
     private void readyHelp(int windowID)
     {
-        GUI.Box(new Rect(10, 20, 150, 250), "Start");
+        GUI.Box(new Rect(40, 30, 170, 100), "Start");
     }
 }
