@@ -9,13 +9,18 @@ public class BackgroundController : MonoBehaviour
     public Material baseBG;
     public Material ecdBG;
     private Image background;
-    //private Renderer rdr;
+    private Renderer rdr;
 
     void Start()
     {
         PlayerController.OnTriggerECD += ChangeColor;
         background = GetComponent<Image>();
-        //rdr = GetComponent<Renderer>();
+        rdr = GetComponent<Renderer>();
+    }
+
+    void OnDestroy()
+    {
+        PlayerController.OnTriggerECD -= ChangeColor;
     }
 
     void ChangeColor(bool ecdActive)

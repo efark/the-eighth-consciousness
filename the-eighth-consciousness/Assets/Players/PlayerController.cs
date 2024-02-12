@@ -110,6 +110,13 @@ public class PlayerController : MonoBehaviour
             topRight.y - bottomLeft.y);
     }
 
+    void OnDestroy()
+    {
+        PlayerStats.OnPlayerDeath -= Death;
+        PlayerStats.OnGameOver -= Death;
+        PlayerStats.OnPlayerHit -= PlayerHit;
+    }
+
     public void UpdateFirePower(int i)
     {
         stats.UpdateFirePower(i);
