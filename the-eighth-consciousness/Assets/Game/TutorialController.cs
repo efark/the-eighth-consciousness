@@ -210,12 +210,13 @@ public class TutorialController : MonoBehaviour
         PlayerController.OnShoot -= markShoot;
         PlayerController.OnECD -= markECD;
         hasEndSequenceStarted = true;
+        cam.GetComponent<FadeController>().StartFadeIn();
         StartCoroutine(loadScene());
     }
 
     IEnumerator loadScene()
     {
-        yield return new WaitForSecondsRealtime(1.0f);
+        yield return new WaitForSecondsRealtime(5.0f);
         SceneManager.LoadScene("Proto1");
     }
 
