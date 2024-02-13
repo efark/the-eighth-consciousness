@@ -171,14 +171,17 @@ public class TutorialController : MonoBehaviour
         GUI.skin = guiSkin;
 
         GUI.skin.button.wordWrap = true;
-        if (GUI.Button(tabRect, "Skip tutorial [Shift]"))
+        if (!hasEndSequenceStarted)
         {
-            endTutorial();
+            if (GUI.Button(tabRect, "Skip tutorial [Shift]"))
+            {
+                endTutorial();
+            }
         }
 
         if (hasEndSequenceStarted)
         {
-            windowRect = GUI.Window(0, windowRect, readyHelp, "Start");
+            //windowRect = GUI.Window(0, windowRect, readyHelp, "Start");
             return;
         }
         if (!hasMoved1 || !hasMoved2)
@@ -211,6 +214,7 @@ public class TutorialController : MonoBehaviour
         PlayerController.OnECD -= markECD;
         hasEndSequenceStarted = true;
         cam.GetComponent<FadeController>().StartFadeIn();
+        startFX.Play();
         StartCoroutine(loadScene());
     }
 
