@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour
         ECDready = true;
         stats.UpdateECDStatus("Ready");
         ECDenabled = false;
-        iFrameCooldown = 0;
         spriteBlinkingTotalDuration = stats.IFrameDuration;
 
         PlayerStats.OnPlayerDeath += Death;
@@ -117,6 +116,9 @@ public class PlayerController : MonoBehaviour
             bottomLeft.y,
             topRight.x - bottomLeft.x,
             topRight.y - bottomLeft.y);
+
+        iFrameCooldown = stats.IFrameDuration;
+        isBlinking = true;
     }
 
     void OnDestroy()
@@ -142,7 +144,9 @@ public class PlayerController : MonoBehaviour
         }
     }
     /*---------------------------------------
-     
+     Code adapted from post in Unity Forum:
+     https://discussions.unity.com/t/sprite-blinking-effect-when-player-hit/158164/4
+     Accessed: 2024-02-14
     ---------------------------------------*/
     private void SpriteBlinkingEffect()
     {
@@ -209,8 +213,6 @@ public class PlayerController : MonoBehaviour
         {
             moveHorizontal = 0;
         }
-
-
 
         Vector3 movement = new Vector2(moveHorizontal, moveVertical);
         if (movement.magnitude != 0)
@@ -296,8 +298,6 @@ public class PlayerController : MonoBehaviour
     {
         bool? nullableBool = CheckECD?.Invoke();
         bool check = nullableBool.HasValue ? nullableBool.Value : false;
-        Debug.Log($"nullableBool: {nullableBool}");
-        Debug.Log($"check: {check}");
         if (!check)
         {
             return;
