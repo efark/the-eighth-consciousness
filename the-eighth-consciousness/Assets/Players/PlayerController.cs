@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     private string fire2Name;
     private string fire3Name;
 
+    public static event Func<bool> CheckECD;
     public static event Action<bool> OnTriggerECD;
     public static event Action<int> OnECD;
     public static event Action<int> OnMovement;
@@ -250,6 +251,14 @@ public class PlayerController : MonoBehaviour
 
     private void triggerSlowMo()
     {
+        bool? nullableBool = CheckECD?.Invoke();
+        bool check = nullableBool.HasValue ? nullableBool.Value : false;
+        Debug.Log($"nullableBool: {nullableBool}");
+        Debug.Log($"check: {check}");
+        if (!check)
+        {
+            return;
+        }
         ECDenabled = true;
         ECDready = false;
         activeSpeed = ECDSpeed;
