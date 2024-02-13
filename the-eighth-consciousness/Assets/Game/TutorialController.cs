@@ -58,8 +58,6 @@ public class TutorialController : MonoBehaviour
         https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
         -------------------------------------------------------------------------------------*/
         cam = Camera.main;
-        //bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
-        //topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, 0, cam.pixelHeight));
         centerX = cam.pixelWidth / 2;
 
         tabRect = new Rect(cam.pixelWidth - 170, 30, 160, 50);
@@ -181,7 +179,6 @@ public class TutorialController : MonoBehaviour
 
         if (hasEndSequenceStarted)
         {
-            //windowRect = GUI.Window(0, windowRect, readyHelp, "Start");
             return;
         }
         if (!hasMoved1 || !hasMoved2)
@@ -367,13 +364,4 @@ public class TutorialController : MonoBehaviour
         return;
     }
 
-    private void readyHelp(int windowID)
-    {
-        /*if (hasPlayer2)
-        {
-            GUI.Box(new Rect(200, 50, 200, 100), "Start");
-            return;
-        }
-        GUI.Box(new Rect(40, 30, 170, 100), "Start");*/
-    }
 }

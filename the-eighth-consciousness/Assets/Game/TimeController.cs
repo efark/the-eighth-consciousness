@@ -9,7 +9,9 @@ https://sharpcoderblog.com/blog/unity-3d-slow-motion-effect-script
 public class TimeController : MonoBehaviour
 {
     public float slowMoScale = 0.5f;
-
+    public float cooldown = 2f;
+    private bool isActive;
+    private float countdown;
     [System.Serializable]
     public class AudioSourceData
     {
@@ -22,6 +24,7 @@ public class TimeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isActive = false;
         //Find all AudioSources in the Scene and save their default pitch values
         AudioSource[] audios = FindObjectsOfType<AudioSource>();
         audioSources = new AudioSourceData[audios.Length];
@@ -35,11 +38,27 @@ public class TimeController : MonoBehaviour
         }
 
         PlayerController.OnTriggerECD += SlowMotionEffect;
+        PlayerController.CheckECD += CheckECDStatus;
+    }
+
+    void Update()
+    {
+        if (!isActive)
+        {
+            countdown = Mathf.Clamp(countdown - Time.deltaTime, 0, cooldown);
+        }
+    }
+
+    public bool CheckECDStatus()
+    {
+        return (!isActive && countdown == 0f);
     }
 
     public void SlowMotionEffect(bool newStatus)
     {
-        Time.timeScale = newStatus ? slowMoScale : 1;
+        isActive = newStatus;
+        Time.timeScale = isActive ? slowMoScale : 1;
+        countdown = isActive ? 0f : 2f;
         for (int i = 0; i < audioSources.Length; i++)
         {
             if (audioSources[i].audioSource)

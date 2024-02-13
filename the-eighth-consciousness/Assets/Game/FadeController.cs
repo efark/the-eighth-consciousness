@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-/*
-Code taken from Unity Forum:
+/*------------------------------------------------------------------------------------------------
+Code taken from Unity Forum and modified to fit the use case:
 https://forum.unity.com/threads/how-can-i-fade-in-out-a-canvas-group-alpha-color-with-duration-time.969864/#post-6311313
 Accessed: 2024-02-13
-*/
+------------------------------------------------------------------------------------------------*/
 /// <summary>
 /// Helper class to fade a canvas group for forum.unity.com by Zer0Cool
 /// - assign this script for instance to the gameobject that holds the canvas
@@ -20,7 +20,6 @@ Accessed: 2024-02-13
 public class FadeController : MonoBehaviour
 {
     public Canvas canvas;
-    //public GameObject blackoutGO;
     public Image blackout;
     public AnimationCurve animationCurve;
     public float fadingSpeed = 5f;
@@ -30,23 +29,19 @@ public class FadeController : MonoBehaviour
 
     void Start()
     {
-        //blackout = blackoutGO.GetComponent<Image>();
         if (canvas == null) canvas = GetComponent<Canvas>();
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         if (canvasGroup == null) Debug.LogError("Please assign a canvas group to the canvas!");
 
         if (animationCurve.length == 0)
         {
-            Debug.Log("Animation curve not assigned: Create a default animation curve");
+            // Debug.Log("Animation curve not assigned: Create a default animation curve");
             animationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
         }
-
-        //StartCoroutine(FadeCanvas(canvasGroup, Direction.FadeIn, fadingSpeed));
-        //StartCoroutine(FadeCanvas(canvasGroup, Direction.FadeOut, fadingSpeed));
     }
     public void StartFadeIn()
     {
-        Debug.Log("Starting fade effect");
+        // Debug.Log("Starting fade effect");
         StartCoroutine(FadeCanvas(canvasGroup, Direction.FadeIn, fadingSpeed));
     }
 
@@ -61,10 +56,10 @@ public class FadeController : MonoBehaviour
         int currentAlpha;
 
         // set the canvas to the start alpha – this ensures that the canvas is ‘reset’ if you fade it multiple times
-        if (direction == Direction.FadeIn) currentAlpha = 0;//canvasGroup.alpha = animationCurve.Evaluate(0f);
-        else currentAlpha = maxAlpha;//canvasGroup.alpha = animationCurve.Evaluate(1f);
+        if (direction == Direction.FadeIn) currentAlpha = 0;
+        else currentAlpha = maxAlpha;
 
-        Debug.Log($"currentAlpha: {currentAlpha}");
+        // Debug.Log($"currentAlpha: {currentAlpha}");
         // loop repeatedly until the previously calculated end time
         while (Time.time <= endTime)
         {
@@ -95,6 +90,6 @@ public class FadeController : MonoBehaviour
             canvasGroup.alpha = animationCurve.Evaluate(0f);
             blackout.color = new Color(objColor.r, objColor.g, objColor.b, maxAlpha * animationCurve.Evaluate(0f));
         }
-        Debug.Log($"canvasGroup.alpha: {canvasGroup.alpha}");
+        // Debug.Log($"canvasGroup.alpha: {canvasGroup.alpha}");
     }
 }
