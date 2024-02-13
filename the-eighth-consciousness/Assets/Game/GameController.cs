@@ -24,11 +24,13 @@ public class GameController : MonoBehaviour
         if (statsPlayer1.IsActive)
         {
             Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity);
+            statsPlayer1.Init();
             statsPlayer1.UpdateIsAlive(true);
         }
         if (statsPlayer2.IsActive)
         {
             Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity);
+            statsPlayer2.Init();
             statsPlayer2.UpdateIsAlive(true);
         }
     }

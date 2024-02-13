@@ -18,6 +18,11 @@ public class BackgroundController : MonoBehaviour
         rdr = GetComponent<Renderer>();
     }
 
+    void OnDestroy()
+    {
+        PlayerController.OnTriggerECD -= ChangeColor;
+    }
+
     void ChangeColor(bool ecdActive)
     {
         Vector2 offset = rdr.material.mainTextureOffset;
