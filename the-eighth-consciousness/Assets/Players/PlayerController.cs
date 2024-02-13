@@ -28,6 +28,13 @@ public class PlayerController : MonoBehaviour
     public AudioSource ecdStartSFX;
     public AudioSource hitSFX;
 
+    [Header("Blinking VFX")]
+    public float spriteBlinkingTimer = 0.0f;
+    public float spriteBlinkingMiniDuration = 0.1f;
+    public float spriteBlinkingTotalTimer = 0.0f;
+    public float spriteBlinkingTotalDuration = 1.0f;
+    public bool isBlinking = false;
+
     public PlayerStats stats;
     private float nextFire;
     private float activeECDCooldown;
@@ -86,6 +93,7 @@ public class PlayerController : MonoBehaviour
         stats.UpdateECDStatus("Ready");
         ECDenabled = false;
         iFrameCooldown = 0;
+        spriteBlinkingTotalDuration = stats.IFrameDuration;
 
         PlayerStats.OnPlayerDeath += Death;
         PlayerStats.OnGameOver += Death;
@@ -129,11 +137,41 @@ public class PlayerController : MonoBehaviour
         if (playerId == _playerId)
         {
             iFrameCooldown = stats.IFrameDuration;
+            isBlinking = true;
             hitSFX.PlayOneShot(hitSFX.clip);
         }
     }
+    /*---------------------------------------
+     
+    ---------------------------------------*/
+    private void SpriteBlinkingEffect()
+    {
+        spriteBlinkingTotalTimer += Time.deltaTime;
+        if (spriteBlinkingTotalTimer >= spriteBlinkingTotalDuration)
+        {
+            isBlinking = false;
+            spriteBlinkingTotalTimer = 0.0f;
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;   // according to 
+                                                                             //your sprite
+            return;
+        }
 
-    public void Death(int playerId)
+        spriteBlinkingTimer += Time.deltaTime;
+        if (spriteBlinkingTimer >= spriteBlinkingMiniDuration)
+        {
+            spriteBlinkingTimer = 0.0f;
+            if (this.gameObject.GetComponent<SpriteRenderer>().enabled == true)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().enabled = false;  //make changes
+            }
+            else
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().enabled = true;   //make changes
+            }
+        }
+    }
+
+        public void Death(int playerId)
     {
         if (playerId == _playerId)
         {
@@ -193,6 +231,11 @@ public class PlayerController : MonoBehaviour
         if (iFrameCooldown == 0)
         {
             stats.UpdateIFrameActive(false);
+        }
+
+        if (isBlinking)
+        {
+            SpriteBlinkingEffect();
         }
 
         // This should be modified later.
