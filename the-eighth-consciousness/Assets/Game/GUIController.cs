@@ -40,8 +40,6 @@ public class GUIController : MonoBehaviour
 
         LoadPreferences();
         SetAudioVolume();
-
-        // musicTrack.Play();
     }
 
     void OnDestroy()
