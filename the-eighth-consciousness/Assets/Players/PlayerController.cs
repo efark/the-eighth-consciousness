@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public GameObject bomb;
     public int _playerId;
     public GameObject explosion;
+    public GameObject ECDParticlesGO;
+    private ParticleSystem ECDParticles;
 
     [Header("Movement")]
     public float speed = 12;
@@ -94,6 +96,8 @@ public class PlayerController : MonoBehaviour
         stats.UpdateECDStatus("Ready");
         ECDenabled = false;
         spriteBlinkingTotalDuration = stats.IFrameDuration;
+        ECDParticles = ECDParticlesGO.transform.GetComponent<ParticleSystem>();
+        //ECDParticles.emission.enabled = true;
 
         PlayerStats.OnPlayerDeath += Death;
         PlayerStats.OnGameOver += Death;
@@ -309,6 +313,10 @@ public class PlayerController : MonoBehaviour
         activeSpeed = ECDSpeed;
         activeFireRate = ECDFireRate;
         stats.UpdateECDStatus("Active");
+        if (!ECDParticles.isPlaying)
+        {
+            ECDParticles.Play();
+        }
         ecdStartSFX.Play();
         OnTriggerECD?.Invoke(true);
         StartCoroutine(waitAndEndSlowMo(ECDDuration));
@@ -328,6 +336,10 @@ public class PlayerController : MonoBehaviour
     {
         ECDenabled = false;
         stats.UpdateECDStatus("Charging");
+        if (ECDParticles.isPlaying)
+        {
+            ECDParticles.Stop();
+        }
         activeSpeed = speed;
         activeFireRate = fireRate;
         activeECDCooldown = ECDCooldown;
