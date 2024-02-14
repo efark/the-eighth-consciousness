@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bomb: {fileID: 137817258388388087, guid: df351a712de24614186608ecc5af6158, type: 3}
   _playerId: 2
+  explosion: {fileID: 100002, guid: cafecd3fc3b761c45bb1553f35cf5c96, type: 3}
   speed: 12
   ECDSpeed: 16
   fireRate: 4
@@ -178,6 +179,11 @@ MonoBehaviour:
   bombSFX: {fileID: 8462638935373594802}
   ecdStartSFX: {fileID: -8325342430508946534}
   hitSFX: {fileID: -1899724618748556401}
+  spriteBlinkingTimer: 0
+  spriteBlinkingMiniDuration: 0.1
+  spriteBlinkingTotalTimer: 0
+  spriteBlinkingTotalDuration: 1
+  isBlinking: 0
   stats: {fileID: 11400000, guid: 0f67b08058f11c7419f4d3bd31c7f829, type: 2}
   bulletSettings: {fileID: 11400000, guid: 98bcfe17447e3a143afa68df99636d99, type: 2}
   spreadSettings: {fileID: 11400000, guid: db77433feba54c145accd09849cefebf, type: 2}

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Prefabs")]
     public GameObject bomb;
     public int _playerId;
+    public GameObject explosion;
 
     [Header("Movement")]
     public float speed = 12;
@@ -189,6 +190,7 @@ public class PlayerController : MonoBehaviour
             // Trigger some sound.
             deathSFX.Play();
             // Trigger visual effect.
+            Instantiate(explosion, this.transform.position, this.transform.rotation);
             // Update some values in state.
             Destroy(gameObject);
         }
