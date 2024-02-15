@@ -27,6 +27,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected bool isAlive = true;
     protected bool canFire = false;
     public AudioSource shotFX;
+    public GameObject explosion;
     public int points;
 
     protected Rect screenLimit;
@@ -195,6 +196,10 @@ public abstract class AbstractEnemyController : MonoBehaviour
         hp += damage;
         if (hp <= 0)
         {
+            if (explosion != null)
+            {
+                Instantiate(explosion, this.transform.position, this.transform.rotation);
+            }
             Destroy(gameObject);
         }
     }

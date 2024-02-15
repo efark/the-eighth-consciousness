@@ -102,6 +102,8 @@ MonoBehaviour:
   attackPatternsValues:
   - {fileID: 11400000, guid: af3c9e2071c8e1d44b521775bd3de0fb, type: 2}
   shotFX: {fileID: -415917297633386462}
+  explosion: {fileID: 4871856717916050757, guid: 097c92eded73dc041b02f27222e15819,
+    type: 3}
   points: 10
   statsText: {fileID: 0}
   thresholdY: 0

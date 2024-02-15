@@ -97,7 +97,6 @@ public class PlayerController : MonoBehaviour
         ECDenabled = false;
         spriteBlinkingTotalDuration = stats.IFrameDuration;
         ECDParticles = ECDParticlesGO.transform.GetComponent<ParticleSystem>();
-        //ECDParticles.emission.enabled = true;
 
         PlayerStats.OnPlayerDeath += Death;
         PlayerStats.OnGameOver += Death;
