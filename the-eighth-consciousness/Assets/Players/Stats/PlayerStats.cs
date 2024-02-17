@@ -24,7 +24,6 @@ public class PlayerStats : ScriptableObject
     private int currentLives;
     private int currentBombs;
     private int currentFirePower;
-    private string currentECDstatus;
     // 
     public bool IsActive => isActive;
     public bool IsAlive => isAlive;
@@ -33,7 +32,6 @@ public class PlayerStats : ScriptableObject
     public int CurrentBombs => currentBombs;
     public int CurrentFirePower => currentFirePower;
     public int CurrentScore => score;
-    public string CurrentECDstatus => currentECDstatus;
 
     private float iFrameDuration;
     public float IFrameDuration => iFrameDuration;
@@ -115,12 +113,6 @@ public class PlayerStats : ScriptableObject
     public void ActivateIFrame()
     {
         iFrameActive = true;
-    }
-
-    public void UpdateECDStatus(string value)
-    { 
-        currentECDstatus = value;
-        OnPlayerGUIChange?.Invoke(playerId);
     }
 
     public void UpdateIsActive(bool value)

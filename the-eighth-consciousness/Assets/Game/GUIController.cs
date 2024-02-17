@@ -91,10 +91,10 @@ public class GUIController : MonoBehaviour
 
     private void _updatePlayerStats(TMP_Text statsText, PlayerStats pStats)
     {
-        statsText.text = $"HP: {pStats.CurrentHP}\n";
+        statsText.text = $"HP:\n";
         statsText.text += $"Lives: {pStats.CurrentLives}\n";
         statsText.text += $"Bombs: {pStats.CurrentBombs}\n";
-        statsText.text += $"ECD: {pStats.CurrentECDstatus}\n";
+        statsText.text += $"ECD:\n";
         statsText.text += $"Score: {pStats.CurrentScore}";
         return;
     }

@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Font 'Futura' downloaded from https://ttfonts.net/.
 public class GameController : MonoBehaviour
 {
-    public PlayerStats statsPlayer1;
-    public PlayerStats statsPlayer2;
+    [SerializeField] private PlayerStats statsPlayer1;
+    [SerializeField] private PlayerStats statsPlayer2;
+    [SerializeField] private Image _ECDSprite1;
+    [SerializeField] private Image _ECDSprite2;
+
     public GameObject playerPrefab1;
     public GameObject playerPrefab2;
     public Vector3 InitialPosition1;
@@ -23,13 +27,15 @@ public class GameController : MonoBehaviour
         PlayerStats.OnPlayerDeath += FlagPlayerRespawn;
         if (statsPlayer1.IsActive)
         {
-            Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity);
+            GameObject playerGO = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
+            playerGO.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite1);
             statsPlayer1.Init();
             statsPlayer1.UpdateIsAlive(true);
         }
         if (statsPlayer2.IsActive)
         {
-            Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity);
+            GameObject playerGO = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
+            playerGO.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite2);
             statsPlayer2.Init();
             statsPlayer2.UpdateIsAlive(true);
         }
@@ -116,15 +122,15 @@ public class GameController : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.0f);
         if (playerId == 1)
         {
-            _playerSpawn(playerPrefab1, InitialPosition1, statsPlayer1);
+            _playerSpawn(playerPrefab1, InitialPosition1, statsPlayer1, _ECDSprite1);
         }
         if (playerId == 2)
         {
-            _playerSpawn(playerPrefab2, InitialPosition2, statsPlayer2);
+            _playerSpawn(playerPrefab2, InitialPosition2, statsPlayer2, _ECDSprite2);
         }
     }
 
-    private void _playerSpawn(GameObject prefab, Vector3 initialPosition, PlayerStats stats)
+    private void _playerSpawn(GameObject prefab, Vector3 initialPosition, PlayerStats stats, Image ECDSprite)
     {
         // Assign playerStats.
         stats.UpdateIsAlive(true);
@@ -132,8 +138,8 @@ public class GameController : MonoBehaviour
         stats.UpdateLives(-1);
         stats.SetFullHP();
         // Instantiate prefab.
-        Instantiate(prefab, initialPosition, Quaternion.identity);
-
+        GameObject playerGO = Instantiate(prefab, initialPosition, Quaternion.identity) as GameObject;
+        playerGO.transform.GetComponent<PlayerController>().SetECDSprite(ECDSprite);
     }
 
 }
