@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public class GUIController : MonoBehaviour
@@ -20,6 +21,12 @@ public class GUIController : MonoBehaviour
     public TMP_Text statsText2;
     public TMP_Text gameOverText;
 
+    [Header("Bars")]
+    [SerializeField] private Image _healthbarSprite1;
+    [SerializeField] private Image _healthbarSprite2;
+    private int maxHP1;
+    private int maxHP2;
+
     private float sfxVolume;
     private float musicVolume;
 
@@ -28,6 +35,8 @@ public class GUIController : MonoBehaviour
     {
         PlayerStats.OnPlayerGUIChange += UpdatePlayerStats;
         PlayerStats.OnGameOver += GameOver;
+        maxHP1 = statsPlayer1._maxHP;
+        maxHP2 = statsPlayer2._maxHP;
 
         UpdatePlayerStats(1);
         if (statsPlayer2.IsActive)
@@ -65,12 +74,20 @@ public class GUIController : MonoBehaviour
         if (playerId == 1)
         {
             _updatePlayerStats(statsText1, statsPlayer1);
+            updateHealthBar(_healthbarSprite1, maxHP1, statsPlayer1.CurrentHP);
         }
         if (playerId == 2)
         {
             _updatePlayerStats(statsText2, statsPlayer2);
+            updateHealthBar(_healthbarSprite2, maxHP2, statsPlayer2.CurrentHP);
         }
     }
+
+    private void updateHealthBar(Image hbSprite, int maxHP, int currentHP)
+    {
+        hbSprite.fillAmount = (float)currentHP / (float)maxHP;
+    }
+
 
     private void _updatePlayerStats(TMP_Text statsText, PlayerStats pStats)
     {
