@@ -2,6 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+public enum ECDStatus
+{
+    Charging,
+    Active,
+    Ready
+}
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,6 +45,14 @@ public class PlayerController : MonoBehaviour
     public float spriteBlinkingTotalTimer = 0.0f;
     public float spriteBlinkingTotalDuration = 1.0f;
     public bool isBlinking = false;
+
+    [Header("Bars")]
+    private ECDStatus _ECDStatus;
+    [SerializeField] private Image ECDSprite;
+    private Color ECDReady;
+    private Color ECDActive;
+    private Color ECDCharging;
+    private float ECDruntime;
 
     public PlayerStats stats;
     private float nextFire;
@@ -75,6 +91,16 @@ public class PlayerController : MonoBehaviour
     public static event Action<int> OnShoot;
     public static event Action<int> OnBombUse;
 
+
+    public void SetECDSprite(Image _sprite)
+    { 
+        if (ECDSprite == null)
+        {
+            ECDSprite = _sprite;
+            return;
+        }
+    }
+
     private void mapButtons()
     {
         xAxisName = $"Horizontal{_playerId}";
@@ -84,17 +110,27 @@ public class PlayerController : MonoBehaviour
         fire3Name = $"Fire{_playerId}3";
     }
 
+    private void initECDColors()
+    {
+        ECDReady = Color.blue;
+        ECDActive = Color.cyan;
+        ECDCharging = Color.yellow;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        mapButtons();
+        initECDColors();
+
         rigidBody = transform.GetComponent<Rigidbody2D>();
         activeFireRate = fireRate;
         nextFire = 1 / activeFireRate;
         activeECDCooldown = ECDCooldown;
         activeSpeed = speed;
         ECDready = true;
-        stats.UpdateECDStatus("Ready");
         ECDenabled = false;
+        _ECDStatus = ECDStatus.Ready;
         spriteBlinkingTotalDuration = stats.IFrameDuration;
         ECDParticles = ECDParticlesGO.transform.GetComponent<ParticleSystem>();
 
@@ -104,8 +140,6 @@ public class PlayerController : MonoBehaviour
 
         bFactory = new BulletFactory(bulletSettings, TargetTypes.Enemy, _playerId, 0f, 1f + stats.CurrentFirePower * 0.2f);
         spread = AuxiliaryMethods.InitSpread(bFactory, spreadSettings);
-
-        mapButtons();
 
         /*-------------------------------------------------------------------------------------
         The logic to calculate the screen borders was taken from Unity's documentation:
@@ -290,20 +324,24 @@ public class PlayerController : MonoBehaviour
         if (!ECDenabled && !ECDready)
         {
             activeECDCooldown = Mathf.Max(activeECDCooldown - Time.deltaTime, 0);
-            if (activeECDCooldown == 0)
+            if (activeECDCooldown == 0 && _checkECD())
             {
                 ECDready = true;
-                stats.UpdateECDStatus("Ready");
+                _ECDStatus = ECDStatus.Ready;
             }
         }
+        updateECDGUI();
+    }
 
+    private bool _checkECD()
+    {
+        bool? nullableBool = CheckECD?.Invoke();
+        return nullableBool.HasValue ? nullableBool.Value : false;
     }
 
     private void triggerSlowMo()
     {
-        bool? nullableBool = CheckECD?.Invoke();
-        bool check = nullableBool.HasValue ? nullableBool.Value : false;
-        if (!check)
+        if (!(_checkECD()))
         {
             return;
         }
@@ -311,7 +349,7 @@ public class PlayerController : MonoBehaviour
         ECDready = false;
         activeSpeed = ECDSpeed;
         activeFireRate = ECDFireRate;
-        stats.UpdateECDStatus("Active");
+        _ECDStatus = ECDStatus.Active;
         if (!ECDParticles.isPlaying)
         {
             ECDParticles.Play();
@@ -321,20 +359,22 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(waitAndEndSlowMo(ECDDuration));
     }
 
-    IEnumerator waitAndEndSlowMo(float timeout)
+    private IEnumerator waitAndEndSlowMo(float timeout)
     {
         //Wait until timeout seconds pass.
-        yield return new WaitForSecondsRealtime(timeout);
-        if (ECDenabled)
+        ECDruntime = 0f;
+        while (ECDruntime <= timeout)
         {
-            endSlowMo();
+            yield return new WaitForFixedUpdate();
+            ECDruntime += Time.deltaTime;
         }
+        endSlowMo();
     }
 
     private void endSlowMo()
     {
         ECDenabled = false;
-        stats.UpdateECDStatus("Charging");
+        _ECDStatus = ECDStatus.Charging;
         if (ECDParticles.isPlaying)
         {
             ECDParticles.Stop();
@@ -343,6 +383,28 @@ public class PlayerController : MonoBehaviour
         activeFireRate = fireRate;
         activeECDCooldown = ECDCooldown;
         OnTriggerECD?.Invoke(false);
+    }
+
+    private void updateECDGUI()
+    {
+        if (_ECDStatus == ECDStatus.Active)
+        {
+            ECDSprite.color = ECDActive;
+            ECDSprite.fillAmount = 1 - ((float)ECDruntime / (float)ECDDuration);
+            return;
+        }
+        if (_ECDStatus == ECDStatus.Charging)
+        {
+            ECDSprite.color = ECDCharging;
+            ECDSprite.fillAmount = 1 - ((float)activeECDCooldown / (float)ECDCooldown);
+            return;
+        }
+        if (_ECDStatus == ECDStatus.Ready)
+        {
+            ECDSprite.color = ECDReady;
+            ECDSprite.fillAmount = 1;
+            return;
+        }
     }
 
     private IEnumerator waitBombCooldown(float timeout)
