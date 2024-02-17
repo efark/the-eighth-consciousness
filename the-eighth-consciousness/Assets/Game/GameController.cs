@@ -27,15 +27,15 @@ public class GameController : MonoBehaviour
         PlayerStats.OnPlayerDeath += FlagPlayerRespawn;
         if (statsPlayer1.IsActive)
         {
-            GameObject playerGO = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
-            playerGO.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite1);
+            GameObject playerGO1 = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
+            playerGO1.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite1);
             statsPlayer1.Init();
             statsPlayer1.UpdateIsAlive(true);
         }
         if (statsPlayer2.IsActive)
         {
-            GameObject playerGO = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
-            playerGO.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite2);
+            GameObject playerGO2 = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
+            playerGO2.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite2);
             statsPlayer2.Init();
             statsPlayer2.UpdateIsAlive(true);
         }

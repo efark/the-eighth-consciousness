@@ -23,6 +23,8 @@ public class TutorialController : MonoBehaviour
     public Vector3 InitialPosition2;
     private GameObject player1;
     private GameObject player2;
+    [SerializeField] private Image _ECDSprite1;
+    [SerializeField] private Image _ECDSprite2;
     private bool hasPlayer2;
     private bool hasEndSequenceStarted;
 
@@ -65,6 +67,7 @@ public class TutorialController : MonoBehaviour
         if (statsPlayer1.IsActive)
         {
             player1 = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
+            player1.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite1);
             statsPlayer1.Init();
             statsPlayer1.UpdateIsAlive(true);
             windowRect = new Rect(centerX-125, 40, 250, 250);
@@ -72,6 +75,7 @@ public class TutorialController : MonoBehaviour
         if (statsPlayer2.IsActive)
         {
             player2 = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
+            player2.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite2);
             statsPlayer2.Init();
             statsPlayer2.UpdateIsAlive(true);
             windowRect = new Rect(centerX-300, 40, 600, 250);
@@ -114,12 +118,12 @@ public class TutorialController : MonoBehaviour
 
     private void markBombUse(int playerId)
     {
-        if (playerId == 1)
+        if (playerId == 1 && hasMoved1)
         {
             hasBombed1 = true;
             return;
         }
-        if (playerId == 2)
+        if (playerId == 2 && hasMoved2)
         {
             hasBombed2 = true;
             return;
@@ -128,12 +132,12 @@ public class TutorialController : MonoBehaviour
 
     private void markECD(int playerId)
     {
-        if (playerId == 1)
+        if (playerId == 1 && hasBombed1)
         {
             hasECDed1 = true;
             return;
         }
-        if (playerId == 2)
+        if (playerId == 2 && hasBombed2)
         {
             hasECDed2 = true;
             return;
@@ -217,7 +221,7 @@ public class TutorialController : MonoBehaviour
 
     IEnumerator loadScene()
     {
-        yield return new WaitForSecondsRealtime(5.0f);
+        yield return new WaitForSecondsRealtime(7.0f);
         SceneManager.LoadScene("Proto1");
     }
 

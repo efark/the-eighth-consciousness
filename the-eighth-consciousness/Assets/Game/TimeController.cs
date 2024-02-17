@@ -43,7 +43,7 @@ public class TimeController : MonoBehaviour
 
     void Update()
     {
-        if (!isActive)
+        if (!isActive && countdown > 0)
         {
             countdown = Mathf.Clamp(countdown - Time.deltaTime, 0, cooldown);
         }
@@ -56,11 +56,9 @@ public class TimeController : MonoBehaviour
 
     public void SlowMotionEffect(bool newStatus)
     {
-        Debug.Log($"SlowMotionEffect - newStatus: {newStatus}");
         isActive = newStatus;
         Time.timeScale = isActive ? slowMoScale : 1;
         countdown = isActive ? 0f : 2f;
-        Debug.Log($"SlowMotionEffect - countdown: {countdown}");
         for (int i = 0; i < audioSources.Length; i++)
         {
             if (audioSources[i].audioSource)

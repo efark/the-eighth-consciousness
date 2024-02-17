@@ -8,7 +8,8 @@ public enum ECDStatus
 {
     Charging,
     Active,
-    Ready
+    Ready,
+    Cooldown
 }
 
 public class PlayerController : MonoBehaviour
@@ -330,6 +331,19 @@ public class PlayerController : MonoBehaviour
                 _ECDStatus = ECDStatus.Ready;
             }
         }
+        if (ECDready)
+        {
+            if (!_checkECD())
+            {
+                _ECDStatus = ECDStatus.Cooldown;
+            }
+            else
+            {
+                _ECDStatus = ECDStatus.Ready;
+            }
+            
+        }
+
         updateECDGUI();
     }
 
@@ -387,6 +401,11 @@ public class PlayerController : MonoBehaviour
 
     private void updateECDGUI()
     {
+        if (_ECDStatus == ECDStatus.Cooldown)
+        {
+            ECDSprite.color = ECDCharging;
+            return;
+        }
         if (_ECDStatus == ECDStatus.Active)
         {
             ECDSprite.color = ECDActive;
