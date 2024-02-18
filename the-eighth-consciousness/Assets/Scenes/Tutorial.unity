@@ -438,6 +438,7 @@ MonoBehaviour:
   startFX: {fileID: 213659092}
   okFX: {fileID: 213659091}
   BGMusic: {fileID: 213659090}
+  gui: {fileID: 348366344}
   statsPlayer1: {fileID: 11400000, guid: 3ce5cb6028dff9d408560cc987803692, type: 2}
   statsPlayer2: {fileID: 11400000, guid: 0f67b08058f11c7419f4d3bd31c7f829, type: 2}
   playerPrefab1: {fileID: 4383251580355074025, guid: 29b7dff760015c144b7d2dfef9383de5,
@@ -825,8 +826,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1131,6 +1132,10 @@ MonoBehaviour:
   statsText1: {fileID: 1405835501}
   statsText2: {fileID: 309339417}
   gameOverText: {fileID: 163657406}
+  _healthBar1: {fileID: 540588857}
+  _healthBar2: {fileID: 1412476049}
+  _ECDBar1: {fileID: 1677548726}
+  _ECDBar2: {fileID: 1407391130}
   _healthbarSprite1: {fileID: 1087719485}
   _healthbarSprite2: {fileID: 752764143}
 --- !u!114 &348366345
@@ -1490,8 +1495,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -314, y: 164}
-  m_SizeDelta: {x: 150, y: 33}
+  m_AnchoredPosition: {x: -331, y: 166}
+  m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &586108607
 GameObject:
@@ -2005,8 +2010,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2107,8 +2112,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 380, y: 50}
-  m_SizeDelta: {x: 150, y: 33}
+  m_AnchoredPosition: {x: 345, y: 68}
+  m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1412476049
 GameObject:
@@ -2143,8 +2148,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 371, y: 164.00002}
-  m_SizeDelta: {x: 150, y: 33}
+  m_AnchoredPosition: {x: 345, y: 166}
+  m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1421430235
 GameObject:
@@ -2320,8 +2325,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -293, y: 50}
-  m_SizeDelta: {x: 150, y: 33}
+  m_AnchoredPosition: {x: -331, y: 68}
+  m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1710537278
 GameObject:

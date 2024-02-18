@@ -1552,6 +1552,10 @@ MonoBehaviour:
   statsText1: {fileID: 1645899200}
   statsText2: {fileID: 1021843450}
   gameOverText: {fileID: 589905249}
+  _healthBar1: {fileID: 2046945896}
+  _healthBar2: {fileID: 1475577153}
+  _ECDBar1: {fileID: 311547441}
+  _ECDBar2: {fileID: 246775856}
   _healthbarSprite1: {fileID: 1758388382}
   _healthbarSprite2: {fileID: 471219021}
 --- !u!1 &1384143440

@@ -22,6 +22,10 @@ public class GUIController : MonoBehaviour
     public TMP_Text gameOverText;
 
     [Header("Bars")]
+    [SerializeField] private GameObject _healthBar1;
+    [SerializeField] private GameObject _healthBar2;
+    [SerializeField] private GameObject _ECDBar1;
+    [SerializeField] private GameObject _ECDBar2;
     [SerializeField] private Image _healthbarSprite1;
     [SerializeField] private Image _healthbarSprite2;
     private int maxHP1;
@@ -44,11 +48,17 @@ public class GUIController : MonoBehaviour
             UpdatePlayerStats(2);
         }
         else {
-            disableText(statsText2);
+            disableUI(statsText2, _healthBar2, _ECDBar2);
         }
 
         LoadPreferences();
         SetAudioVolume();
+    }
+
+    public void DisableGUI()
+    {
+        disableUI(statsText1, _healthBar1, _ECDBar1);
+        disableUI(statsText2, _healthBar2, _ECDBar2);
     }
 
     void OnDestroy()
@@ -103,11 +113,11 @@ public class GUIController : MonoBehaviour
     {
         if (playerId == 1)
         {
-            _gameOver(statsText1);
+            _gameOver(statsText1, _healthBar1, _ECDBar1);
         }
         if (playerId == 2)
         {
-            _gameOver(statsText2);
+            _gameOver(statsText2, _healthBar2, _ECDBar2);
         }
         if (!statsPlayer1.IsActive && !statsPlayer2.IsActive)
         {
@@ -115,22 +125,26 @@ public class GUIController : MonoBehaviour
         }
     }
 
-    private void _gameOver(TMP_Text statsText)
+    private void _gameOver(TMP_Text statsText, GameObject HPBar, GameObject ECDBar)
     {
         statsText.text = "Game Over";
+        HPBar.SetActive(false);
+        ECDBar.SetActive(false);
     }
 
-    private void disableText(TMP_Text statsText)
+    private void disableUI(TMP_Text statsText, GameObject HPBar, GameObject ECDBar)
     {
         statsText.text = "";
+        HPBar.SetActive(false);
+        ECDBar.SetActive(false);
     }
 
     public void FinishGame()
     {
         musicTrack.Stop();
         gameOverTrack.Play();
-        disableText(statsText1);
-        disableText(statsText2);
+        disableUI(statsText1, _healthBar1, _ECDBar1);
+        disableUI(statsText2, _healthBar2, _ECDBar2);
         gameOverText.text = "Game Over!";
         StartCoroutine(loadScene());
     }
