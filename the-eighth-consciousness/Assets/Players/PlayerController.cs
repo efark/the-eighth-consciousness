@@ -317,7 +317,6 @@ public class PlayerController : MonoBehaviour
         {
             if (ECDready && !ECDenabled)
             {
-                OnECD?.Invoke(_playerId);
                 triggerSlowMo();
             }
         }
@@ -387,6 +386,7 @@ public class PlayerController : MonoBehaviour
 
     private void endSlowMo()
     {
+        OnECD?.Invoke(_playerId);
         ECDenabled = false;
         _ECDStatus = ECDStatus.Charging;
         if (ECDParticles.isPlaying)

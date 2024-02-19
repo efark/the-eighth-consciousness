@@ -214,16 +214,16 @@ public class TutorialController : MonoBehaviour
         PlayerController.OnBombUse -= markBombUse;
         PlayerController.OnShoot -= markShoot;
         PlayerController.OnECD -= markECD;
-        gui.DisableGUI();
-        hasEndSequenceStarted = true;
-        cam.GetComponent<FadeController>().StartFadeIn();
-        startFX.Play();
         StartCoroutine(loadScene());
     }
 
     IEnumerator loadScene()
     {
-        yield return new WaitForSecondsRealtime(7.0f);
+        gui.DisableGUI();
+        hasEndSequenceStarted = true;
+        cam.GetComponent<FadeController>().StartFadeIn();
+        startFX.Play();
+        yield return new WaitForSecondsRealtime(5.0f);
         SceneManager.LoadScene("Proto1");
     }
 
