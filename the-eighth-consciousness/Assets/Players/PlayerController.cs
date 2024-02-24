@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Sound FX")]
     public AudioSource shootSFX;
-    public AudioSource deathSFX;
     public AudioSource bombSFX;
     public AudioSource ecdStartSFX;
     public AudioSource hitSFX;
@@ -225,8 +224,6 @@ public class PlayerController : MonoBehaviour
             PlayerStats.OnPlayerDeath -= Death;
             PlayerStats.OnGameOver -= Death;
             PlayerStats.OnPlayerHit -= PlayerHit;
-            // Trigger some sound.
-            deathSFX.Play();
             // Trigger visual effect.
             Instantiate(explosion, this.transform.position, this.transform.rotation);
             // Update some values in state.
