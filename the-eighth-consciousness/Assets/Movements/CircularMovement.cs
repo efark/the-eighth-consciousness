@@ -16,12 +16,6 @@ public class CircularMovement : AbstractMovement
     //private Vector2 centre;
     private float angle;
 
-    void Start()
-    {
-        rb = transform.GetComponent<Rigidbody2D>();
-        //centre = transform.position;
-    }
-
     void FixedUpdate()
     {
         if (!isEnabled)
