@@ -17,6 +17,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected List<Vector3> allFirepoints = new List<Vector3>();
 
     protected TargetTypes targetType;
+    protected AbstractMovement mvController;
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
     protected List<AttackPattern> attackPatterns = new List<AttackPattern>();
     protected List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
@@ -106,6 +107,11 @@ public abstract class AbstractEnemyController : MonoBehaviour
         }
     }
 
+    protected void initMovementController()
+    {
+        mvController = this.GetComponent<AbstractMovement>();
+    }
+
     protected List<Vector3> GetFirepoints(FirepointTypes ft)
     {
         if (ft == FirepointTypes.All)
@@ -121,6 +127,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected GameObject GetClosestPlayer()
     {
+        players = GameObject.FindGameObjectsWithTag(targetType.ToString());
         if (players.Length == 1)
         {
             return players[0];

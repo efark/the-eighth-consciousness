@@ -23,13 +23,28 @@ public class BombController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag.ToLower() == "enemybullet")
+        // The bomb was triggered by the player.
+        if (playerId != 0)
         {
-            Destroy(other.gameObject);
+            if (other.tag.ToLower() == "enemybullet")
+            {
+                Destroy(other.gameObject);
+            }
+            if (other.tag.ToLower() == "enemy" || other.tag.ToLower() == "boss")
+            {
+                other.transform.GetComponent<AbstractEnemyController>().Hit(this.playerId, -damage);
+            }
+            return;
         }
-        if (other.tag.ToLower() == "enemy" || other.tag.ToLower() == "boss")
+
+        if (playerId == 0)
         {
-            other.transform.GetComponent<AbstractEnemyController>().Hit(this.playerId, -damage);
+            if (other.tag.ToLower() == "player")
+            {
+                other.transform.GetComponent<PlayerController>().stats.UpdateHP(-damage);
+                return;
+            }
         }
+
     }
 }
