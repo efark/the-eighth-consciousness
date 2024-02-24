@@ -8,7 +8,8 @@ public enum ECDStatus
 {
     Charging,
     Active,
-    Ready
+    Ready,
+    Cooldown
 }
 
 public class PlayerController : MonoBehaviour
@@ -34,7 +35,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Sound FX")]
     public AudioSource shootSFX;
-    public AudioSource deathSFX;
     public AudioSource bombSFX;
     public AudioSource ecdStartSFX;
     public AudioSource hitSFX;
@@ -224,8 +224,6 @@ public class PlayerController : MonoBehaviour
             PlayerStats.OnPlayerDeath -= Death;
             PlayerStats.OnGameOver -= Death;
             PlayerStats.OnPlayerHit -= PlayerHit;
-            // Trigger some sound.
-            deathSFX.Play();
             // Trigger visual effect.
             Instantiate(explosion, this.transform.position, this.transform.rotation);
             // Update some values in state.
@@ -316,7 +314,6 @@ public class PlayerController : MonoBehaviour
         {
             if (ECDready && !ECDenabled)
             {
-                OnECD?.Invoke(_playerId);
                 triggerSlowMo();
             }
         }
@@ -330,6 +327,19 @@ public class PlayerController : MonoBehaviour
                 _ECDStatus = ECDStatus.Ready;
             }
         }
+        if (ECDready)
+        {
+            if (!_checkECD())
+            {
+                _ECDStatus = ECDStatus.Cooldown;
+            }
+            else
+            {
+                _ECDStatus = ECDStatus.Ready;
+            }
+            
+        }
+
         updateECDGUI();
     }
 
@@ -373,6 +383,7 @@ public class PlayerController : MonoBehaviour
 
     private void endSlowMo()
     {
+        OnECD?.Invoke(_playerId);
         ECDenabled = false;
         _ECDStatus = ECDStatus.Charging;
         if (ECDParticles.isPlaying)
@@ -387,6 +398,11 @@ public class PlayerController : MonoBehaviour
 
     private void updateECDGUI()
     {
+        if (_ECDStatus == ECDStatus.Cooldown)
+        {
+            ECDSprite.color = ECDCharging;
+            return;
+        }
         if (_ECDStatus == ECDStatus.Active)
         {
             ECDSprite.color = ECDActive;

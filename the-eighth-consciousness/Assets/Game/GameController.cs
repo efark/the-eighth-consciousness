@@ -11,10 +11,15 @@ public class GameController : MonoBehaviour
     [SerializeField] private Image _ECDSprite1;
     [SerializeField] private Image _ECDSprite2;
 
+    [Header("Players")]
     public GameObject playerPrefab1;
     public GameObject playerPrefab2;
     public Vector3 InitialPosition1;
     public Vector3 InitialPosition2;
+    public AudioSource playerDeathSFX;
+
+    [Header("Enemy")]
+    public AudioSource enemyDeathSFX;
     private bool mustRespawn1;
     private bool mustRespawn2;
 
@@ -27,15 +32,15 @@ public class GameController : MonoBehaviour
         PlayerStats.OnPlayerDeath += FlagPlayerRespawn;
         if (statsPlayer1.IsActive)
         {
-            GameObject playerGO = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
-            playerGO.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite1);
+            GameObject playerGO1 = Instantiate(playerPrefab1, InitialPosition1, Quaternion.identity) as GameObject;
+            playerGO1.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite1);
             statsPlayer1.Init();
             statsPlayer1.UpdateIsAlive(true);
         }
         if (statsPlayer2.IsActive)
         {
-            GameObject playerGO = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
-            playerGO.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite2);
+            GameObject playerGO2 = Instantiate(playerPrefab2, InitialPosition2, Quaternion.identity) as GameObject;
+            playerGO2.transform.GetComponent<PlayerController>().SetECDSprite(_ECDSprite2);
             statsPlayer2.Init();
             statsPlayer2.UpdateIsAlive(true);
         }
@@ -93,6 +98,7 @@ public class GameController : MonoBehaviour
 
     private void EnemyDeath(int enemyId, int playerId, int points)
     {
+        enemyDeathSFX.PlayOneShot(enemyDeathSFX.clip);
         enemies[enemyId].transform.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
         enemies.Remove(enemyId);
         if (playerId == 1)
@@ -107,6 +113,7 @@ public class GameController : MonoBehaviour
 
     public void FlagPlayerRespawn(int playerId)
     {
+        playerDeathSFX.PlayOneShot(playerDeathSFX.clip);
         if (playerId == 1)
         { 
             mustRespawn1 = true;
