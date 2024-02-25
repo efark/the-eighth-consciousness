@@ -56,7 +56,6 @@ public class Straighter : AbstractEnemyController
                     ap.spread.Create(transform.position, transform.rotation, lastDirection);
                 }
             }
-            // yield return new WaitForSeconds(ap.cooldown);
             ap.UpdateIsRunning(false);
             attackPatterns[index] = ap;
         }
@@ -77,7 +76,6 @@ public class Straighter : AbstractEnemyController
         UpdateGUI();
         targetType = TargetTypes.Player;
 
-        // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
         canFire = false;
 
         initScreenLimit();

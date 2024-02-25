@@ -101,7 +101,6 @@ public class EnemySpawner : MonoBehaviour
                 targetPlayer = GetClosestPlayer();
                 if (targetPlayer != null)
                 {
-                    //Debug.Log("Attacking player");
                     Vector3 dir3 = targetPlayer.transform.position - this.transform.position;
                     direction.x = dir3.x;
                     direction.y = dir3.y;
@@ -113,7 +112,6 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
             Quaternion rota = Quaternion.LookRotation(Vector3.forward, direction);
-            // Debug.Log($"Attack Direction: {direction}");
             this.spread.Create(this.transform.position, rota, direction.normalized);
             nextWave = cooldown;
             waveNumber++;

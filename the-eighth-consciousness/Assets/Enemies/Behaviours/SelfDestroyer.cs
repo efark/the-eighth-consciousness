@@ -33,7 +33,6 @@ public class SelfDestroyer : AbstractEnemyController
         // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
         initMovementController();
         initScreenLimit();
-        // initFirepoints();
         initAttackPatterns();
         initOnDeathEvent();
 
@@ -56,7 +55,6 @@ public class SelfDestroyer : AbstractEnemyController
 
         if (isAlive && Vector3.Distance(this.transform.position, target) < proximity)
         {
-            //bombSFX.Play();
             GameObject b = Instantiate(bomb, transform.position, Quaternion.identity) as GameObject;
             b.transform.GetComponent<BombController>().playerId = 0;
             b.transform.GetComponent<BombController>().damage = 50;

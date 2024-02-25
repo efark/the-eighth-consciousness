@@ -35,13 +35,11 @@ public class FadeController : MonoBehaviour
 
         if (animationCurve.length == 0)
         {
-            // Debug.Log("Animation curve not assigned: Create a default animation curve");
             animationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
         }
     }
     public void StartFadeIn()
     {
-        // Debug.Log("Starting fade effect");
         StartCoroutine(FadeCanvas(canvasGroup, Direction.FadeIn, fadingSpeed));
     }
 
@@ -59,7 +57,6 @@ public class FadeController : MonoBehaviour
         if (direction == Direction.FadeIn) currentAlpha = 0;
         else currentAlpha = maxAlpha;
 
-        // Debug.Log($"currentAlpha: {currentAlpha}");
         // loop repeatedly until the previously calculated end time
         while (Time.time <= endTime)
         {
@@ -90,6 +87,5 @@ public class FadeController : MonoBehaviour
             canvasGroup.alpha = animationCurve.Evaluate(0f);
             blackout.color = new Color(objColor.r, objColor.g, objColor.b, maxAlpha * animationCurve.Evaluate(0f));
         }
-        // Debug.Log($"canvasGroup.alpha: {canvasGroup.alpha}");
     }
 }

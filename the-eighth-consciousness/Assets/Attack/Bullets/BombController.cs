@@ -32,7 +32,6 @@ public class BombController : MonoBehaviour
             }
             if (other.tag.ToLower() == "enemy" || other.tag.ToLower() == "boss")
             {
-                Debug.Log($"Impact bomb - Player {this.playerId}");
                 other.transform.GetComponent<AbstractEnemyController>().Hit(this.playerId, -damage);
             }
             return;
