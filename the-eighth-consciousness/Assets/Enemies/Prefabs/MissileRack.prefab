@@ -134,7 +134,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2537e2fe424b0fe4d817c041284a67dd, type: 2}
   shotFX: {fileID: -5128655948724695392}
   explosion: {fileID: 0}
-  points: 0
+  points: 40
   statsText: {fileID: 0}
   isAimedAtPoint: 0
   targetPoint: {x: 0, y: 0}

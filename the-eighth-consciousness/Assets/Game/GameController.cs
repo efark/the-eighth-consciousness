@@ -90,6 +90,7 @@ public class GameController : MonoBehaviour
             }
             if (!found)
             {
+                Debug.Log($"Add enemy {cekv.Key} to the map.");
                 enemies.Add(cekv.Key, cekv.Value);
                 cekv.Value.transform.GetComponent<AbstractEnemyController>().OnDeath.AddListener(EnemyDeath);
             }
@@ -103,10 +104,12 @@ public class GameController : MonoBehaviour
         enemies.Remove(enemyId);
         if (playerId == 1)
         {
+            Debug.Log($"Add {points} points to player {playerId}");
             statsPlayer1.UpdateScore(points);
         }
         if (playerId == 2)
         {
+            Debug.Log($"Add {points} points to player {playerId}");
             statsPlayer2.UpdateScore(points);
         }
     }

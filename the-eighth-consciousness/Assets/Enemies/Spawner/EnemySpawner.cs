@@ -25,7 +25,6 @@ public class EnemySpawner : MonoBehaviour
     public Vector2 targetPoint;
     public Vector2 targetPointRange;
 
-    //public SpawnerSettings settings;
     private AbstractSpread spread;
     private float nextWave;
     private int waveNumber;

@@ -196,7 +196,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     public void Hit(int playerId, int damage)
     {
-        if (hp > 0 && hp + damage < 0)
+        if (hp > 0 && hp + damage <= 0)
         {
             OnDeath?.Invoke(this.GetInstanceID(), playerId, points);
         }

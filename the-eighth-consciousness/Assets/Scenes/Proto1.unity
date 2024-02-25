@@ -1799,7 +1799,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
+  - {fileID: 11400000, guid: 95b1e1994e26dc24cbb232703e845231, type: 2}
   - {fileID: 11400000, guid: 3666083d563cd594d909391ea8204434, type: 2}
+  - {fileID: 11400000, guid: 95b1e1994e26dc24cbb232703e845231, type: 2}
+  - {fileID: 11400000, guid: ea629db07b3eb4047ae2af4fb0af20aa, type: 2}
+  - {fileID: 11400000, guid: 3666083d563cd594d909391ea8204434, type: 2}
+  - {fileID: 11400000, guid: 6f972361789601c45aa546949ed61b66, type: 2}
   - {fileID: 11400000, guid: ea629db07b3eb4047ae2af4fb0af20aa, type: 2}
 --- !u!1 &1645899198
 GameObject:

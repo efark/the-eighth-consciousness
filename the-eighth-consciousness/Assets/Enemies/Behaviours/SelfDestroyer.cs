@@ -42,7 +42,6 @@ public class SelfDestroyer : AbstractEnemyController
             target = targetPlayer.transform.position;
             Vector3 targetDir = (target - this.transform.position).normalized;
             mvController.direction = new Vector2(targetDir.x, targetDir.y);
-            Debug.Log($"target: {target}");
         }
         
     }
