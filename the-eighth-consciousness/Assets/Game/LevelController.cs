@@ -25,8 +25,7 @@ public class LevelController : MonoBehaviour
 
     void Update()
     {
-
-        if (index <= lastIndex)
+        if (index < lastIndex)
         {
             if (spawner == null)
             {
@@ -35,16 +34,5 @@ public class LevelController : MonoBehaviour
                 index++;
             }
         }
-
-        /*
-        foreach (WavesSettings ws in settings)
-        {
-            if (ws.startingTime < time && !ws.Activated)
-            {
-                ws.SetActivated(true);
-                Instantiate(ws.enemySpawner, ws.startingPosition, Quaternion.identity);
-            }
-        }
-        time += Time.deltaTime;*/
     }
 }

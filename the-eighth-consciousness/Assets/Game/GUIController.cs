@@ -10,7 +10,6 @@ public class GUIController : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public AudioSource musicTrack;
-    public AudioSource gameOverTrack;
 
     [Header("Stats")]
     public PlayerStats statsPlayer1;
@@ -142,7 +141,6 @@ public class GUIController : MonoBehaviour
     public void FinishGame()
     {
         musicTrack.Stop();
-        gameOverTrack.Play();
         disableUI(statsText1, _healthBar1, _ECDBar1);
         disableUI(statsText2, _healthBar2, _ECDBar2);
         gameOverText.text = "Game Over!";

@@ -72,7 +72,7 @@ public class Straighter : AbstractEnemyController
     void Start()
     {
         time = 0f;
-        hp = 100;
+        hp = 60;
         UpdateGUI();
         targetType = TargetTypes.Player;
 

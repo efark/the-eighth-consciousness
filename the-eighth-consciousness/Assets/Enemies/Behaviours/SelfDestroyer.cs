@@ -24,7 +24,7 @@ public class SelfDestroyer : AbstractEnemyController
     void Start()
     {
         time = 0f;
-        hp = 100;
+        hp = 40;
         UpdateGUI();
         targetType = TargetTypes.Player;
         targetPlayer = GetClosestPlayer();

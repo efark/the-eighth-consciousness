@@ -24,7 +24,7 @@ public class VFlyer : AbstractEnemyController
     // Start is called before the first frame update
     void Start()
     {
-        hp = 100;
+        hp = 30;
         targetType = TargetTypes.Player;
         thresholdY += Random.Range(-thresholdRange, thresholdRange);
 

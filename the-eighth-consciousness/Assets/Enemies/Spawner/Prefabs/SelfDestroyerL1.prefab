@@ -45,9 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7441234122721255524, guid: 2fd93b95f09c56946921135e62b9ab8a, type: 3}
   spreadSettings: {fileID: 11400000, guid: db77433feba54c145accd09849cefebf, type: 2}
-  waves: 10
-  startDelay: 0
-  cooldown: 1
+  waves: 20
+  startDelay: 2
+  cooldown: 0.5
   isAimingPlayer: 1
   hasFixedDirection: 0
   fixedDirection: {x: 0, y: 0}

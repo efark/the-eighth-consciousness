@@ -221,7 +221,7 @@ MonoBehaviour:
   order: 0
   acceleration: 2
   minSpeed: 4
-  maxSpeed: 4
+  maxSpeed: 12
 --- !u!50 &487835735
 Rigidbody2D:
   serializedVersion: 4
