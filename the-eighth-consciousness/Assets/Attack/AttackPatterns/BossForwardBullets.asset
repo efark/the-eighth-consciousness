@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
-  m_Name: DoubleHelix
+  m_Name: BossForwardBullets
   m_EditorClassIdentifier: 
-  spreadSettings: {fileID: 11400000, guid: 11d16dde998f8f949ae8ffd17e6d9482, type: 2}
-  bulletSettings: {fileID: 11400000, guid: 17eea5f40dda6084f9ed335a8914a792, type: 2}
-  firepointType: 4
-  burstOffset: 2
-  burstSize: 5
-  burstSpacing: 2
+  spreadSettings: {fileID: 11400000, guid: 78ff018b3e1db2a418617d26957cd30c, type: 2}
+  bulletSettings: {fileID: 11400000, guid: b18b4b5640288ab4290fb850bf7ebd8b, type: 2}
+  firepointType: 2
+  burstOffset: 0
+  burstSize: 4
+  burstSpacing: 0.5
   offset: 0
-  cooldown: 1
-  numberOfBursts: 4
-  order: 0
+  cooldown: 0
+  numberOfBursts: 2
+  order: 3
   keepsAiming: 0
   isStaticAttack: 0
   isConstantAttack: 0

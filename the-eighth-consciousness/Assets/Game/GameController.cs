@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Font 'Futura' downloaded from https://ttfonts.net/.
 public class GameController : MonoBehaviour
 {
     [SerializeField] private PlayerStats statsPlayer1;
@@ -100,7 +99,8 @@ public class GameController : MonoBehaviour
     {
         enemyDeathSFX.PlayOneShot(enemyDeathSFX.clip);
         enemies[enemyId].transform.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
-        enemies.Remove(enemyId);
+        enemies[enemyId] = null;
+        //enemies.Remove(enemyId);
         if (playerId == 1)
         {
             statsPlayer1.UpdateScore(points);

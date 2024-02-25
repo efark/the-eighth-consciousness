@@ -14,7 +14,10 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected GameObject targetPlayer;
     protected List<Vector3> centralFirepoints = new List<Vector3>();
     protected List<Vector3> lateralFirepoints = new List<Vector3>();
+    protected List<Vector3> forwardFirepoints = new List<Vector3>();
+    protected List<Vector3> mainFirepoints = new List<Vector3>();
     protected List<Vector3> allFirepoints = new List<Vector3>();
+    protected Dictionary<string, List<Vector3>> firepointsMap = new Dictionary<string, List<Vector3>>();
 
     protected TargetTypes targetType;
     protected AbstractMovement mvController;
@@ -88,6 +91,12 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected void initFirepoints()
     {
+        List<Vector3> central = new List<Vector3>();
+        List<Vector3> lateral = new List<Vector3>();
+        List<Vector3> forward = new List<Vector3>();
+        List<Vector3> main = new List<Vector3>();
+        List<Vector3> all = new List<Vector3>();
+
         Transform firepoints = this.transform.Find("Firepoints");
         if (firepoints == null)
         {
@@ -95,16 +104,33 @@ public abstract class AbstractEnemyController : MonoBehaviour
         }
         foreach (Transform child in firepoints)
         {
+            all.Add(child.localPosition);
             if (child.name.ToLower() == "central")
             {
-                centralFirepoints.Add(child.localPosition);
+                central.Add(child.localPosition);
+                continue;
             }
-            else
+            if (child.name.ToLower() == "lateral")
             {
-                lateralFirepoints.Add(child.localPosition);
+                lateral.Add(child.localPosition);
+                continue;
             }
-            allFirepoints.Add(child.localPosition);
+            if (child.name.ToLower() == "forward")
+            {
+                forward.Add(child.localPosition);
+                continue;
+            }
+            if (child.name.ToLower() == "main")
+            {
+                main.Add(child.localPosition);
+                continue;
+            }
         }
+        firepointsMap.Add("central", central);
+        firepointsMap.Add("lateral", lateral);
+        firepointsMap.Add("forward", forward);
+        firepointsMap.Add("main", main);
+        firepointsMap.Add("all", all);
     }
 
     protected void initMovementController()
@@ -114,6 +140,8 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected List<Vector3> GetFirepoints(FirepointTypes ft)
     {
+        return firepointsMap[ft.ToString().ToLower()];
+        /*
         if (ft == FirepointTypes.All)
         {
             return allFirepoints;
@@ -122,7 +150,15 @@ public abstract class AbstractEnemyController : MonoBehaviour
         {
             return centralFirepoints;
         }
-        return lateralFirepoints;
+        if (ft == FirepointTypes.Central)
+        {
+            return centralFirepoints;
+        }
+        if (ft == FirepointTypes.Central)
+        {
+            return centralFirepoints;
+        }
+        return lateralFirepoints;*/
     }
 
     protected GameObject GetClosestPlayer()

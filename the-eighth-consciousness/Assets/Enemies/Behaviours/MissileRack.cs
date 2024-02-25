@@ -56,6 +56,7 @@ public class MissileRack : AbstractEnemyController
         initAttackPatterns();
         checkAttackPatterns();
         initFirepoints();
+        initOnDeathEvent();
     }
 
     // Update is called once per frame
