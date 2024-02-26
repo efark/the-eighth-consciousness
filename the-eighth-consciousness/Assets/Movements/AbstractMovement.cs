@@ -19,6 +19,7 @@ public class AbstractMovement : MonoBehaviour
     [Header("Basic Parameters")]
     public float speed;
     public Vector2 direction;
+    public Vector2 destination;
     public bool isEnabled = true;
     [System.NonSerialized] public Rigidbody2D rb;
     public int order;

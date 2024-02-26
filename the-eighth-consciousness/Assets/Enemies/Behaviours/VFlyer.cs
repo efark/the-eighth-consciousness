@@ -32,12 +32,15 @@ public class VFlyer : AbstractEnemyController
         initAttackPatterns();
         initFirepoints();
         initScreenLimit();
+        initWorldLimit();
         initOnDeathEvent();
         transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
     }
 
     void Update()
     {
+        CheckEnteredScreen();
+        CheckOutOfWorld();
         if (HP < 0)
         {
             isAlive = false;

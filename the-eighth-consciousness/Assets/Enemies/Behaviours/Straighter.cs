@@ -79,6 +79,7 @@ public class Straighter : AbstractEnemyController
         canFire = false;
 
         initScreenLimit();
+        initWorldLimit();
         initFirepoints();
         initAttackPatterns();
         initOnDeathEvent();
@@ -86,6 +87,8 @@ public class Straighter : AbstractEnemyController
 
     void Update()
     {
+        CheckEnteredScreen();
+        CheckOutOfWorld();
         if (HP < 0)
         {
             isAlive = false;

@@ -203,6 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: 1, y: 0}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   radius: 1
@@ -338,6 +339,7 @@ GameObject:
   - component: {fileID: 324093851}
   - component: {fileID: 324093852}
   - component: {fileID: 324093853}
+  - component: {fileID: 324093857}
   m_Layer: 0
   m_Name: TripleArrow
   m_TagString: Boss
@@ -424,6 +426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   direction: {x: 0, y: -5}
+  destination: {x: 0, y: 0}
   isEnabled: 0
   order: 0
   acceleration: 0
@@ -443,6 +446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   direction: {x: 0, y: 8}
+  destination: {x: 0, y: 0}
   isEnabled: 0
   order: 1
   prepTime: 0
@@ -461,7 +465,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   direction: {x: 0, y: 3}
-  isEnabled: 1
+  destination: {x: 0, y: 0}
+  isEnabled: 0
   order: 2
   acceleration: 0
   minSpeed: 6
@@ -476,7 +481,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -541,10 +546,107 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d051e1bacc3b43342b1743cd69d9a32d, type: 2}
   - {fileID: 11400000, guid: 376852079b585f64f92be1a52dacceed, type: 2}
   - {fileID: 11400000, guid: af3c9e2071c8e1d44b521775bd3de0fb, type: 2}
-  shotFX: {fileID: 0}
+  shotFX: {fileID: 324093857}
   explosion: {fileID: 0}
-  points: 0
+  points: 500
   statsText: {fileID: 0}
+--- !u!82 &324093857
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324093848}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 2867901742790518699, guid: 6ee537fc11b2b4849aa122de75721999,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: a764377339b869e459f5e53fb9258f73, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &351594409
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: -2, y: -2}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   radius: 1
@@ -915,6 +1018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: -2, y: 2}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   radius: 1
@@ -1088,7 +1192,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961407004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.498, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1507296112}
@@ -1260,6 +1364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: 2, y: 2}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   radius: 1
@@ -1461,6 +1566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: -1, y: 0}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   radius: 1
@@ -1644,6 +1750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   direction: {x: 8, y: 2}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   prepTime: 3
@@ -1924,6 +2031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: 2, y: -2}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   radius: 1
@@ -2193,6 +2301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: 0, y: 1}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   radius: 1
@@ -2296,6 +2405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: 0, y: -1}
+  destination: {x: 0, y: 0}
   isEnabled: 1
   order: 0
   radius: 1

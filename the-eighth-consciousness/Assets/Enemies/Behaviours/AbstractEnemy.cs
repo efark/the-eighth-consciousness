@@ -35,6 +35,8 @@ public abstract class AbstractEnemyController : MonoBehaviour
     public int points;
 
     protected Rect screenLimit;
+    protected Rect worldLimit;
+    protected bool enteredScreen;
 
     public EnemyDeathEvent OnDeath;
 
@@ -55,6 +57,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected void initScreenLimit()
     {
+        enteredScreen = false;
         Camera cam = Camera.main;
         Vector3 bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         Vector3 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
@@ -64,6 +67,19 @@ public abstract class AbstractEnemyController : MonoBehaviour
             bottomLeft.y,
             topRight.x - bottomLeft.x,
             topRight.y - bottomLeft.y);
+    }
+
+    protected void initWorldLimit()
+    {
+        Camera cam = Camera.main;
+        Vector3 bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        Vector3 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
+
+        worldLimit = new Rect(
+            bottomLeft.x -1000,
+            bottomLeft.y -1000,
+            topRight.x +1000 - bottomLeft.x,
+            topRight.y +1000 - bottomLeft.y);
     }
 
     protected void initAttackPatterns()
@@ -141,24 +157,6 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected List<Vector3> GetFirepoints(FirepointTypes ft)
     {
         return firepointsMap[ft.ToString().ToLower()];
-        /*
-        if (ft == FirepointTypes.All)
-        {
-            return allFirepoints;
-        }
-        if (ft == FirepointTypes.Central)
-        {
-            return centralFirepoints;
-        }
-        if (ft == FirepointTypes.Central)
-        {
-            return centralFirepoints;
-        }
-        if (ft == FirepointTypes.Central)
-        {
-            return centralFirepoints;
-        }
-        return lateralFirepoints;*/
     }
 
     protected GameObject GetClosestPlayer()
@@ -258,6 +256,24 @@ public abstract class AbstractEnemyController : MonoBehaviour
             statsText.text = "";
         }
         statsText.text = $"Enemy HP: {hp}";
+    }
+
+    public void CheckEnteredScreen()
+    {
+        if ( screenLimit.Contains(transform.position))
+        {
+            enteredScreen = true;
+        }
+    }
+
+    public void CheckOutOfWorld()
+    {
+        if (enteredScreen && !worldLimit.Contains(transform.position))
+        {
+            Debug.Log("Out of the world!");
+            isAlive = false;
+            Destroy(gameObject);
+        }
     }
 
     // Start is called before the first frame update

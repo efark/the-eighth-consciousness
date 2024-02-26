@@ -36,7 +36,7 @@ public class SelfDestroyer : AbstractEnemyController
         initAttackPatterns();
         initOnDeathEvent();
 
-        mvController.direction = new Vector2(0, 0);
+        mvController.direction = new Vector2(0, -1);
         if (targetPlayer != null)
         {
             target = targetPlayer.transform.position;
