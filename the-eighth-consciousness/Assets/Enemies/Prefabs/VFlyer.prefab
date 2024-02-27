@@ -174,7 +174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: 0.5, y: -1}
-  isEnabled: 1
+  destination: {x: 0, y: 0}
+  isActive: 1
   order: 0
   acceleration: 0.2
   minSpeed: 0

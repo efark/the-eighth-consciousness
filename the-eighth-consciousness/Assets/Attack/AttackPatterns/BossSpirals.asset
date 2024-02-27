@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spreadSettings: {fileID: 11400000, guid: 6c6a4389d2874ad43b6e7b39d7f23b17, type: 2}
   bulletSettings: {fileID: 11400000, guid: 538243295113a7346bb29d4474dce866, type: 2}
+  firepointType: 1
   burstOffset: 0
-  burstSize: 8
-  burstSpacing: 0.4
+  burstSize: 4
+  burstSpacing: 1.5
   offset: 0
-  cooldown: 1
-  numberOfBursts: 4
-  order: 0
+  cooldown: 2
+  numberOfBursts: 3
+  order: 4
   keepsAiming: 0
   isStaticAttack: 0
   isConstantAttack: 0

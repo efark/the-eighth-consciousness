@@ -12,11 +12,10 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected int hp;
     protected GameObject[] players = new GameObject[2];
     protected GameObject targetPlayer;
-    protected List<Vector3> centralFirepoints = new List<Vector3>();
-    protected List<Vector3> lateralFirepoints = new List<Vector3>();
-    protected List<Vector3> allFirepoints = new List<Vector3>();
+    protected Dictionary<string, List<Vector3>> firepointsMap = new Dictionary<string, List<Vector3>>();
 
     protected TargetTypes targetType;
+    protected AbstractMovement mvController;
     public List<AttackPattern> attackPatternsValues = new List<AttackPattern>();
     protected List<AttackPattern> attackPatterns = new List<AttackPattern>();
     protected List<AttackPattern> constantAttackPatterns = new List<AttackPattern>();
@@ -31,6 +30,8 @@ public abstract class AbstractEnemyController : MonoBehaviour
     public int points;
 
     protected Rect screenLimit;
+    protected Rect worldLimit;
+    protected bool enteredScreen;
 
     public EnemyDeathEvent OnDeath;
 
@@ -51,6 +52,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected void initScreenLimit()
     {
+        enteredScreen = false;
         Camera cam = Camera.main;
         Vector3 bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
         Vector3 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
@@ -60,6 +62,19 @@ public abstract class AbstractEnemyController : MonoBehaviour
             bottomLeft.y,
             topRight.x - bottomLeft.x,
             topRight.y - bottomLeft.y);
+    }
+
+    protected void initWorldLimit()
+    {
+        Camera cam = Camera.main;
+        Vector3 bottomLeft = cam.ScreenToWorldPoint(Vector3.zero);
+        Vector3 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight));
+
+        worldLimit = new Rect(
+            bottomLeft.x -1000,
+            bottomLeft.y -1000,
+            topRight.x +1000 - bottomLeft.x,
+            topRight.y +1000 - bottomLeft.y);
     }
 
     protected void initAttackPatterns()
@@ -87,6 +102,12 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     protected void initFirepoints()
     {
+        List<Vector3> central = new List<Vector3>();
+        List<Vector3> lateral = new List<Vector3>();
+        List<Vector3> forward = new List<Vector3>();
+        List<Vector3> main = new List<Vector3>();
+        List<Vector3> all = new List<Vector3>();
+
         Transform firepoints = this.transform.Find("Firepoints");
         if (firepoints == null)
         {
@@ -94,33 +115,60 @@ public abstract class AbstractEnemyController : MonoBehaviour
         }
         foreach (Transform child in firepoints)
         {
+            all.Add(child.localPosition);
             if (child.name.ToLower() == "central")
             {
-                centralFirepoints.Add(child.localPosition);
+                foreach (Transform granchild in child)
+                {
+                    central.Add(granchild.localPosition * 4f);
+                }
+                continue;
             }
-            else
+            if (child.name.ToLower() == "lateral")
             {
-                lateralFirepoints.Add(child.localPosition);
+                foreach (Transform granchild in child)
+                {
+                    lateral.Add(granchild.localPosition * 4f);
+                }
+                continue;
             }
-            allFirepoints.Add(child.localPosition);
+            if (child.name.ToLower() == "forward")
+            {
+                foreach (Transform granchild in child)
+                {
+                    forward.Add(granchild.localPosition * 4f);
+                }
+                continue;
+            }
+            if (child.name.ToLower() == "main")
+            {
+                foreach (Transform granchild in child)
+                {
+                    main.Add(granchild.localPosition * 4f);
+                }
+                continue;
+            }
         }
+        firepointsMap.Add("central", central);
+        firepointsMap.Add("lateral", lateral);
+        firepointsMap.Add("forward", forward);
+        firepointsMap.Add("main", main);
+        firepointsMap.Add("all", all);
+    }
+
+    protected void initMovementController()
+    {
+        mvController = this.GetComponent<AbstractMovement>();
     }
 
     protected List<Vector3> GetFirepoints(FirepointTypes ft)
     {
-        if (ft == FirepointTypes.All)
-        {
-            return allFirepoints;
-        }
-        if (ft == FirepointTypes.Central)
-        {
-            return centralFirepoints;
-        }
-        return lateralFirepoints;
+        return firepointsMap[ft.ToString().ToLower()];
     }
 
     protected GameObject GetClosestPlayer()
     {
+        players = GameObject.FindGameObjectsWithTag(targetType.ToString());
         if (players.Length == 1)
         {
             return players[0];
@@ -189,7 +237,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
 
     public void Hit(int playerId, int damage)
     {
-        if (hp > 0 && hp + damage < 0)
+        if (hp > 0 && hp + damage <= 0)
         {
             OnDeath?.Invoke(this.GetInstanceID(), playerId, points);
         }
@@ -215,6 +263,24 @@ public abstract class AbstractEnemyController : MonoBehaviour
             statsText.text = "";
         }
         statsText.text = $"Enemy HP: {hp}";
+    }
+
+    public void CheckEnteredScreen()
+    {
+        if ( screenLimit.Contains(transform.position))
+        {
+            enteredScreen = true;
+        }
+    }
+
+    public void CheckOutOfWorld()
+    {
+        if (enteredScreen && !worldLimit.Contains(transform.position))
+        {
+            //Debug.Log("Out of the world!");
+            isAlive = false;
+            Destroy(gameObject);
+        }
     }
 
     // Start is called before the first frame update

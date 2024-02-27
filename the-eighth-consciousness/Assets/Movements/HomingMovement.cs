@@ -34,8 +34,7 @@ public class HomingMovement : AbstractMovement
 
     void FixedUpdate()
     {
-        //Debug.Log($"speed: {speed}");
-        if (!isEnabled)
+        if (!isActive)
         {
             return;
         }
@@ -73,7 +72,6 @@ public class HomingMovement : AbstractMovement
                 newDirection = Vector3.RotateTowards(transform.up, targetDirection, singleStep, 0.0f);
                 lastDirection = newDirection.normalized;
             }
-            // Debug.DrawRay(transform.position, newDirection, Color.red);
 
             transform.rotation = Quaternion.LookRotation(Vector3.forward, newDirection);
         }

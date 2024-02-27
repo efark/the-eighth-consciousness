@@ -32,7 +32,7 @@ public class PropelledHomingMovement : AbstractMovement
 
     void FixedUpdate()
     {
-        if (!isEnabled)
+        if (!isActive)
         {
             return;
         }

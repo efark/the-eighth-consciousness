@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
+  m_Name: BossForwardBullets
+  m_EditorClassIdentifier: 
+  spreadSettings: {fileID: 11400000, guid: ca4e907061deffa4f9b911443200eb54, type: 2}
+  bulletSettings: {fileID: 11400000, guid: b18b4b5640288ab4290fb850bf7ebd8b, type: 2}
+  firepointType: 2
+  burstOffset: 0
+  burstSize: 5
+  burstSpacing: 0.5
+  offset: 0
+  cooldown: 2
+  numberOfBursts: 2
+  order: 5
+  hasFixedDirection: 1
+  fixedDirection: {x: 0, y: -1}
+  keepsAiming: 0
+  isStaticAttack: 0
+  isConstantAttack: 0
+  isActive: 0
+  isOpposite: 0

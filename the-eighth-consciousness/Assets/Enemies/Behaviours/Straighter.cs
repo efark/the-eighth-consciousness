@@ -56,7 +56,6 @@ public class Straighter : AbstractEnemyController
                     ap.spread.Create(transform.position, transform.rotation, lastDirection);
                 }
             }
-            // yield return new WaitForSeconds(ap.cooldown);
             ap.UpdateIsRunning(false);
             attackPatterns[index] = ap;
         }
@@ -73,14 +72,14 @@ public class Straighter : AbstractEnemyController
     void Start()
     {
         time = 0f;
-        hp = 100;
+        hp = 60;
         UpdateGUI();
         targetType = TargetTypes.Player;
 
-        // https://docs.unity3d.com/ScriptReference/Camera.ScreenToWorldPoint.html
         canFire = false;
 
         initScreenLimit();
+        initWorldLimit();
         initFirepoints();
         initAttackPatterns();
         initOnDeathEvent();
@@ -88,6 +87,8 @@ public class Straighter : AbstractEnemyController
 
     void Update()
     {
+        CheckEnteredScreen();
+        CheckOutOfWorld();
         if (HP < 0)
         {
             isAlive = false;

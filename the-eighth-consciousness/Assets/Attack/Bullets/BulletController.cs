@@ -21,9 +21,15 @@ public class BulletController : MonoBehaviour
         {
             return;
         }
-        if (targetType == TargetTypes.Enemy && (other.gameObject.tag.ToLower() == "enemy" || other.gameObject.tag.ToLower() == "boss"))
+        if (targetType == TargetTypes.Enemy && other.gameObject.tag.ToLower() == "enemy")
         {
             other.transform.GetComponent<AbstractEnemyController>().Hit(this.playerId, -damage);
+            Destroy(gameObject);
+            return;
+        }
+        if (targetType == TargetTypes.Enemy && other.gameObject.tag.ToLower() == "boss")
+        {
+            other.transform.GetComponent<Boss>().Hit(this.playerId, -damage);
             Destroy(gameObject);
             return;
         }

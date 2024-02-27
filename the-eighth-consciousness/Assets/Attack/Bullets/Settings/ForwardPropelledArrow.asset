@@ -15,4 +15,4 @@ MonoBehaviour:
   mvSettings: {fileID: 11400000, guid: 28c18fdb2305e174885e27dd05dee116, type: 2}
   prefab: {fileID: 1892965868773774543, guid: 89e147eb474c3a74c9d347ef672a9a7e, type: 3}
   damage: 12
-  ttl: 12
+  ttl: 8

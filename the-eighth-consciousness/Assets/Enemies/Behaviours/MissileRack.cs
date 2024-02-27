@@ -45,7 +45,7 @@ public class MissileRack : AbstractEnemyController
     void Start()
     {
         time = 0f;
-        hp = 500;
+        hp = 60;
         UpdateGUI();
         targetType = TargetTypes.Player;
 
@@ -56,6 +56,7 @@ public class MissileRack : AbstractEnemyController
         initAttackPatterns();
         checkAttackPatterns();
         initFirepoints();
+        initOnDeathEvent();
     }
 
     // Update is called once per frame

@@ -45,7 +45,7 @@ if number < 1 but > 0,  wave will stretch out (meaning it will take longer to re
 
     void FixedUpdate()
     {
-        if (!isEnabled)
+        if (!isActive)
         {
             return;
         }

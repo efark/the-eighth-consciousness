@@ -120,7 +120,6 @@ public class MainMenu : MonoBehaviour
 
     public void startGame(bool hasPlayer2)
     {
-        Debug.Log("Start new Game");
         BGMusic.Stop();
         startFX.Play();
         // Add Animation.
@@ -201,7 +200,6 @@ public class MainMenu : MonoBehaviour
 
         if (GUI.Button(new Rect(40, 300, 100, 25), "Cancel"))
         {
-            Debug.Log("Back");
             navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
             showOptionsMenu = false;
             canvas.enabled = true;
@@ -209,7 +207,6 @@ public class MainMenu : MonoBehaviour
         }
         if (GUI.Button(new Rect(360, 300, 100, 25), "Done"))
         {
-            Debug.Log("Save and back");
             navigateMenuFX.PlayOneShot(navigateMenuFX.clip);
             showOptionsMenu = false;
             canvas.enabled = true;

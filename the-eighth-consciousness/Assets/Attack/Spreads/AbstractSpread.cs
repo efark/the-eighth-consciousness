@@ -12,7 +12,9 @@ public enum FirepointTypes
 { 
     All,
     Central,
-    Lateral
+    Forward,
+    Lateral,
+    Main
 }
 
 public abstract class AbstractSpread

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: HomingMissile
   m_EditorClassIdentifier: 
   speed: 5
-  type: 2
+  type: 1
   acceleration: 2
   minSpeed: 5
-  maxSpeed: 13
-  homingDelay: 1
-  homingSpeed: 50
-  homingDuration: 5
+  maxSpeed: 9
+  homingDelay: 2
+  homingSpeed: 20
+  homingDuration: 2
   force: 0
   initialForce: 0
   amplitude: 0

@@ -7,7 +7,10 @@ public class AcceleratingMovement : AbstractMovement
     /* Inherited from Abstract class:
         public float speed;
         public Vector2 direction;
-        public Rigidbody rb;
+        public Vector2 destination;
+        public bool isActive = true;
+        [System.NonSerialized] public Rigidbody2D rb;
+        public int order;
      */
 
     [Header("Acceleration parameters")]
@@ -17,11 +20,10 @@ public class AcceleratingMovement : AbstractMovement
 
     void FixedUpdate()
     {
-        if (isEnabled)
+        if (isActive)
         {
             speed = Mathf.Clamp(speed + acceleration * Time.fixedDeltaTime, minSpeed, maxSpeed);
             rb.velocity = direction * speed;
         }
     }
-
 }

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
+  m_Name: BossLateralMissiles
+  m_EditorClassIdentifier: 
+  spreadSettings: {fileID: 11400000, guid: 66969cc92bc94f44389e1df50e789dca, type: 2}
+  bulletSettings: {fileID: 11400000, guid: a9357144adb3aaa42b14f3ca3efe4fe1, type: 2}
+  firepointType: 3
+  burstOffset: 0
+  burstSize: 2
+  burstSpacing: 1
+  offset: 0
+  cooldown: 2
+  numberOfBursts: 3
+  order: 7
+  keepsAiming: 0
+  isStaticAttack: 0
+  isConstantAttack: 0
+  isActive: 0
+  isOpposite: 0

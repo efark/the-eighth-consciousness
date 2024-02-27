@@ -30,10 +30,8 @@ public class MultiSpread : AbstractSpread
 
         for (int i = 0; i < groupSize; i++)
         {
-            // Debug.Log($"lateralDirection: {lateralDirection}");
             Vector3 itemPosition = startPosition + lateralDirection.normalized * spacing;
             itemPosition = new Vector3(itemPosition.x, itemPosition.y, 0);
-            // Debug.Log($"bulletPosition: {bulletPosition}");
             spacing += internalSpacing;
             factory.Create(itemPosition, rotation, direction);
         }

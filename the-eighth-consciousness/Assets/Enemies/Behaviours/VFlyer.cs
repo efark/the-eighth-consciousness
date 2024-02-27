@@ -7,7 +7,6 @@ public class VFlyer : AbstractEnemyController
     public float thresholdY = 0f;
     public float thresholdRange = 1.5f;
 
-    private AbstractMovement mvController;
     private bool hasFired = false;
     private bool hasTurned = false;
     public override int HP
@@ -25,20 +24,23 @@ public class VFlyer : AbstractEnemyController
     // Start is called before the first frame update
     void Start()
     {
-        hp = 100;
+        hp = 30;
         targetType = TargetTypes.Player;
-        mvController = this.GetComponent<AbstractMovement>();
         thresholdY += Random.Range(-thresholdRange, thresholdRange);
 
+        initMovementController();
         initAttackPatterns();
         initFirepoints();
         initScreenLimit();
+        initWorldLimit();
         initOnDeathEvent();
         transform.rotation = Quaternion.LookRotation(Vector3.forward, mvController.direction);
     }
 
     void Update()
     {
+        CheckEnteredScreen();
+        CheckOutOfWorld();
         if (HP < 0)
         {
             isAlive = false;

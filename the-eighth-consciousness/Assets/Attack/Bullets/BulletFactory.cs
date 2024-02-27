@@ -43,7 +43,7 @@ public class BulletFactory : ObjectFactory
         {
             case MovementTypes.AcceleratingMovement:
                 AcceleratingMovement am = bullet.GetComponent<AcceleratingMovement>();
-                am.isEnabled = true;
+                am.isActive = true;
                 am.speed = settings.mvSettings.speed;
                 am.direction = direction;
                 am.acceleration = settings.mvSettings.acceleration;
@@ -52,7 +52,7 @@ public class BulletFactory : ObjectFactory
                 return bullet;
             case MovementTypes.HomingMovement:
                 HomingMovement hm = bullet.GetComponent<HomingMovement>();
-                hm.isEnabled = true;
+                hm.isActive = true;
                 hm.speed = settings.mvSettings.speed;
                 hm.direction = direction;
                 hm.target = AuxiliaryMethods.FindTarget(targetType.ToString(), position);
@@ -65,7 +65,7 @@ public class BulletFactory : ObjectFactory
                 return bullet;
             case MovementTypes.PropelledHomingMovement:
                 PropelledHomingMovement phm = bullet.GetComponent<PropelledHomingMovement>();
-                phm.isEnabled = true;
+                phm.isActive = true;
                 phm.speed = settings.mvSettings.speed;
                 phm.direction = direction;
                 phm.target = AuxiliaryMethods.FindTarget(targetType.ToString(), position);
@@ -77,7 +77,7 @@ public class BulletFactory : ObjectFactory
                 return bullet;
             case MovementTypes.WavyMovement:
                 WavyMovement wm = bullet.GetComponent<WavyMovement>();
-                wm.isEnabled = true;
+                wm.isActive = true;
                 wm.speed = settings.mvSettings.speed;
                 wm.direction = direction;
                 wm.waveSpeed = settings.mvSettings.waveSpeed;
@@ -92,7 +92,7 @@ public class BulletFactory : ObjectFactory
                 return bullet;
             case MovementTypes.SpiralMovement:
                 SpiralMovement sp = bullet.GetComponent<SpiralMovement>();
-                sp.isEnabled = true;
+                sp.isActive = true;
                 sp.direction = direction;
                 sp.speed = settings.mvSettings.speed;
                 sp.spiralSpeed = settings.mvSettings.spiralSpeed;
@@ -100,7 +100,7 @@ public class BulletFactory : ObjectFactory
                 return bullet;
             case MovementTypes.CircularMovement:
                 CircularMovement cm = bullet.GetComponent<CircularMovement>();
-                cm.isEnabled = true;
+                cm.isActive = true;
                 cm.direction = direction;
                 cm.speed = settings.mvSettings.speed;
                 cm.rotationSpeed = settings.mvSettings.rotationSpeed;

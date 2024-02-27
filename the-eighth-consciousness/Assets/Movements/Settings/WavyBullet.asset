@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WavyBullet
   m_EditorClassIdentifier: 
   speed: 7
-  type: 4
+  type: 3
   acceleration: 0
   minSpeed: 0
   maxSpeed: 0
