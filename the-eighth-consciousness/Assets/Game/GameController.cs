@@ -97,10 +97,12 @@ public class GameController : MonoBehaviour
 
     private void EnemyDeath(int enemyId, int playerId, int points)
     {
-        enemyDeathSFX.PlayOneShot(enemyDeathSFX.clip);
+        if (playerId != 0)
+        {
+            enemyDeathSFX.PlayOneShot(enemyDeathSFX.clip);
+        }
         enemies[enemyId].transform.GetComponent<AbstractEnemyController>().OnDeath.RemoveListener(EnemyDeath);
         enemies[enemyId] = null;
-        //enemies.Remove(enemyId);
         if (playerId == 1)
         {
             statsPlayer1.UpdateScore(points);

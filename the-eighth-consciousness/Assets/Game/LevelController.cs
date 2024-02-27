@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,10 @@ public class LevelController : MonoBehaviour
     private int lastIndex;
     private GameObject spawner;
     public GameObject boss;
+    private GameObject spawnedBoss;
+    private bool hasBossSpawned;
+
+    public static event Action BossAppears;
 
     //private float time;
 
@@ -17,6 +22,7 @@ public class LevelController : MonoBehaviour
         // time = 0;
         index = 0;
         lastIndex = 0;
+        hasBossSpawned = false;
         foreach (WavesSettings ws in settings)
         {
             ws.SetActivated(false);
@@ -37,11 +43,20 @@ public class LevelController : MonoBehaviour
         }
         if (index == lastIndex)
         {
-            if (spawner == null)
+            if (spawner == null && !hasBossSpawned)
             {
-                Instantiate(boss, transform.position, Quaternion.identity);
-                index++;
+                StartCoroutine(spawnBoss());
             }
         }
+    }
+
+    private IEnumerator spawnBoss()
+    {
+        hasBossSpawned = true;
+        index++;
+        yield return new WaitForSecondsRealtime(5.0f);
+        BossAppears?.Invoke();
+        Instantiate(boss, transform.position, Quaternion.identity);
+
     }
 }

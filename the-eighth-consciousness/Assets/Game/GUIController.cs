@@ -10,6 +10,7 @@ public class GUIController : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public AudioSource musicTrack;
+    public AudioSource levelCompleteSFX;
 
     [Header("Stats")]
     public PlayerStats statsPlayer1;
@@ -27,6 +28,8 @@ public class GUIController : MonoBehaviour
     [SerializeField] private GameObject _ECDBar2;
     [SerializeField] private Image _healthbarSprite1;
     [SerializeField] private Image _healthbarSprite2;
+    [SerializeField] private GameObject _bossBar;
+    [SerializeField] private Image _bossHealthbarSprite;
     private int maxHP1;
     private int maxHP2;
 
@@ -38,6 +41,8 @@ public class GUIController : MonoBehaviour
     {
         PlayerStats.OnPlayerGUIChange += UpdatePlayerStats;
         PlayerStats.OnGameOver += GameOver;
+        LevelController.BossAppears += startBossGUI;
+        Boss.UpdateHPBar += updateBossGUI;
         maxHP1 = statsPlayer1._maxHP;
         maxHP2 = statsPlayer2._maxHP;
 
@@ -54,6 +59,21 @@ public class GUIController : MonoBehaviour
         SetAudioVolume();
     }
 
+    private void startBossGUI()
+    {
+        _bossBar.SetActive(true);
+    }
+    
+    private void updateBossGUI(float percentage)
+    {
+        Debug.Log($"Percentage: {percentage}");
+        updateBossHealthBar(_bossHealthbarSprite, percentage);
+        if (percentage <= 0)
+        {
+            levelComplete();
+        }
+    }
+
     public void DisableGUI()
     {
         disableUI(statsText1, _healthBar1, _ECDBar1);
@@ -64,6 +84,8 @@ public class GUIController : MonoBehaviour
     {
         PlayerStats.OnPlayerGUIChange -= UpdatePlayerStats;
         PlayerStats.OnGameOver -= GameOver;
+        Boss.UpdateHPBar -= updateBossGUI;
+        LevelController.BossAppears -= startBossGUI;
     }
 
     private void LoadPreferences()
@@ -97,6 +119,10 @@ public class GUIController : MonoBehaviour
         hbSprite.fillAmount = (float)currentHP / (float)maxHP;
     }
 
+    private void updateBossHealthBar(Image hbSprite, float fillPercentage)
+    {
+        hbSprite.fillAmount = fillPercentage;
+    }
 
     private void _updatePlayerStats(TMP_Text statsText, PlayerStats pStats)
     {
@@ -151,5 +177,15 @@ public class GUIController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(10.0f);
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private void levelComplete()
+    {
+        musicTrack.Stop();
+        levelCompleteSFX.Play();
+        disableUI(statsText1, _healthBar1, _ECDBar1);
+        disableUI(statsText2, _healthBar2, _ECDBar2);
+        gameOverText.text = "Level Complete!\nThank you for playing!";
+        StartCoroutine(loadScene());
     }
 }

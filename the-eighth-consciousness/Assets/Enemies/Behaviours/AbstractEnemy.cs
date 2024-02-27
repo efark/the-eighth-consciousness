@@ -277,7 +277,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
     {
         if (enteredScreen && !worldLimit.Contains(transform.position))
         {
-            Debug.Log("Out of the world!");
+            //Debug.Log("Out of the world!");
             isAlive = false;
             Destroy(gameObject);
         }
