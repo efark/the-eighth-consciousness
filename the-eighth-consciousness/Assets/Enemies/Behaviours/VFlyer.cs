@@ -39,8 +39,8 @@ public class VFlyer : AbstractEnemyController
 
     void Update()
     {
-        CheckEnteredScreen();
-        CheckOutOfWorld();
+        //CheckEnteredScreen();
+        //CheckOutOfWorld();
         if (HP < 0)
         {
             isAlive = false;
