@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6889087317598876303}
   - component: {fileID: 6889087317598876300}
   m_Layer: 0
-  m_Name: StraighterL1
+  m_Name: StraighterSideL1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 2723425226927078684, guid: 7bad4a11f707a9547994ac9f82950917, type: 3}
   spreadSettings: {fileID: 11400000, guid: db77433feba54c145accd09849cefebf, type: 2}
-  waves: 8
+  waves: 5
   startDelay: 2
   cooldown: 4
   isAimingPlayer: 1

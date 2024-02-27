@@ -445,8 +445,8 @@ MonoBehaviour:
     type: 3}
   playerPrefab2: {fileID: 4383251580355074025, guid: 65a5de9b176f77744a4ca9b90756751a,
     type: 3}
-  InitialPosition1: {x: -5, y: -4, z: 0}
-  InitialPosition2: {x: 5, y: -4, z: 0}
+  InitialPosition1: {x: -9, y: -7, z: 0}
+  InitialPosition2: {x: 9, y: -7, z: 0}
   _ECDSprite1: {fileID: 1945407926}
   _ECDSprite2: {fileID: 947064508}
 --- !u!82 &213659090

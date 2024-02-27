@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 860c1aeeeac237142b7279dd6ee86950, type: 3}
-  m_Name: VFlyerL1
+  m_Name: StraighterRightL1
   m_EditorClassIdentifier: 
-  startingTime: 30
-  enemySpawner: {fileID: 3616164697787595228, guid: fcb5c7e0c66c6c147a59a5fe3387fea8,
+  startingTime: 3
+  enemySpawner: {fileID: 6889087317598876301, guid: 6d86d7665963a384f9f8f86de4765ee9,
     type: 3}
-  startingPosition: {x: 0, y: 12, z: 0}
+  startingPosition: {x: 21, y: 4, z: 0}
