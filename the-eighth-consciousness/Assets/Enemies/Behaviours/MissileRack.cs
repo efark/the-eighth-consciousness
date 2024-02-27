@@ -46,7 +46,7 @@ public class MissileRack : AbstractEnemyController
     {
         time = 0f;
         hp = 60;
-        UpdateGUI();
+        //UpdateGUI();
         targetType = TargetTypes.Player;
 
         HomingMovement mvController = this.GetComponent<HomingMovement>();

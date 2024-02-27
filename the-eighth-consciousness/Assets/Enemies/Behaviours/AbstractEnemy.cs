@@ -272,7 +272,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
             enteredScreen = true;
         }
     }
-
+    /*
     public void CheckOutOfWorld()
     {
         if (enteredScreen && !worldLimit.Contains(transform.position))
@@ -282,21 +282,19 @@ public abstract class AbstractEnemyController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    */
     void OnDestroy()
     {
         OnDeath?.Invoke(this.GetInstanceID(), 0, 0);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag.ToLower() == "player")
+        {
+            other.transform.GetComponent<PlayerController>().stats.UpdateHP(-hp);
+            Destroy(gameObject);
+            return;
+        }
     }
 }

@@ -224,7 +224,7 @@ public class Boss : AbstractEnemyController
                     yield return new WaitForSeconds(ap.burstSpacing);
                 }
                 players = GameObject.FindGameObjectsWithTag(targetType.ToString());
-                Vector2 targetDirection = new Vector2(0, 0);
+                Vector2 targetDirection = new Vector2(0, -1);
                 if (ap.hasFixedDirection)
                 { 
                     targetDirection = ap.fixedDirection;
@@ -262,4 +262,12 @@ public class Boss : AbstractEnemyController
         attackDone = true;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag.ToLower() == "player")
+        {
+            other.transform.GetComponent<PlayerController>().stats.UpdateHP(-50);
+            return;
+        }
+    }
 }

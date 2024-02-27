@@ -53,6 +53,11 @@ public class HomingMovement : AbstractMovement
         {
             if (target == null)
             {
+                if (acceleration != 0)
+                {
+                    speed = Mathf.Clamp(speed + (acceleration * Time.fixedDeltaTime), minSpeed, maxSpeed);
+                }
+                transform.position += (new Vector3(lastDirection.x, lastDirection.y, 0) * speed * Time.fixedDeltaTime);
                 return;
             }
             homingAccumTime += Time.fixedDeltaTime;
