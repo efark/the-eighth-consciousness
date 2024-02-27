@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
-  m_Name: DoubleHelix
+  m_Name: BossDoubleHelix
   m_EditorClassIdentifier: 
   spreadSettings: {fileID: 11400000, guid: 11d16dde998f8f949ae8ffd17e6d9482, type: 2}
   bulletSettings: {fileID: 11400000, guid: 17eea5f40dda6084f9ed335a8914a792, type: 2}
-  firepointType: 4
-  burstOffset: 2
+  firepointType: 3
+  burstOffset: 1
   burstSize: 5
-  burstSpacing: 2
+  burstSpacing: 0.3
   offset: 0
   cooldown: 1
   numberOfBursts: 4

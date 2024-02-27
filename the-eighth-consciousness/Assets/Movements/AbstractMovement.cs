@@ -20,14 +20,17 @@ public class AbstractMovement : MonoBehaviour
     public float speed;
     public Vector2 direction;
     public Vector2 destination;
-    public bool isEnabled = true;
+    public bool isActive;
     [System.NonSerialized] public Rigidbody2D rb;
     public int order;
 
-    public bool IsEnabled
+    public bool IsActive
     {
-        get { return isEnabled; }
-        set { isEnabled = value; }
+        get { return isActive; }
+        set {
+            rb.velocity = direction * (value ? speed : 0f);
+            isActive = value;
+        }
     }
 
     void Start()

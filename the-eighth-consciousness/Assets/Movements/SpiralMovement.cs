@@ -27,7 +27,7 @@ public class SpiralMovement : AbstractMovement
 
     void FixedUpdate()
     {
-        if (!isEnabled)
+        if (!isActive)
         {
             return;
         }

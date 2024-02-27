@@ -21,7 +21,7 @@ MonoBehaviour:
   offset: 0
   cooldown: 1
   numberOfBursts: 4
-  order: 1
+  order: 4
   keepsAiming: 0
   isStaticAttack: 0
   isConstantAttack: 0

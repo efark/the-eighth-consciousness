@@ -34,7 +34,7 @@ public class HomingMovement : AbstractMovement
 
     void FixedUpdate()
     {
-        if (!isEnabled)
+        if (!isActive)
         {
             return;
         }

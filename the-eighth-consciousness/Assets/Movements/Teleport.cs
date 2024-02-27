@@ -18,7 +18,7 @@ public class Teleport : AbstractMovement
     // Update is called once per frame
     void Update()
     {
-        if (isEnabled)
+        if (isActive)
         {
             time += Time.deltaTime;
             if (time < prepTime)
@@ -31,7 +31,7 @@ public class Teleport : AbstractMovement
                 return;
             }
             transform.position = direction;
-            isEnabled = false;
+            isActive = false;
             return;
         }
     }

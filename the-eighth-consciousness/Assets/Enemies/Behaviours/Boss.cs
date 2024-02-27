@@ -9,10 +9,12 @@ public class Boss : AbstractEnemyController
     // public healthBar;
 
     private List<AbstractMovement> mvControllers = new List<AbstractMovement>();
-    private int mvIndex;
-    private int mvLastIndex;
-    private int fIndex;
+    private Dictionary<int, (AbstractMovement, AttackPattern)> actionsMap = new Dictionary<int, (AbstractMovement, AttackPattern)>();
+    private AbstractMovement currentMovement;
+    private AttackPattern currentAttack;
+    private bool mvDone, attackDone;
     private int actIndex;
+    private int maxMvOrder, maxAtkOrder;
     private bool actTriggered, actDone;
 
     public override int HP
@@ -31,35 +33,124 @@ public class Boss : AbstractEnemyController
     private void initMovementControllers()
     {
         AbstractMovement[] myResults = GetComponents<AbstractMovement>();
-        mvLastIndex = myResults.Length;
-
-        for (int i = 0; i < mvLastIndex; i++)
+        foreach (AbstractMovement am in myResults)
         {
-            foreach (AbstractMovement am in myResults)
+            mvControllers.Add(am);
+        }
+    }
+
+    private void mapActions()
+    {
+        for (int i = 0; i <= Mathf.Max(maxAtkOrder, maxMvOrder); i++)
+        {
+            AbstractMovement tempAM = null;
+            AttackPattern tempAP = null;
+            foreach (AbstractMovement am in mvControllers)
             {
                 if (am.order == i)
                 {
-                    mvControllers.Add(am);
+                    tempAM = am;
+                    break;
                 }
             }
+            foreach (AttackPattern ap in attackPatterns)
+            {
+                if (ap.order == i)
+                {
+                    tempAP = ap;
+                    break;
+                }
+            }
+            actionsMap[i] = (tempAM, tempAP);
+        }
+    }
+
+    void getMaxOrders()
+    {
+        foreach (AbstractMovement am in mvControllers)
+        { 
+            maxMvOrder = maxMvOrder < am.order ? am.order : maxMvOrder;
         }
 
+        foreach (AttackPattern ap in attackPatterns)
+        {
+            maxAtkOrder = maxAtkOrder < ap.order ? ap.order : maxAtkOrder;
+        }
     }
 
     void Start()
     {
         HP = 2000;
-        mvIndex = 0;
-        fIndex = 0;
         actIndex = 0;
         actDone = false;
         targetType = TargetTypes.Player;
 
+        actTriggered = false;
+        actDone = false;
+
         initMovementControllers();
         initAttackPatterns();
+        getMaxOrders();
+        mapActions();
         initFirepoints();
         initScreenLimit();
         initOnDeathEvent();
+
+        foreach (KeyValuePair<int, (AbstractMovement, AttackPattern)> kvp in actionsMap)
+        {
+            Debug.Log(string.Format("Key = {0}, Item1 = {1}, Item2 = {2}", kvp.Key, kvp.Value.Item1, kvp.Value.Item2));
+        }
+    }
+
+    private void checkActionStatus()
+    {
+        actDone = mvDone && attackDone;
+    }
+
+    private void triggerMovement()
+    {
+        currentMovement.IsActive = true;
+        currentMovement.enabled = true;
+    }
+
+    private void stopMovement()
+    {
+        if (mvDone)
+        {
+            return;
+        }
+        mvDone = (Vector2.Distance(currentMovement.destination, new Vector2(transform.position.x, transform.position.y)) < 0.5f);
+        if (mvDone)
+        {
+            currentMovement.IsActive = false;
+        }
+    }
+
+    private void triggerAttack()
+    {
+        oneShotAttack(currentAttack);
+    }
+
+
+    private void triggerAction()
+    {
+        Debug.Log($"Triggering action: {actIndex}");
+        (AbstractMovement, AttackPattern) actionTuple = actionsMap[actIndex];
+        currentMovement = actionTuple.Item1;
+        currentAttack = actionTuple.Item2;
+        mvDone = true;
+        attackDone = true;
+        if (currentMovement != null)
+        {
+            mvDone = false;
+            triggerMovement();
+        }
+        if (currentAttack != null)
+        {
+            attackDone = false;
+            triggerAttack();
+        }
+
     }
 
     // Update is called once per frame
@@ -71,17 +162,18 @@ public class Boss : AbstractEnemyController
             Destroy(gameObject);
         }
 
-
         /*----------------------------------------------
-        S0 - Main - .
+        S0 - Main Gun.
 
         M0 - Move forward.
         S1 - Lateral shots to the sides.
 
         M1 - Teleport.
+
         M2 - Move to the initial point.
 
         S2 - Shoot circling.
+ 
         S3 - Shoot forward.
 
         M3 - Move to the center of the screen.
@@ -94,30 +186,17 @@ public class Boss : AbstractEnemyController
             actTriggered = false;
             actDone = false;
         }
-        if (actTriggered && !actDone) // wait
-        {
-            // nothing
-        }
         if (!actTriggered && !actDone) // trigger
         {
             // Trigger the action.
-            if (actIndex == 0)
-            {
-                oneShotAttack(attackPatterns[fIndex]);
-            }
+            triggerAction();
             actTriggered = true;
+            actDone = false;
         }
 
+        stopMovement();
+        checkActionStatus();
 
-        // check if target == position.
-        /*
-        if (mvControllers[mvIndex].target == transform.position)
-        {
-            mvControllers[mvIndex].isEnabled = false;
-            mvIndex = mvIndex == mvLastIndex ? 0 : mvIndex + 1;
-            mvControllers[mvIndex].isEnabled = true;
-        }
-        */
     }
 
     private void oneShotAttack(AttackPattern ap)
@@ -156,6 +235,7 @@ public class Boss : AbstractEnemyController
                     }
                 }
                 List<Vector3> fPoints = GetFirepoints(ap.firepointType);
+                //Debug.Log($"fPoints: {fPoints}, firepointType: {ap.firepointType}");
                 shotFX.PlayOneShot(shotFX.clip);
                 foreach (Vector3 fp in fPoints)
                 {
@@ -165,6 +245,7 @@ public class Boss : AbstractEnemyController
         }
         yield return new WaitForSeconds(ap.cooldown);
         ap.UpdateIsRunning(false);
+        attackDone = true;
     }
 
 }

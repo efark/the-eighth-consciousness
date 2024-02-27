@@ -18,7 +18,7 @@ public class CircularMovement : AbstractMovement
 
     void FixedUpdate()
     {
-        if (!isEnabled)
+        if (!isActive)
         {
             return;
         }

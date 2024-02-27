@@ -204,7 +204,7 @@ MonoBehaviour:
   speed: 3
   direction: {x: 1, y: 0}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   radius: 1
   spiralSpeed: 1.1
@@ -339,6 +339,7 @@ GameObject:
   - component: {fileID: 324093851}
   - component: {fileID: 324093852}
   - component: {fileID: 324093853}
+  - component: {fileID: 324093858}
   - component: {fileID: 324093857}
   m_Layer: 0
   m_Name: TripleArrow
@@ -424,11 +425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0502228e5a57fa429b405e45aeb9e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  direction: {x: 0, y: -5}
-  destination: {x: 0, y: 0}
-  isEnabled: 0
-  order: 0
+  speed: 3
+  direction: {x: 0, y: -1}
+  destination: {x: 0, y: -20}
+  isActive: 0
+  order: 1
   acceleration: 0
   minSpeed: 4
   maxSpeed: 4
@@ -446,9 +447,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   direction: {x: 0, y: 8}
-  destination: {x: 0, y: 0}
-  isEnabled: 0
-  order: 1
+  destination: {x: 0, y: 8}
+  isActive: 0
+  order: 2
   prepTime: 0
   delay: 0
 --- !u!114 &324093853
@@ -464,10 +465,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  direction: {x: 0, y: 3}
-  destination: {x: 0, y: 0}
-  isEnabled: 0
-  order: 2
+  direction: {x: 0, y: -1}
+  destination: {x: 0, y: 3}
+  isActive: 0
+  order: 3
   acceleration: 0
   minSpeed: 6
   maxSpeed: 6
@@ -545,7 +546,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c5e30fef300305e4b88cf50327597a0c, type: 2}
   - {fileID: 11400000, guid: d051e1bacc3b43342b1743cd69d9a32d, type: 2}
   - {fileID: 11400000, guid: 376852079b585f64f92be1a52dacceed, type: 2}
-  - {fileID: 11400000, guid: af3c9e2071c8e1d44b521775bd3de0fb, type: 2}
+  - {fileID: 11400000, guid: 9680ba46addac404fb79a8f3bc87d27f, type: 2}
+  - {fileID: 11400000, guid: 2d13a9434d5187043a64fcb59d66bfc9, type: 2}
   shotFX: {fileID: 324093857}
   explosion: {fileID: 0}
   points: 500
@@ -647,6 +649,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &324093858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324093848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0502228e5a57fa429b405e45aeb9e15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  direction: {x: 0, y: -1}
+  destination: {x: 0, y: 0}
+  isActive: 0
+  order: 6
+  acceleration: 0
+  minSpeed: 4
+  maxSpeed: 4
 --- !u!1 &351594409
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +751,7 @@ MonoBehaviour:
   speed: 3
   direction: {x: -2, y: -2}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   radius: 1
   spiralSpeed: 1.1
@@ -1019,7 +1041,7 @@ MonoBehaviour:
   speed: 3
   direction: {x: -2, y: 2}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   radius: 1
   spiralSpeed: 1.1
@@ -1365,7 +1387,7 @@ MonoBehaviour:
   speed: 3
   direction: {x: 2, y: 2}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   radius: 1
   spiralSpeed: 1.1
@@ -1567,7 +1589,7 @@ MonoBehaviour:
   speed: 3
   direction: {x: -1, y: 0}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   radius: 1
   spiralSpeed: 1.1
@@ -1751,7 +1773,7 @@ MonoBehaviour:
   speed: 0
   direction: {x: 8, y: 2}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   prepTime: 3
   delay: 4
@@ -2032,7 +2054,7 @@ MonoBehaviour:
   speed: 3
   direction: {x: 2, y: -2}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   radius: 1
   spiralSpeed: 1.1
@@ -2302,7 +2324,7 @@ MonoBehaviour:
   speed: 3
   direction: {x: 0, y: 1}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   radius: 1
   spiralSpeed: 1.1
@@ -2406,7 +2428,7 @@ MonoBehaviour:
   speed: 3
   direction: {x: 0, y: -1}
   destination: {x: 0, y: 0}
-  isEnabled: 1
+  isActive: 0
   order: 0
   radius: 1
   spiralSpeed: 1.1
@@ -2613,6 +2635,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFlyer
       objectReference: {fileID: 0}
+    - target: {fileID: 1456057149979271541, guid: cfa3c37cdacef354f80134081e272582,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfa3c37cdacef354f80134081e272582, type: 3}
 --- !u!1001 &2723425227448249552
@@ -2706,6 +2733,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cross
+      objectReference: {fileID: 0}
+    - target: {fileID: 5348079716934436496, guid: 65fc10c21a7ec854d96bc6e3344e8bca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5348079716934436498, guid: 65fc10c21a7ec854d96bc6e3344e8bca,
         type: 3}
@@ -2942,6 +2974,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MissileRackL1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9167679516845136895, guid: 2a563e4a497a7f34e8ba413a39cc1a2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a563e4a497a7f34e8ba413a39cc1a2e, type: 3}
