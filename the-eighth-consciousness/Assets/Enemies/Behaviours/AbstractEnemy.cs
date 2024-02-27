@@ -12,12 +12,6 @@ public abstract class AbstractEnemyController : MonoBehaviour
     protected int hp;
     protected GameObject[] players = new GameObject[2];
     protected GameObject targetPlayer;
-    /*protected List<Vector3> centralFirepoints = new List<Vector3>();
-    protected List<Vector3> lateralFirepoints = new List<Vector3>();
-    protected List<Vector3> forwardFirepoints = new List<Vector3>();
-    protected List<Vector3> mainFirepoints = new List<Vector3>();
-    protected List<Vector3> allFirepoints = new List<Vector3>();
-    */
     protected Dictionary<string, List<Vector3>> firepointsMap = new Dictionary<string, List<Vector3>>();
 
     protected TargetTypes targetType;
@@ -126,7 +120,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
             {
                 foreach (Transform granchild in child)
                 {
-                    central.Add(granchild.localPosition);
+                    central.Add(granchild.localPosition * 4f);
                 }
                 continue;
             }
@@ -134,7 +128,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
             {
                 foreach (Transform granchild in child)
                 {
-                    lateral.Add(granchild.localPosition);
+                    lateral.Add(granchild.localPosition * 4f);
                 }
                 continue;
             }
@@ -142,7 +136,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
             {
                 foreach (Transform granchild in child)
                 {
-                    forward.Add(granchild.localPosition);
+                    forward.Add(granchild.localPosition * 4f);
                 }
                 continue;
             }
@@ -150,7 +144,7 @@ public abstract class AbstractEnemyController : MonoBehaviour
             {
                 foreach (Transform granchild in child)
                 {
-                    main.Add(granchild.localPosition);
+                    main.Add(granchild.localPosition * 4f);
                 }
                 continue;
             }

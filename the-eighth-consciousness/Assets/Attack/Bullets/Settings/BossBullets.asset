@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38be96cc68c257743a56627414ffbf1a, type: 3}
   m_Name: BossBullets
   m_EditorClassIdentifier: 
-  mvSettings: {fileID: 11400000, guid: 7f3311985c96beb4e994dae6c50314b5, type: 2}
+  mvSettings: {fileID: 11400000, guid: f59dd630b8785df42b903176696b5725, type: 2}
   prefab: {fileID: 8431385358610832092, guid: 3ba96cd5556d5b747b9787b0e7c2ce71, type: 3}
   damage: 10
   ttl: 7

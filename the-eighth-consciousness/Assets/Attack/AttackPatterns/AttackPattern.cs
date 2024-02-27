@@ -21,6 +21,10 @@ public class AttackPattern : ScriptableObject
     public float cooldown;
     public int numberOfBursts;
     public int order;
+
+    [Header("Targetting")]
+    public bool hasFixedDirection;
+    public Vector2 fixedDirection;
     public bool keepsAiming;
     public bool isStaticAttack;
     public bool isConstantAttack;

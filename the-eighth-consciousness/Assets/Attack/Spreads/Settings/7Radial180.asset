@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 7Radial180
   m_EditorClassIdentifier: 
   type: 0
-  groupSize: 0
-  spreadAngle: 0
+  groupSize: 7
+  spreadAngle: 180
   internalSpacing: 0
   isAlternating: 0
-  isCentered: 0
+  isCentered: 1

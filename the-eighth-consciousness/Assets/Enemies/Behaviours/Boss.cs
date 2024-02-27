@@ -14,7 +14,7 @@ public class Boss : AbstractEnemyController
     private AttackPattern currentAttack;
     private bool mvDone, attackDone;
     private int actIndex;
-    private int maxMvOrder, maxAtkOrder;
+    private int maxAction;
     private bool actTriggered, actDone;
 
     public override int HP
@@ -41,7 +41,7 @@ public class Boss : AbstractEnemyController
 
     private void mapActions()
     {
-        for (int i = 0; i <= Mathf.Max(maxAtkOrder, maxMvOrder); i++)
+        for (int i = 0; i <= maxAction; i++)
         {
             AbstractMovement tempAM = null;
             AttackPattern tempAP = null;
@@ -67,6 +67,9 @@ public class Boss : AbstractEnemyController
 
     void getMaxOrders()
     {
+        int maxMvOrder, maxAtkOrder;
+        maxMvOrder = 0;
+        maxAtkOrder = 0;
         foreach (AbstractMovement am in mvControllers)
         { 
             maxMvOrder = maxMvOrder < am.order ? am.order : maxMvOrder;
@@ -76,6 +79,7 @@ public class Boss : AbstractEnemyController
         {
             maxAtkOrder = maxAtkOrder < ap.order ? ap.order : maxAtkOrder;
         }
+        maxAction = Mathf.Max(maxMvOrder, maxAtkOrder);
     }
 
     void Start()
@@ -182,7 +186,7 @@ public class Boss : AbstractEnemyController
         -----------------------------------------------*/
         if (actTriggered && actDone) // move to the next.
         {
-            actIndex++;
+            actIndex = actIndex < maxAction ? actIndex + 1 : 0;
             actTriggered = false;
             actDone = false;
         }
@@ -224,21 +228,35 @@ public class Boss : AbstractEnemyController
                 }
                 players = GameObject.FindGameObjectsWithTag(targetType.ToString());
                 Vector2 targetDirection = new Vector2(0, 0);
-                targetPlayer = GetClosestPlayer();
-                if (targetPlayer != null)
+                if (ap.hasFixedDirection)
+                { 
+                    targetDirection = ap.fixedDirection;
+                }
+                if (!ap.hasFixedDirection)
                 {
-                    Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
-                    targetDirection = new Vector2(targetDir.x, targetDir.y);
-                    if (ap.isOpposite)
+                    targetPlayer = GetClosestPlayer();
+                    if (targetPlayer != null)
                     {
-                        targetDirection *= -1;
+                        Vector3 targetDir = (targetPlayer.transform.position - this.transform.position).normalized;
+                        targetDirection = new Vector2(targetDir.x, targetDir.y);
                     }
+                }
+                if (ap.isOpposite)
+                {
+                    targetDirection *= -1;
                 }
                 List<Vector3> fPoints = GetFirepoints(ap.firepointType);
                 //Debug.Log($"fPoints: {fPoints}, firepointType: {ap.firepointType}");
                 shotFX.PlayOneShot(shotFX.clip);
                 foreach (Vector3 fp in fPoints)
                 {
+                    if (ap.firepointType == FirepointTypes.Lateral)
+                    {
+                        if (fp.x > 0)
+                        {
+                            targetDirection *= -1;
+                        }
+                    }
                     ap.spread.Create(transform.position + fp, transform.rotation, targetDirection);
                 }
             }

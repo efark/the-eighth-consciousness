@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 737216b3c3250a3499167057835eb39f, type: 3}
-  m_Name: HomingMissile
+  m_Name: BossBullets
   m_EditorClassIdentifier: 
-  speed: 5
-  type: 1
+  speed: 6
+  type: 0
   acceleration: 2
-  minSpeed: 5
-  maxSpeed: 13
-  homingDelay: 1
-  homingSpeed: 50
-  homingDuration: 5
+  minSpeed: 6
+  maxSpeed: 10
+  homingDelay: 0
+  homingSpeed: 0
+  homingDuration: 0
   force: 0
   initialForce: 0
   amplitude: 0

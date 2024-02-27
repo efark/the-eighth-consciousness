@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
   m_Name: BossLateralBullets
   m_EditorClassIdentifier: 
-  spreadSettings: {fileID: 11400000, guid: 00ce533c677862b469678c8d7eb022e3, type: 2}
+  spreadSettings: {fileID: 11400000, guid: 91050e005acc4e848a0815b41c6a3c1c, type: 2}
   bulletSettings: {fileID: 11400000, guid: 5acd58246be2a714b8c2347c515f98bb, type: 2}
   firepointType: 3
   burstOffset: 0
-  burstSize: 1
-  burstSpacing: 2
+  burstSize: 6
+  burstSpacing: 0.5
   offset: 0
-  cooldown: 0
+  cooldown: 0.5
   numberOfBursts: 1
   order: 1
+  hasFixedDirection: 1
+  fixedDirection: {x: -1, y: 0}
   keepsAiming: 0
   isStaticAttack: 0
   isConstantAttack: 0

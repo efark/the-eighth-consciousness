@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8862346e77621c4d978fe64e3554aa7, type: 3}
   m_Name: BossForwardBullets
   m_EditorClassIdentifier: 
-  spreadSettings: {fileID: 11400000, guid: 78ff018b3e1db2a418617d26957cd30c, type: 2}
+  spreadSettings: {fileID: 11400000, guid: ca4e907061deffa4f9b911443200eb54, type: 2}
   bulletSettings: {fileID: 11400000, guid: b18b4b5640288ab4290fb850bf7ebd8b, type: 2}
   firepointType: 2
   burstOffset: 0
-  burstSize: 4
+  burstSize: 5
   burstSpacing: 0.5
   offset: 0
-  cooldown: 0
+  cooldown: 2
   numberOfBursts: 2
   order: 5
+  hasFixedDirection: 1
+  fixedDirection: {x: 0, y: -1}
   keepsAiming: 0
   isStaticAttack: 0
   isConstantAttack: 0
