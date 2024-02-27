@@ -8,6 +8,7 @@ public class LevelController : MonoBehaviour
     private int index;
     private int lastIndex;
     private GameObject spawner;
+    public GameObject boss;
 
     //private float time;
 
@@ -31,6 +32,14 @@ public class LevelController : MonoBehaviour
             {
                 WavesSettings ws = settings[index];
                 spawner = Instantiate(ws.enemySpawner, ws.startingPosition, Quaternion.identity) as GameObject;
+                index++;
+            }
+        }
+        if (index == lastIndex)
+        {
+            if (spawner == null)
+            {
+                Instantiate(boss, transform.position, Quaternion.identity);
                 index++;
             }
         }

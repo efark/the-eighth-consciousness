@@ -420,7 +420,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   direction: {x: 0, y: 0}
-  isEnabled: 1
+  destination: {x: 0, y: 0}
+  isActive: 0
   order: 0
   amplitude: 3
   waveFrequency: 2
@@ -1681,7 +1682,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605917008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5425441, y: -1.1227638, z: -114.58433}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1709,6 +1710,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95b1e1994e26dc24cbb232703e845231, type: 2}
   - {fileID: 11400000, guid: 6f972361789601c45aa546949ed61b66, type: 2}
   - {fileID: 11400000, guid: ea629db07b3eb4047ae2af4fb0af20aa, type: 2}
+  boss: {fileID: 5098209154045379333, guid: 65b0f487abd9a2e4fb24c3673e78cbeb, type: 3}
 --- !u!1 &1645899198
 GameObject:
   m_ObjectHideFlags: 0
