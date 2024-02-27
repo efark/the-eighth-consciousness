@@ -15,4 +15,4 @@ MonoBehaviour:
   startingTime: 3
   enemySpawner: {fileID: 6889087317598876301, guid: a39a30b6f4c191647adacb08ce838016,
     type: 3}
-  startingPosition: {x: 0, y: 7, z: 0}
+  startingPosition: {x: 0, y: 12, z: 0}
