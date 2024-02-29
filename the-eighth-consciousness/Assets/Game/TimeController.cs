@@ -67,4 +67,9 @@ public class TimeController : MonoBehaviour
             }
         }
     }
+
+    private void OnDestroy()
+    {
+        SlowMotionEffect(false);
+    }
 }
