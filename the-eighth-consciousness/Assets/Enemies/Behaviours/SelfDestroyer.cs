@@ -48,20 +48,35 @@ public class SelfDestroyer : AbstractEnemyController
 
     void Update()
     {
+        targetPlayer = GetClosestPlayer();
         if (HP < 0)
         {
             isAlive = false;
             Destroy(gameObject);
         }
 
-        if (isAlive && Vector3.Distance(this.transform.position, target) < proximity)
+        if (isAlive)
         {
-            GameObject b = Instantiate(bomb, transform.position, Quaternion.identity) as GameObject;
-            b.transform.GetComponent<BombController>().playerId = 0;
-            b.transform.GetComponent<BombController>().damage = 50;
-            b.transform.GetComponent<BombController>().ttl = 1f;
-            b.transform.GetComponent<BombController>().scaleFactor = 1;
-            Destroy(gameObject);
+            if (Vector3.Distance(this.transform.position, target) < proximity)
+            {
+                GameObject b = Instantiate(bomb, transform.position, Quaternion.identity) as GameObject;
+                b.transform.GetComponent<BombController>().playerId = 0;
+                b.transform.GetComponent<BombController>().damage = 50;
+                b.transform.GetComponent<BombController>().ttl = 1f;
+                b.transform.GetComponent<BombController>().scaleFactor = 1;
+                Destroy(gameObject);
+                return;
+            }
+            if (targetPlayer != null && Vector3.Distance(this.transform.position, targetPlayer.transform.position) < proximity)
+            {
+                GameObject b = Instantiate(bomb, transform.position, Quaternion.identity) as GameObject;
+                b.transform.GetComponent<BombController>().playerId = 0;
+                b.transform.GetComponent<BombController>().damage = 50;
+                b.transform.GetComponent<BombController>().ttl = 1f;
+                b.transform.GetComponent<BombController>().scaleFactor = 1;
+                Destroy(gameObject);
+                return;
+            }
         }
     }
 

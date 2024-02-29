@@ -45,6 +45,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        PlayerStats.OnPlayerDeath -= FlagPlayerRespawn;
+    }
+
     void Update()
     {
         if (mustRespawn1)
