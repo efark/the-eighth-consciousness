@@ -66,7 +66,7 @@ public class GUIController : MonoBehaviour
     
     private void updateBossGUI(float percentage)
     {
-        Debug.Log($"Percentage: {percentage}");
+        //Debug.Log($"Percentage: {percentage}");
         updateBossHealthBar(_bossHealthbarSprite, percentage);
         if (percentage <= 0)
         {
